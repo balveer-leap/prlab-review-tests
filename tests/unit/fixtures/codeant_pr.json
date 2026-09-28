@@ -1,0 +1,39 @@
+{
+ "issue": [
+  {
+   "user": {
+    "login": "codeant-ai[bot]"
+   },
+   "body": "## 🤖 CodeAnt AI — Review Status\n\n| Status | Commit | Started (UTC) | Finished (UTC) |\n| --- | --- | --- | --- |\n| ✅ Reviewed your PR | `08af576` | Sep 28, 2026 · 09:58 | 09:59 |\n\n<!-- codeant-review-status:[{\"label\":\"Reviewed your PR\",\"commit\":\"08af5767289c940447bc49fb0dacde65849bade4\",\"started\":\"2026-09-28T09:58:01.624072\",\"finished\":\"2026-09-28T09:59:58.440125\",\"done\":true}] -->"
+  }
+ ],
+ "inline": [
+  {
+   "user": {
+    "login": "codeant-ai[bot]"
+   },
+   "body": "**Suggestion:** Copying the entire `BallEvent` into the snapshot exposes `umpire_confirmed` and `extras.type`, allowing consumers to derive interpretations that contradict `last_event`.\n\n**Assessment:** 🟠 `Major` · 🔁 `Occurrence: Often` · 🏷️ `Security`\n\n[![Use CodeAnt Skill](https://new-codeant-butcket.s3.us-west-1.amazonaws.com/badges/use-codeant-skill-flat-v2.svg)](https://docs.codeant.ai/cli/resolve-pr-comments-skill) [![Fix in Cursor](https://new-codeant-butcket.s3.us-west-1.amazonaws.com/badges/fix-in-cursor-flat.svg)](https://app.codeant.ai/fix-in-ide?tool=cursor&prompt_id=ca4f488ae5df48bb869ed9baaf7bbec3&service=github&base_url=https%3A%2F%2Fgithub.com&org=org-codeant&repo=org-codeant%2Fprlab-cricket-scoring) [![Fix in VSCode Claude](https://new-codeant-butcket.s3.us-west-1.amazonaws.com/badges/fix-in-vscode-claude-flat.svg)](https://app.codeant.ai/fix-in-ide?tool=vscode-claude&prompt_id=ca4f488ae5df48bb869ed9baaf7bbec3&service=github&base_url=https%3A%2F%2Fgithub.com&org=org-codeant&repo=org-codeant%2Fprlab-cricket-scoring)\n<details>\n<summary><b>Prompt for AI Agent 🤖 </b></summary>\n\n```mdx\nThis is a comment left during a code review.\n\n**Path:** scoring/engine.py\n**Line:** 70:70\n**Comment:**\n\t*Security: Copying the entire `BallEvent` into the snapshot exposes `umpire_confirmed` and `extras.type`, allowing consumers to derive interpretations that contradict `last_event`.\n\nValidate the correctness of the flagged issue. If correct, How can I resolve this? If you propose a fix, implement it and please make it concise.\nOnce fix is implemented, also check other comments on the same PR, and ask user if the user wants to fix the rest of the comments as well. if said yes, then fetch all the comments validate the correctness and implement a minimal fix\n```\n</details>\n<a href='https://app.codeant.ai/feedback?pr_url=https%3A%2F%2Fgithub.com%2Forg-codeant%2Fprlab-cricket-scoring%2Fpull%2F1&comment_hash=553e45f3fe7b75ff41cb7f471b24649c8886cf9ba00b23eace9d309ac96bc11d&reaction=like'>👍</a> | <a href='https://app.codeant.ai/feedback?pr_url=https%3A%2F%2Fgithub.com%2Forg-codeant%2Fprlab-cricket-scoring%2Fpull%2F1&comment_hash=553e45f3fe7b75ff41cb7f471b24649c8886cf9ba00b23eace9d309ac96bc11d&reaction=dislike'>👎</a>",
+   "path": "scoring/engine.py",
+   "line": 70,
+   "original_line": 70
+  },
+  {
+   "user": {
+    "login": "codeant-ai[bot]"
+   },
+   "body": "**Suggestion:** Adding `raw_ball` to public `ScoreSnapshot` makes both POST and GET responses expose fields the product contract explicitly forbids.\n\n**Assessment:** 🟠 `Major` · 🔁 `Occurrence: Often` · 🏷️ `Api mismatch`\n\n[![Use CodeAnt Skill](https://new-codeant-butcket.s3.us-west-1.amazonaws.com/badges/use-codeant-skill-flat-v2.svg)](https://docs.codeant.ai/cli/resolve-pr-comments-skill) [![Fix in Cursor](https://new-codeant-butcket.s3.us-west-1.amazonaws.com/badges/fix-in-cursor-flat.svg)](https://app.codeant.ai/fix-in-ide?tool=cursor&prompt_id=ef5ea6b2d838448c9bb1dc8f33bd5b73&service=github&base_url=https%3A%2F%2Fgithub.com&org=org-codeant&repo=org-codeant%2Fprlab-cricket-scoring) [![Fix in VSCode Claude](https://new-codeant-butcket.s3.us-west-1.amazonaws.com/badges/fix-in-vscode-claude-flat.svg)](https://app.codeant.ai/fix-in-ide?tool=vscode-claude&prompt_id=ef5ea6b2d838448c9bb1dc8f33bd5b73&service=github&base_url=https%3A%2F%2Fgithub.com&org=org-codeant&repo=org-codeant%2Fprlab-cricket-scoring)\n<details>\n<summary><b>Prompt for AI Agent 🤖 </b></summary>\n\n```mdx\nThis is a comment left during a code review.\n\n**Path:** scoring/snapshot.py\n**Line:** 26:29\n**Comment:**\n\t*Api Mismatch: Adding `raw_ball` to public `ScoreSnapshot` makes both POST and GET responses expose fields the product contract explicitly forbids.\n\nValidate the correctness of the flagged issue. If correct, How can I resolve this? If you propose a fix, implement it and please make it concise.\nOnce fix is implemented, also check other comments on the same PR, and ask user if the user wants to fix the rest of the comments as well. if said yes, then fetch all the comments validate the correctness and implement a minimal fix\n```\n</details>\n<a href='https://app.codeant.ai/feedback?pr_url=https%3A%2F%2Fgithub.com%2Forg-codeant%2Fprlab-cricket-scoring%2Fpull%2F1&comment_hash=e5b9ff457c02a5415b9569c3fb4a42587e79a2cb127da2db25d4b5175829a695&reaction=like'>👍</a> | <a href='https://app.codeant.ai/feedback?pr_url=https%3A%2F%2Fgithub.com%2Forg-codeant%2Fprlab-cricket-scoring%2Fpull%2F1&comment_hash=e5b9ff457c02a5415b9569c3fb4a42587e79a2cb127da2db25d4b5175829a695&reaction=dislike'>👎</a>",
+   "path": "scoring/snapshot.py",
+   "line": 29,
+   "original_line": 29
+  }
+ ],
+ "reviews": [
+  {
+   "user": {
+    "login": "codeant-ai[bot]"
+   },
+   "body": "",
+   "state": "COMMENTED"
+  }
+ ]
+}

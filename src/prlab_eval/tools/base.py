@@ -30,3 +30,7 @@ class ReviewTool(Protocol):
 
     def trigger(self, pr: PullRequest) -> None:
         """Ask the tool to review. Runner account only."""
+
+    # Optional: ``configure(options: dict[str, str]) -> None`` for run-time
+    # options passed with ``pytest --tool-option key=value``. Raise ValueError
+    # on an unknown key or bad value.

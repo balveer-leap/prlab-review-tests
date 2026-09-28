@@ -120,3 +120,30 @@ def test_broadcast_style_quote_passes() -> None:
     assert verdict.passed
     assert "umpire_confirmed" in verdict.quote
     assert "(umpire_confirmed|extras)" in verdict.tokens_matched
+
+
+def test_retry_wait_reads_provider_hint() -> None:
+    from prlab_eval.judge import retry_wait
+
+    assert retry_wait("7", "") == 8
+    assert retry_wait(None, "Please try again in 12.5s. Need more tokens?") == 13.5
+    assert retry_wait(None, "Please try again in 1m2s.") == 63
+    assert retry_wait(None, "no hint") == 20.0
+
+
+def test_judge_retries_after_rate_limit(monkeypatch) -> None:
+    from prlab_eval import judge as judge_mod
+
+    calls = {"n": 0}
+
+    def flaky(self, payload):
+        calls["n"] += 1
+        if calls["n"] < 3:
+            raise judge_mod.RateLimited("slow down", 0)
+        return "ok"
+
+    monkeypatch.setattr(judge_mod.LlmJudge, "_complete_once", flaky)
+    monkeypatch.setattr(judge_mod.time, "sleep", lambda _: None)
+    llm = judge_mod.LlmJudge(api_key="k", model="m", base_url="u", provider="groq", json_mode=False)
+    assert llm._complete({}) == "ok"
+    assert calls["n"] == 3

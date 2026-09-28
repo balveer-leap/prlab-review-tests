@@ -31,19 +31,43 @@ def find_open_pr(repo: str, branch: str) -> PullRequest | None:
     return PullRequest(repo=repo, number=row["number"], url=row["url"], branch=branch)
 
 
-def remote_branch_exists(local: Path, branch: str) -> bool:
-    run(["git", "fetch", "origin", "--prune"], cwd=str(local))
-    return bool(run(["git", "ls-remote", "--heads", "origin", branch], cwd=str(local)).strip())
+def remote_branch_exists(local: Path, branch: str, remote: str = "origin") -> bool:
+    run(["git", "fetch", remote, "--prune"], cwd=str(local))
+    return bool(run(["git", "ls-remote", "--heads", remote, branch], cwd=str(local)).strip())
 
 
-def push_eval_branch(local: Path, branch: str) -> str:
+def push_eval_branch(local: Path, branch: str, remote: str = "origin") -> str:
     """Create the remote eval branch if it is missing. Force-update only when it already exists."""
-    exists = remote_branch_exists(local, branch)
-    cmd = ["git", "push", "-u", "origin", f"HEAD:{branch}"]
+    exists = remote_branch_exists(local, branch, remote)
+    cmd = ["git", "push", "-u", remote, f"HEAD:{branch}"]
     if exists:
         cmd.append("--force-with-lease")
     run(cmd, cwd=str(local))
     return "updated" if exists else "created"
+
+
+def repo_url(repo: str) -> str:
+    return f"https://github.com/{repo}.git"
+
+
+def remote_for(local: Path, repo: str) -> str:
+    """Git remote in ``local`` that points at ``repo``.
+
+    ``origin`` for the default owner. A retargeted case (``--owner``) gets a
+    remote named after its owner, added on first use.
+    """
+    url = repo_url(repo)
+    names = run(["git", "remote"], cwd=str(local)).split()
+    for name in names:
+        current = run(["git", "remote", "get-url", name], cwd=str(local)).strip()
+        if current.removesuffix(".git").lower() == url.removesuffix(".git").lower():
+            return name
+    name = repo.split("/", 1)[0]
+    if name in names:
+        run(["git", "remote", "set-url", name, url], cwd=str(local))
+    else:
+        run(["git", "remote", "add", name, url], cwd=str(local))
+    return name
 
 
 def context_files(case: Case, tool: ReviewTool | None, all_tools: bool) -> dict[str, str]:
@@ -72,9 +96,10 @@ def ensure_pr(
     if not (local / ".git").exists():
         raise GitHubError(f"missing product clone: {local}")
 
-    run(["git", "fetch", "origin", "--prune"], cwd=str(local))
-    run(["git", "checkout", "-B", case.branch, "origin/main"], cwd=str(local))
-    run(["git", "reset", "--hard", "origin/main"], cwd=str(local))
+    remote = remote_for(local, case.github_repo)
+    run(["git", "fetch", remote, "--prune"], cwd=str(local))
+    run(["git", "checkout", "-B", case.branch, f"{remote}/main"], cwd=str(local))
+    run(["git", "reset", "--hard", f"{remote}/main"], cwd=str(local))
     run(["git", "apply", str(ROOT / case.patch)], cwd=str(local))
 
     for dest, content in context_files(case, tool, all_tools).items():
@@ -88,7 +113,7 @@ def ensure_pr(
         raise GitHubError(f"{case.id}: patch produced no changes")
 
     run(["git", "commit", "-m", f"{case.title}\n\n{case.body}"], cwd=str(local))
-    push_eval_branch(local, case.branch)
+    push_eval_branch(local, case.branch, remote)
 
     existing = find_open_pr(case.github_repo, case.branch)
     if existing:

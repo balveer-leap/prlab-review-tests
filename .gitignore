@@ -3,7 +3,7 @@ __pycache__/
 *.egg-info/
 .pytest_cache/
 .DS_Store
-reports/*.json
-reports/*.md
-reports/*.html
+reports/**/*.json
+reports/**/*.md
+reports/**/*.html
 !reports/.gitkeep
