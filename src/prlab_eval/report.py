@@ -8,7 +8,14 @@ from pathlib import Path
 from prlab_eval.cases import load_capabilities
 from prlab_eval.harness import EvalResult
 from prlab_eval.judge import ClaimVerdict
-from prlab_eval.metrics import CaseMetrics, aggregate_metrics, pct, review_comments, score_metrics
+from prlab_eval.metrics import (
+    CaseMetrics,
+    CommentVerdict,
+    aggregate_metrics,
+    pct,
+    review_comments,
+    score_metrics,
+)
 
 REPORT_DIR = Path(__file__).resolve().parents[2] / "reports"
 
@@ -75,19 +82,86 @@ def capability_groups(results: list[EvalResult]) -> list[tuple[str, str, list[Ev
     return [(key, names[key], groups[key]) for key in groups]
 
 
+def judge_label(judge: dict[str, str]) -> str:
+    if judge.get("mode") == "fast":
+        return "token (fast)"
+    provider = judge.get("provider") or "llm"
+    return f"{provider} / {judge['model']}" if judge.get("model") else provider
+
+
+def _comment_verdict(row: EvalResult, index: int) -> CommentVerdict | None:
+    return next((v for v in row.comment_verdicts if v.index == index), None)
+
+
+def comment_label(row: EvalResult, index: int) -> str:
+    verdict = _comment_verdict(row, index)
+    return verdict.label if verdict else "unrated"
+
+
 def _judge_verdict(claim: ClaimVerdict) -> str:
     status = "PASS" if claim.passed else "FAIL"
     reason = claim.reason or ("asserted" if claim.passed else "not asserted")
     return f"{status} — {reason}"
 
 
-def write_reports(results: list[EvalResult], tool: str, out_dir: Path | None = None) -> Path:
-    directory = out_dir or REPORT_DIR
+def reviewer_dir(tool: str, out_dir: Path | None = None) -> Path:
+    return (out_dir or REPORT_DIR) / tool
+
+
+def report_stem(tool: str, label: str = "", stamp: str = "") -> str:
+    """review-eval-<tool>[-<label>]-<stamp>. Label names the run (owner, judge)."""
+    parts = ["review-eval", tool, *([label] if label else []), stamp]
+    return "-".join(part for part in parts if part)
+
+
+RESCORED = "rescored"
+
+
+def is_rescored(path: Path) -> bool:
+    return f"-{RESCORED}-" in path.name
+
+
+def report_run_at(path: Path) -> str:
+    """When the report's reviews were collected (a rescore keeps its source's time)."""
+    payload = json.loads(path.read_text())
+    return payload.get("run_at") or payload.get("generated_at") or ""
+
+
+def unused_stem(directory: Path, stem: str) -> str:
+    """Never overwrite a finished report: add -2, -3 ... if the name is taken."""
+    candidate, n = stem, 1
+    while any((directory / f"{candidate}{ext}").exists() for ext in (".md", ".json", ".html")):
+        n += 1
+        candidate = f"{stem}-{n}"
+    return candidate
+
+
+def write_reports(
+    results: list[EvalResult],
+    tool: str,
+    out_dir: Path | None = None,
+    label: str = "",
+    stamp: str | None = None,
+    owner: str = "",
+    tool_options: dict[str, str] | None = None,
+    judge: dict[str, str] | None = None,
+    rescored_from: str = "",
+    run_at: str = "",
+) -> Path:
+    # One folder per reviewer; every run gets its own files and nothing is overwritten.
+    directory = reviewer_dir(tool, out_dir)
     directory.mkdir(parents=True, exist_ok=True)
-    stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+    stamp = stamp or datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
     overall = aggregate_metrics([result_metrics(row) for row in results])
+    judge = dict(judge or {})
     payload = {
         "tool": tool,
+        "owner": owner,
+        "tool_options": dict(tool_options or {}),
+        "judge": judge,
+        **({"rescored_from": rescored_from} if rescored_from else {}),
+        # When the reviews were collected; a rescore keeps its source's run_at.
+        "run_at": run_at or stamp,
         "generated_at": stamp,
         "passed": sum(1 for row in results if row.finding_passed and row.isolation_passed),
         "failed": sum(1 for row in results if not (row.finding_passed and row.isolation_passed)),
@@ -108,15 +182,13 @@ def write_reports(results: list[EvalResult], tool: str, out_dir: Path | None = N
         ],
         "results": [asdict(row) for row in results],
     }
-    json_path = directory / f"review-eval-{tool}-{stamp}.json"
-    md_path = directory / f"review-eval-{tool}-{stamp}.md"
-    latest_json = directory / "latest.json"
-    latest_md = directory / "latest.md"
+    stem = unused_stem(directory, report_stem(tool, label, stamp))
+    json_path = directory / f"{stem}.json"
+    md_path = directory / f"{stem}.md"
     json_path.write_text(json.dumps(payload, indent=2) + "\n")
-    latest_json.write_text(json_path.read_text())
 
     lines = [
-        f"# Review eval — {tool}",
+        f"# Review eval — {tool}" + (f" @ {owner}" if owner else ""),
         "",
         (
             f"Generated {stamp}. {payload['passed']} passed, {payload['failed']} failed. "
@@ -124,18 +196,21 @@ def write_reports(results: list[EvalResult], tool: str, out_dir: Path | None = N
             f"F1 {pct(overall.f1)}."
         ),
         "",
+        f"Judge: {judge_label(judge)}." + (f" Rescored from `{rescored_from}`." if rescored_from else ""),
+        "",
         "Expected finding = the trap the review must state. Actual PR comment = what the tool wrote. "
         "Judge verdict = whether that comment asserts the expected finding (not the comment itself).",
-        "Recall = expected findings asserted / expected findings. "
-        "Precision = PR comments that support an asserted finding / all PR comments.",
+        "Recall = expected findings asserted / expected findings.",
+        (
+            "Precision = relevant PR comments / all PR comments. Each comment is labelled "
+            "[trap] (holds the verified quote for the planted finding), [defect] (the judge, "
+            "shown the diff but not the trap, rated it a genuine defect) or [noise]."
+            if judge.get("mode") != "fast"
+            else "Precision = PR comments holding the verified quote for the planted finding / all PR "
+            "comments. The fast judge cannot rate other comments, so any second real finding counts as noise."
+        ),
         "Capability is the review-tool skill the case is measuring.",
         "Isolated is yes if only the selected review bot commented.",
-        (
-            "Judge is token (fast) if --fast scored claims by keyword tokens; "
-            "otherwise a temperature-0 LLM."
-            if any(getattr(row, "judge_mode", "llm") == "fast" for row in results)
-            else "Judge is a temperature-0 LLM."
-        ),
         "",
         "| Case | Isolated | P | R | F1 | Capability | Intent | Expected finding | Actual PR comment | Judge verdict | PR |",
         "|---|---|---|---|---|---|---|---|---|---|---|",
@@ -144,7 +219,9 @@ def write_reports(results: list[EvalResult], tool: str, out_dir: Path | None = N
         metrics = result_metrics(row)
         comments = result_comments(row)
         expected = "<br>".join(claim.must_assert for claim in row.claims) or "(none)"
-        actual = "<br>".join(f"{idx}. {item}" for idx, item in enumerate(comments, start=1)) or "(none)"
+        actual = "<br>".join(
+            f"{idx}. [{comment_label(row, idx)}] {item}" for idx, item in enumerate(comments, start=1)
+        ) or "(none)"
         verdicts = "<br>".join(
             f"{'✓' if claim.passed else '✗'} {_judge_verdict(claim)}"
             for claim in row.claims
@@ -204,7 +281,9 @@ def write_reports(results: list[EvalResult], tool: str, out_dir: Path | None = N
         lines.append("")
         if comments:
             for idx, comment in enumerate(comments, start=1):
-                lines.append(f"{idx}.")
+                verdict = _comment_verdict(row, idx)
+                reason = f" — {verdict.reason}" if verdict and verdict.reason else ""
+                lines.append(f"{idx}. [{comment_label(row, idx)}]{reason}")
                 lines.append("")
                 lines.append("```")
                 lines.append(comment)
@@ -241,8 +320,7 @@ def write_reports(results: list[EvalResult], tool: str, out_dir: Path | None = N
 
     markdown = "\n".join(lines) + "\n"
     md_path.write_text(markdown)
-    latest_md.write_text(markdown)
-    return latest_md
+    return md_path
 
 
 def terminal_summary(results: list[EvalResult]) -> str:

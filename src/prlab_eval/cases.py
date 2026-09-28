@@ -1,12 +1,19 @@
 from __future__ import annotations
 
 import json
+import os
 from dataclasses import dataclass
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 CASES_PATH = ROOT / "cases" / "cases.json"
 CAPABILITIES_PATH = ROOT / "cases" / "capabilities.json"
+OWNERS_PATH = ROOT / "cases" / "owners.json"
+OWNER_ENV = "PRLAB_OWNER"
+
+
+class OwnerError(ValueError):
+    """No GitHub owner could be resolved for a live run."""
 
 
 @dataclass(frozen=True)
@@ -96,7 +103,53 @@ def resolve_capabilities(
     return tuple(resolved)
 
 
-def load_cases(path: Path | None = None) -> list[Case]:
+def retarget(repo: str, owner: str | None) -> str:
+    """Point an owner/name repo at another owner. Each vendor runs in its own org."""
+    if not owner:
+        return repo
+    return f"{owner}/{repo.split('/', 1)[-1]}"
+
+
+def load_owners(path: Path | None = None) -> dict[str, str]:
+    """Tool name -> GitHub owner that holds that tool's copy of the product repos."""
+    raw = json.loads((path or OWNERS_PATH).read_text())
+    return {str(tool): str(owner).strip() for tool, owner in raw.items() if str(owner).strip()}
+
+
+def resolve_owner(tool: str | None, owner: str | None = None, path: Path | None = None) -> str:
+    """Owner for a live run: explicit ``owner``, then $PRLAB_OWNER, then cases/owners.json.
+
+    Never falls back silently. A live run against the wrong owner reads another
+    vendor's PRs (a bogus report) or, for cleanup, closes them.
+    """
+    explicit = (owner or os.environ.get(OWNER_ENV) or "").strip()
+    if explicit:
+        return explicit
+    owners = load_owners(path)
+    if tool and tool in owners:
+        return owners[tool]
+    known = ", ".join(f"{name}={org}" for name, org in sorted(owners.items()))
+    what = f"tool {tool!r}" if tool else "a run with no --tool"
+    raise OwnerError(
+        f"no GitHub owner for {what}. Pass --owner, set ${OWNER_ENV}, "
+        f"or add it to {OWNERS_PATH.name} (known: {known})"
+    )
+
+
+def owner_mismatch(tool: str | None, owner: str, path: Path | None = None) -> str:
+    """Warning text when ``owner`` differs from the tool's configured owner, else ""."""
+    configured = load_owners(path).get(tool or "")
+    if configured and configured != owner:
+        return f"warning: {tool} is configured for {configured} but this run targets {owner}"
+    return ""
+
+
+def load_cases(path: Path | None = None, owner: str | None = None) -> list[Case]:
+    """Load cases. ``owner`` moves every PR repo to that GitHub owner.
+
+    ``owner=None`` returns the repos exactly as written in cases.json. That is for
+    data checks only. Live runs pass ``resolve_owner(...)``.
+    """
     catalog = load_capabilities()
     raw = json.loads((path or CASES_PATH).read_text())
     cases = []
@@ -118,7 +171,7 @@ def load_cases(path: Path | None = None) -> list[Case]:
                 intent=intent,
                 tests=tests,
                 capabilities=capabilities,
-                github_repo=row["github_repo"],
+                github_repo=retarget(row["github_repo"], owner),
                 local=row["local"],
                 patch=row["patch"],
                 branch=row["branch"],
@@ -128,3 +181,8 @@ def load_cases(path: Path | None = None) -> list[Case]:
             )
         )
     return cases
+
+
+def case_diff(case: Case) -> str:
+    """The code change the eval PR carries, as a unified diff."""
+    return (ROOT / case.patch).read_text()

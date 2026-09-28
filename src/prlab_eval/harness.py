@@ -3,9 +3,15 @@ from __future__ import annotations
 import time
 from dataclasses import dataclass, field
 
-from prlab_eval.cases import Case
-from prlab_eval.judge import ClaimJudge, ClaimVerdict, visible_review_text
-from prlab_eval.metrics import CaseMetrics, review_comments, score_metrics
+from prlab_eval.cases import Case, case_diff
+from prlab_eval.judge import ClaimJudge, ClaimVerdict, CommentRating, visible_review_text
+from prlab_eval.metrics import (
+    CaseMetrics,
+    CommentVerdict,
+    classify_comments,
+    review_comments,
+    score_metrics,
+)
 from prlab_eval.prs import ensure_pr
 from prlab_eval.scoring import Review, check_isolation
 from prlab_eval.tools.base import PullRequest, ReviewTool
@@ -31,6 +37,7 @@ class EvalResult:
     metrics: CaseMetrics = field(default_factory=CaseMetrics)
     unexpected_bots: tuple[str, ...] = ()
     judge_mode: str = "llm"
+    comment_verdicts: list[CommentVerdict] = field(default_factory=list)
 
 
 class ReviewError(AssertionError):
@@ -39,6 +46,14 @@ class ReviewError(AssertionError):
 
 def failed_claims(result: EvalResult) -> list[ClaimVerdict]:
     return [claim for claim in result.claims if not claim.passed]
+
+
+def rate_comments(judge: object, case: Case, comments: list[str]) -> list[CommentRating] | None:
+    """Ratings from a judge that can rate comments; None for one that cannot (fast)."""
+    rate = getattr(judge, "rate_comments", None)
+    if rate is None:
+        return None
+    return rate(case_diff(case), comments) if comments else []
 
 
 @dataclass
@@ -51,6 +66,7 @@ class ReviewHarness:
     allow_bots: frozenset[str] = frozenset()
     judge_mode: str = "llm"
     opened: list[PullRequest] = field(default_factory=list)
+    owner: str = ""
 
     def setup(self, case: Case) -> PullRequest:
         """Open the eval PR if needed. Reuses an already-open PR."""
@@ -73,6 +89,7 @@ class ReviewHarness:
         comments = review_comments(review.comments, review.text)
         visible = "\n\n".join(comments) or visible_review_text(review.text)
         claims = [self.judge.judge(claim, review.text) for claim in case.claims]
+        verdicts = classify_comments(claims, comments, rate_comments(self.judge, case, comments))
         allowed = set(self.tool.bot_logins) | set(self.allow_bots)
         isolation = check_isolation(review.logins, allowed)
         return EvalResult(
@@ -90,9 +107,10 @@ class ReviewHarness:
             claims=claims,
             actual=visible,
             comments=comments,
-            metrics=score_metrics(claims, comments),
+            metrics=score_metrics(claims, comments, verdicts),
             unexpected_bots=isolation.unexpected_bots,
             judge_mode=self.judge_mode,
+            comment_verdicts=verdicts,
         )
 
     def assert_review(self, review: Review, case: Case) -> EvalResult:
@@ -116,4 +134,4 @@ class ReviewHarness:
     def cleanup(self) -> None:
         from prlab_eval.cleanup import cleanup_eval
 
-        cleanup_eval()
+        cleanup_eval(owner=self.owner)

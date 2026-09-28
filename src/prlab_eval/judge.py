@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 import os
 import re
+import time
 import urllib.error
 import urllib.request
 from dataclasses import dataclass
@@ -20,9 +21,31 @@ Return JSON only:
 Rules:
 - asserts is true only if the review states the claim's meaning. Related field names or the word "wicket" alone are not enough.
 - If the review discusses a different problem, asserts is false.
-- quote must be copied from the review. Markdown backticks and extra spaces may be dropped.
+- quote must be copied from the review. Markdown formatting (backticks, bold, links) and extra spaces may be dropped.
 - Use "" if nothing supports the decision.
 - Do not invent bugs that the review did not state.
+"""
+
+# The rater sees the diff and the comments, never the planted claim: a comment that
+# reports some other real bug in the change is useful review, not noise.
+COMMENT_PROMPT = """You audit the comments an automated reviewer posted on a pull request.
+
+You get the pull request diff and the reviewer's comments, numbered. For each comment, decide whether it reports a genuine defect in this change.
+
+A defect is a concrete problem the diff introduces that would cause wrong behaviour at runtime: incorrect results, a broken or leaked data contract, a regression for a caller or downstream consumer, data loss, or a security issue. The comment must be right about what the diff does.
+
+Not a defect:
+- style, naming, formatting, typos, docs, or code comments
+- requests for more tests or logging, unless the comment shows a concrete bug they would hide
+- summaries or restatements of the change, praise, or questions that state no problem
+- claims the diff contradicts, or speculation the diff does not support
+- a repeat of a defect an earlier comment already reported
+
+A comment may describe an impact in another service that the diff does not show. Judge it by whether that impact follows from the diff; do not reject it only because the other service is not in the diff.
+
+Return JSON only:
+{"comments": [{"index": 1, "defect": true|false, "reason": "one sentence"}]}
+Rate every comment exactly once.
 """
 
 
@@ -38,8 +61,21 @@ class ClaimVerdict:
     tokens_missing: tuple[str, ...]
 
 
+@dataclass(frozen=True)
+class CommentRating:
+    """Whether one posted comment reports a genuine defect in the diff (1-based index)."""
+
+    index: int
+    defect: bool
+    reason: str
+
+
 class ClaimJudge(Protocol):
     def judge(self, claim: Claim, review_text: str) -> ClaimVerdict: ...
+
+
+class CommentRater(Protocol):
+    def rate_comments(self, diff: str, comments: list[str]) -> list[CommentRating]: ...
 
 
 class JudgeConfigError(RuntimeError):
@@ -69,13 +105,39 @@ def visible_review_text(text: str) -> str:
     return re.sub(r"\n{3,}", "\n\n", stripped).strip()
 
 
+QUOTE_NOT_FOUND = "judge quote was not found in the review"
+MARKDOWN_LINK = re.compile(r"!?\[([^\]]*)\]\([^)]*\)")
+
+
 def normalize_for_quote(text: str) -> str:
     folded = visible_review_text(text)
     for src, dest in _QUOTE_PUNCT.items():
         folded = folded.replace(src, dest)
-    folded = folded.replace("`", "")
+    # Judges copy what a comment says, not its markdown: "[engine](url)" reads
+    # as "engine" and "**not**" as "not".
+    folded = MARKDOWN_LINK.sub(r"\1", folded)
+    folded = re.sub(r"[`*~]", "", folded)
     folded = re.sub(r"[_-]+", " ", folded)
     return re.sub(r"\s+", " ", folded).lower().strip()
+
+
+class RateLimited(Exception):
+    def __init__(self, detail: str, wait_seconds: float) -> None:
+        super().__init__(detail)
+        self.wait_seconds = wait_seconds
+
+
+def retry_wait(header: str | None, detail: str) -> float:
+    """Seconds to wait from Retry-After or "try again in 12.3s" / "1m2s"; default 20."""
+    try:
+        if header:
+            return min(float(header) + 1, 120)
+    except ValueError:
+        pass
+    match = re.search(r"try again in (?:(\d+)m)?([\d.]+)s", detail or "")
+    if match:
+        return min(int(match.group(1) or 0) * 60 + float(match.group(2)) + 1, 120)
+    return 20.0
 
 
 def quote_is_from_review(quote: str, review_text: str) -> bool:
@@ -104,6 +166,30 @@ def parse_judge_payload(raw: str) -> dict:
         raise
 
 
+def parse_comment_ratings(raw: str, count: int) -> list[CommentRating]:
+    """One rating per comment, in order. A comment the judge skipped is not a defect."""
+    parsed = parse_judge_payload(raw)
+    rows = parsed.get("comments") if isinstance(parsed, dict) else parsed
+    by_index: dict[int, CommentRating] = {}
+    for row in rows or []:
+        if not isinstance(row, dict):
+            continue
+        try:
+            index = int(row.get("index"))
+        except (TypeError, ValueError):
+            continue
+        if 1 <= index <= count and index not in by_index:
+            by_index[index] = CommentRating(
+                index=index,
+                defect=bool(row.get("defect")),
+                reason=str(row.get("reason") or "").strip(),
+            )
+    return [
+        by_index.get(i) or CommentRating(index=i, defect=False, reason="judge did not rate this comment")
+        for i in range(1, count + 1)
+    ]
+
+
 def verdict_for(
     claim: Claim,
     review_text: str,
@@ -127,7 +213,7 @@ def verdict_for(
         )
     if asserts and not quote_is_from_review(quote, visible):
         asserts = False
-        reason = "judge quote was not found in the review"
+        reason = QUOTE_NOT_FOUND
     return ClaimVerdict(
         claim_id=claim.id,
         must_assert=claim.must_assert,
@@ -143,12 +229,21 @@ def verdict_for(
 class CallableJudge:
     """Deterministic judge for unit tests."""
 
-    def __init__(self, decide):
+    def __init__(self, decide, rate=None):
         self._decide = decide
+        self._rate = rate
+        if rate is not None:
+            self.rate_comments = self._rate_comments
 
     def judge(self, claim: Claim, review_text: str) -> ClaimVerdict:
         asserts, quote, reason = self._decide(claim, review_text)
         return verdict_for(claim, review_text, asserts=asserts, quote=quote, reason=reason)
+
+    def _rate_comments(self, diff: str, comments: list[str]) -> list[CommentRating]:
+        return [
+            CommentRating(index=i, defect=bool(self._rate(diff, text)), reason="test rater")
+            for i, text in enumerate(comments, start=1)
+        ]
 
 
 class TokenJudge:
@@ -373,7 +468,18 @@ class LlmJudge:
             "User-Agent": "Mozilla/5.0 prlab-review-tests/0.1",
         }
 
-    def _complete(self, payload: dict) -> str:
+    def _complete(self, payload: dict, retries: int = 6) -> str:
+        """POST once; on HTTP 429 wait as long as the provider asks, then retry."""
+        for attempt in range(retries + 1):
+            try:
+                return self._complete_once(payload)
+            except RateLimited as exc:
+                if attempt == retries:
+                    raise JudgeConfigError(f"judge HTTP 429 after {retries} retries: {exc}") from exc
+                time.sleep(exc.wait_seconds)
+        raise AssertionError("unreachable")
+
+    def _complete_once(self, payload: dict) -> str:
         request = urllib.request.Request(
             f"{self.base_url}/chat/completions",
             data=json.dumps(payload).encode(),
@@ -385,6 +491,8 @@ class LlmJudge:
                 body = json.loads(response.read().decode())
         except urllib.error.HTTPError as exc:
             detail = exc.read().decode()[:400]
+            if exc.code == 429:
+                raise RateLimited(detail, retry_wait(exc.headers.get("retry-after"), detail)) from exc
             if exc.code == 403 and "1010" in detail:
                 raise JudgeConfigError(
                     f"{self.provider} blocked the client (Cloudflare 1010). "
@@ -415,33 +523,33 @@ class LlmJudge:
             payload.pop("max_tokens", None)
             return self._complete(payload).strip()
 
-    def judge(self, claim: Claim, review_text: str) -> ClaimVerdict:
-        visible = visible_review_text(review_text)
-        if not visible:
-            return verdict_for(claim, review_text, asserts=False, quote="", reason="no review")
+    def _ask_json(self, system: str, user: str) -> str:
         payload = {
             "model": self.model,
             "temperature": 0,
             "messages": [
-                {"role": "system", "content": SYSTEM_PROMPT},
-                {
-                    "role": "user",
-                    "content": (
-                        f"Claim:\n{claim.must_assert}\n\n"
-                        f"PR review:\n{visible[:12000]}"
-                    ),
-                },
+                {"role": "system", "content": system},
+                {"role": "user", "content": user},
             ],
         }
         if self.json_mode:
             payload["response_format"] = {"type": "json_object"}
         try:
-            content = self._complete(payload)
+            return self._complete(payload)
         except JudgeConfigError as exc:
             if "1010" in str(exc) or "response_format" not in payload:
                 raise
             payload.pop("response_format", None)
-            content = self._complete(payload)
+            return self._complete(payload)
+
+    def judge(self, claim: Claim, review_text: str) -> ClaimVerdict:
+        visible = visible_review_text(review_text)
+        if not visible:
+            return verdict_for(claim, review_text, asserts=False, quote="", reason="no review")
+        content = self._ask_json(
+            SYSTEM_PROMPT,
+            f"Claim:\n{claim.must_assert}\n\nPR review:\n{visible[:12000]}",
+        )
         parsed = parse_judge_payload(content)
         return verdict_for(
             claim,
@@ -450,6 +558,19 @@ class LlmJudge:
             quote=str(parsed.get("quote") or ""),
             reason=str(parsed.get("reason") or ""),
         )
+
+    def rate_comments(self, diff: str, comments: list[str]) -> list[CommentRating]:
+        if not comments:
+            return []
+        numbered = "\n\n".join(
+            f"Comment {i}:\n{visible_review_text(text)[:4000]}"
+            for i, text in enumerate(comments, start=1)
+        )
+        content = self._ask_json(
+            COMMENT_PROMPT,
+            f"Diff:\n{diff[:12000]}\n\nReviewer comments:\n{numbered}",
+        )
+        return parse_comment_ratings(content, len(comments))
 
 
 def precheck_judge(judge: LlmJudge) -> str:

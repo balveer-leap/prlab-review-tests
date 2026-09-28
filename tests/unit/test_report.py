@@ -73,7 +73,7 @@ def test_write_reports_separates_comment_from_judge(tmp_path) -> None:
     assert "Recall" in text
     assert "not asserted" in text
     assert isolation_label(results[0]) == "yes"
-    payload = (tmp_path / "latest.json").read_text()
+    payload = latest.with_suffix(".json").read_text()
     assert '"precision"' in payload
     assert '"recall"' in payload
     assert '"must_assert"' in payload
@@ -82,3 +82,19 @@ def test_write_reports_separates_comment_from_judge(tmp_path) -> None:
     assert "test-stats-not-out-display-increments-wickets" in table
     assert "P=" in table
     assert "R=" in table
+
+
+def test_reports_are_named_by_run_and_never_overwritten(tmp_path) -> None:
+    from prlab_eval.harness import EvalResult
+
+    row = EvalResult(case_id="test-x", tool="qodo", pr_url="u", finding_passed=True, isolation_passed=True)
+    first = write_reports([row], "qodo", out_dir=tmp_path, label="org-qodo1-groq", stamp="20260924T000000Z")
+    second = write_reports([row], "qodo", out_dir=tmp_path, label="org-qodo1-groq", stamp="20260924T000000Z")
+    assert first.parent == tmp_path / "qodo"
+    assert not list(tmp_path.rglob("latest*"))
+    names = sorted(path.name for path in (tmp_path / "qodo").glob("review-eval-*.md"))
+    assert names == [
+        "review-eval-qodo-org-qodo1-groq-20260924T000000Z-2.md",
+        "review-eval-qodo-org-qodo1-groq-20260924T000000Z.md",
+    ]
+    assert first != second
