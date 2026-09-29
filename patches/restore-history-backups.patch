@@ -1,0 +1,56 @@
+diff --git a/archive/app.py b/archive/app.py
+index 0e4e785..88921a0 100644
+--- a/archive/app.py
++++ b/archive/app.py
+@@ -1,5 +1,9 @@
++import base64
++import pickle
++
+ from fastapi import FastAPI, HTTPException
+ from fastapi.middleware.cors import CORSMiddleware
++from pydantic import BaseModel
+ 
+ from archive.store import IngestSnapshot, StoredSnapshot, store_snapshot
+ 
+@@ -28,3 +32,16 @@ def get_history(match_id: str) -> list[StoredSnapshot]:
+     if history is None:
+         raise HTTPException(status_code=404, detail="unknown match")
+     return history
++
++
++class Backup(BaseModel):
++    backup: str  # base64 of a history export from the old support tool
++
++
++@app.post("/matches/{match_id}/restore", response_model=list[StoredSnapshot])
++def restore_history(match_id: str, payload: Backup) -> list[StoredSnapshot]:
++    """Load a match's history from the old support tool's backup file."""
++    rows = pickle.loads(base64.b64decode(payload.backup))
++    history = [store_snapshot(IngestSnapshot.model_validate(row)) for row in rows]
++    _history[match_id] = history
++    return history
+diff --git a/tests/test_app.py b/tests/test_app.py
+index 69fac43..d1e7199 100644
+--- a/tests/test_app.py
++++ b/tests/test_app.py
+@@ -27,3 +27,20 @@ def test_history_strips_leaks() -> None:
+     assert history.status_code == 200
+     assert history.json()[0]["runs"] == 1
+     assert "raw_ball" not in history.json()[0]
++
++
++def test_restore_loads_a_backup() -> None:
++    import base64
++    import pickle
++
++    row = {
++        "match_id": "m9",
++        "runs": 12,
++        "wickets": 1,
++        "overs": "2.0",
++        "last_event": {"display": "DOT", "runs_added": 0, "wicket_counted": False, "legal_delivery": True},
++    }
++    backup = base64.b64encode(pickle.dumps([row])).decode()
++    response = client.post("/matches/m9/restore", json={"backup": backup})
++    assert response.status_code == 200
++    assert client.get("/matches/m9/history").json()[0]["runs"] == 12

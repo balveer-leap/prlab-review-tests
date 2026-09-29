@@ -18,6 +18,15 @@
           "umpire_confirmed",
           "(omitted|default|missing)",
           "wicket"
+        ],
+        "parts": [
+          "When umpire_confirmed is omitted on a dismissal, the change treats it as confirmed (defaults it to true).",
+          "As a result an unconfirmed appeal can be counted or recorded as a wicket."
+        ],
+        "not_enough": [
+          "The JSON schema default disagreeing with the Python model when kind is \"none\".",
+          "An explicit umpire_confirmed=true being kept or rewritten when kind is \"none\".",
+          "A docs or docstring mismatch."
         ]
       }
     ]
@@ -41,13 +50,31 @@
           "umpire_confirmed",
           "(omitted|default|missing)",
           "wicket"
+        ],
+        "parts": [
+          "When umpire_confirmed is omitted on a dismissal, the change treats it as confirmed (defaults it to true).",
+          "As a result an unconfirmed appeal can be counted or recorded as a wicket."
+        ],
+        "not_enough": [
+          "The JSON schema default disagreeing with the Python model when kind is \"none\".",
+          "An explicit umpire_confirmed=true being kept or rewritten when kind is \"none\".",
+          "A docs or docstring mismatch."
         ]
       },
       {
         "id": "names-downstream-consumer",
-        "must_assert": "The review says this protocol change can affect a downstream scoring, stats, or fantasy consumer — for example scoring counting the wicket, the ledger copying it, or fantasy paying bowling points. Naming the field default alone is not enough.",
+        "must_assert": "The review states a concrete downstream effect of the defaulted confirmation in a named consumer — for example scoring counting or incrementing the wicket, the stats ledger copying that wicket, or fantasy paying bowling points for it. Naming a downstream repo or hop without saying what it does wrong (for example 'scoring may rely on this invariant') is not enough, and neither is naming the field default alone.",
         "tokens": [
-          "(scoring|stats|fantasy|ledger|points)"
+          "(scoring|stats|fantasy|ledger)",
+          "(count|increment|cop(y|ies)|pa(y|ys|id)|award|points)"
+        ],
+        "parts": [
+          "Names a specific downstream consumer: scoring, the stats ledger, or fantasy (any one).",
+          "Says what that consumer now does wrong because of the defaulted confirmation: counts or increments the wicket, copies it into the ledger, or pays bowling points for it."
+        ],
+        "not_enough": [
+          "Naming a downstream service or hop without saying what it does wrong.",
+          "Describing only the field default."
         ]
       }
     ]
@@ -70,6 +97,12 @@
         "tokens": [
           "raw_ball",
           "(leak|protocol|BallEvent|product)"
+        ],
+        "parts": [
+          "Publishing raw_ball exposes protocol or BallEvent fields (such as umpire_confirmed or extras) to product clients that should see only the score snapshot."
+        ],
+        "not_enough": [
+          "Calling raw_ball a debug convenience, or questioning whether it preserves the original payload, without the leak."
         ]
       }
     ]
@@ -92,6 +125,12 @@
         "tokens": [
           "(match pack|latest_delivery|umpire_confirmed|extras)",
           "(leak|re-export|protocol|product)"
+        ],
+        "parts": [
+          "The nested match pack exposes protocol fields such as extras.type or umpire_confirmed to product clients through the public snapshot."
+        ],
+        "not_enough": [
+          "Saying only that the JSON schema for match is underspecified."
         ]
       }
     ]
@@ -114,6 +153,14 @@
         "tokens": [
           "raw_ball",
           "(umpire_confirmed|extras)"
+        ],
+        "parts": [
+          "Broadcast decides the animation from raw_ball (its extras or wicket confirmation) ahead of, or instead of, scoring's last_event.",
+          "A missing umpire_confirmed is treated as a wicket, so an unconfirmed or rejected appeal can be shown as a wicket."
+        ],
+        "not_enough": [
+          "Test-coverage nits about no_ball.",
+          "Extras overriding last_event, without saying that a missing confirmation is shown as a wicket."
         ]
       }
     ]
@@ -136,6 +183,13 @@
         "tokens": [
           "(latest_delivery|match\\.innings|umpire_confirmed)",
           "(last_event|wicket|extras)"
+        ],
+        "parts": [
+          "Broadcast decides the animation from the match pack's latest delivery (its extras or wicket confirmation) ahead of, or instead of, scoring's last_event, so the pack can override last_event."
+        ],
+        "not_enough": [
+          "Saying only that public/app.js duplicates animator.js.",
+          "Saying only that scoring does not yet supply the match pack."
         ]
       }
     ]
@@ -158,6 +212,12 @@
         "tokens": [
           "NOT_OUT",
           "wicket"
+        ],
+        "parts": [
+          "Wickets are incremented when the display is NOT_OUT, so an appeal where the batter was not out is counted as a dismissal."
+        ],
+        "not_enough": [
+          "Comment or docstring changes about the ledger copying snapshot.wickets."
         ]
       }
     ]
@@ -180,6 +240,12 @@
         "tokens": [
           "(last_ball|umpire_confirmed)",
           "(wicket|bowling|points)"
+        ],
+        "parts": [
+          "When umpire_confirmed is missing on the last ball's wicket, settlement treats it as given and awards wicket (bowling) points that the ledger did not count."
+        ],
+        "not_enough": [
+          "Last-ball settlement overwriting an aggregate of several wickets (a different bug)."
         ]
       }
     ]
@@ -202,6 +268,13 @@
         "tokens": [
           "NOT_OUT",
           "wicket"
+        ],
+        "parts": [
+          "A NOT_OUT (refused or unconfirmed) appeal is now given kind wicket, so it is labelled, clipped or published as a wicket."
+        ],
+        "not_enough": [
+          "Replay-discoverability rationale.",
+          "A stale type annotation or doc that still lists appeal."
         ]
       }
     ]
@@ -224,6 +297,12 @@
         "tokens": [
           "appeal",
           "WICKET"
+        ],
+        "parts": [
+          "Social posts WICKET for a highlight of kind appeal, so an appeal that was not given is announced publicly as a wicket. (In this system an appeal is a dismissal that was not given, so 'every appeal' covers failed appeals.)"
+        ],
+        "not_enough": [
+          "A stale docstring or README that still says only scored wickets are posted."
         ]
       }
     ]
@@ -246,6 +325,12 @@
         "tokens": [
           "raw_ball",
           "(persist|leak|history|match)"
+        ],
+        "parts": [
+          "Archive now keeps raw_ball or the match pack on its stored snapshots (persisted, or copied into the stored model), so protocol fields beyond the product snapshot are kept in or returned from history."
+        ],
+        "not_enough": [
+          "Memory limits, or a missing match fixture, on their own."
         ]
       }
     ]
@@ -268,6 +353,13 @@
         "tokens": [
           "NOT_OUT",
           "(wicket_counted|WICKET|push|notif)"
+        ],
+        "parts": [
+          "A WICKET push is sent when the display is NOT_OUT (without requiring wicket_counted), so fans are alerted to a wicket for an appeal that was not given."
+        ],
+        "not_enough": [
+          "An untested WICKET-display branch.",
+          "Stale 'counted wickets only' docs."
         ]
       }
     ]
@@ -290,6 +382,13 @@
         "tokens": [
           "(raw_ball|match)",
           "(forward|pass|strip|leak|mobile)"
+        ],
+        "parts": [
+          "The gateway now passes raw_ball, the match pack, or other extra scoring fields through to its clients instead of stripping them, exposing protocol fields such as umpire_confirmed."
+        ],
+        "not_enough": [
+          "Responses now carrying raw_ball: null or match: null (a response-shape change) without protocol fields reaching clients.",
+          "Nested extra fields being dropped."
         ]
       }
     ]
@@ -312,6 +411,376 @@
         "tokens": [
           "(latest_delivery|umpire_confirmed|match\\.innings)",
           "(banner|wicket)"
+        ],
+        "parts": [
+          "When umpire_confirmed is missing on the match-pack wicket, mobile shows a wicket banner for an unconfirmed dismissal."
+        ],
+        "not_enough": [
+          "Saying only that ScoreSnapshot does not declare match."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "test-scoring-no-content-breaks-gateway-and-broadcast",
+    "intent": "Catch that a 204 for an unstarted match breaks the gateway and broadcast",
+    "tests": "Scoring returns 204 with no body for a match with no balls, instead of 404. The live-gateway treats any status other than 200/404 as a scoring failure and returns 502 to mobile; broadcast's fetchSnapshot treats 204 as ok and throws parsing the empty body. A passing review must say the status change breaks callers, and name one of those consumers with its concrete failure.",
+    "capabilities": [
+      "api-contract-break",
+      "cross-repo-impact"
+    ],
+    "github_repo": "srajat-leap/prlab-cricket-scoring",
+    "local": "cricket-scoring",
+    "patch": "patches/scoring-no-content-before-first-ball.patch",
+    "branch": "scoring-no-content-before-first-ball",
+    "title": "Return 204 for matches that have not started",
+    "body": "Dashboards poll /score before the first ball and log a 404 each time.\nReturn 204 No Content until a ball is recorded.",
+    "claims": [
+      {
+        "id": "status-change-breaks-callers",
+        "must_assert": "Changing GET /matches/{id}/score from 404 to 204 with an empty body for a match with no balls is a breaking API change: callers that treat 204 as success and parse JSON fail on the empty body, and callers can no longer tell an unknown match from one that has not started.",
+        "tokens": [
+          "204",
+          "(empty|no content|body|json)"
+        ],
+        "parts": [
+          "Returning 204 with an empty body instead of 404 for a match with no balls breaks existing callers: callers that parse JSON fail on the empty body, callers that accept only 200 or 404 now treat it as an error, or callers can no longer tell an unknown match from one not started (any one)."
+        ]
+      },
+      {
+        "id": "names-broken-consumer",
+        "must_assert": "The review names a concrete consumer failure: the live-gateway returns 502 (scoring error) to mobile for a match that has not started because it treats any non-200 non-404 status as a failure, or broadcast's fetchSnapshot accepts the 204 as ok and throws when parsing the empty body. Saying only that clients may be affected is not enough.",
+        "tokens": [
+          "(gateway|broadcast|mobile|fetchSnapshot)",
+          "(502|throw|pars|json|error)"
+        ],
+        "parts": [
+          "Names the live-gateway, or broadcast (its fetchSnapshot or dashboard).",
+          "States that consumer's concrete failure: the gateway returns a 502 or scoring error for a match that has not started, or broadcast treats 204 as success and fails parsing the empty body."
+        ],
+        "not_enough": [
+          "Saying only that clients or callers may be affected."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "test-scoring-overs-number-breaks-string-consumers",
+    "intent": "Catch that publishing overs as a number breaks consumers that expect a string",
+    "tests": "Scoring publishes overs as a float instead of a string. The live-gateway, stats and archive models declare overs as a string, and pydantic rejects a float, so the gateway fails for mobile and stats and archive reject every snapshot. A passing review must call it a breaking type change and name a consumer that now rejects the snapshot.",
+    "capabilities": [
+      "api-contract-break",
+      "cross-repo-impact"
+    ],
+    "github_repo": "srajat-leap/prlab-cricket-scoring",
+    "local": "cricket-scoring",
+    "patch": "patches/publish-overs-as-number.patch",
+    "branch": "publish-overs-as-number",
+    "title": "Publish overs as a number",
+    "body": "Charting wants overs as a number. Publish 12.3 instead of \"12.3\"; the schema is updated.",
+    "claims": [
+      {
+        "id": "overs-type-change-breaks-contract",
+        "must_assert": "Changing overs in the published ScoreSnapshot from a string to a number is a breaking change to the API contract for existing consumers, with no versioning or compatibility path.",
+        "tokens": [
+          "overs",
+          "(string|str|type|number|float)"
+        ],
+        "parts": [
+          "Changing overs in the published snapshot from a string to a number is a breaking change for existing consumers of the API contract."
+        ]
+      },
+      {
+        "id": "names-consumer-rejecting-overs",
+        "must_assert": "The review names a consumer whose model declares overs as a string and says it will now reject or fail on the snapshot: the live-gateway (its response to mobile fails), stats (snapshots rejected, ledger stops updating), or archive (snapshots rejected).",
+        "tokens": [
+          "(gateway|stats|archive|ledger)",
+          "(reject|fail|valid|422|500|error)"
+        ],
+        "parts": [
+          "Names the live-gateway, stats or archive.",
+          "Says that consumer will now reject, fail validation on, or fail on the snapshot because it expects overs as a string."
+        ],
+        "not_enough": [
+          "Saying only that consumers may break."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "test-scoring-numeric-boundaries-silence-highlights",
+    "intent": "Catch that numeric boundary displays silently stop boundary clips and posts",
+    "tests": "Scoring stops emitting FOUR and SIX; boundaries display as 4 and 6. Highlights and mobile detect boundaries only by display FOUR/SIX, so boundary clips, social BOUNDARY posts and the mobile boundary banner stop, with no error anywhere. A passing review must say consumers match on those values and name the silent loss.",
+    "capabilities": [
+      "event-contract-break",
+      "cross-repo-impact"
+    ],
+    "github_repo": "srajat-leap/prlab-cricket-scoring",
+    "local": "cricket-scoring",
+    "patch": "patches/numeric-display-for-boundaries.patch",
+    "branch": "numeric-display-for-boundaries",
+    "title": "Show runs numerically for every scoring shot",
+    "body": "Graphics wants one format for runs. Boundaries now display 4 and 6 like other scoring shots instead of FOUR and SIX.",
+    "claims": [
+      {
+        "id": "display-values-removed",
+        "must_assert": "Removing FOUR and SIX from last_event.display changes the values of a published event that consumers match on, so any consumer detecting boundaries by FOUR or SIX stops recognising them.",
+        "tokens": [
+          "(FOUR|SIX)",
+          "(display|event|consumer|match)"
+        ],
+        "parts": [
+          "Removing FOUR and SIX from last_event.display changes values that consumers match on, so consumers detecting boundaries by FOUR or SIX stop recognising them."
+        ]
+      },
+      {
+        "id": "names-silent-boundary-loss",
+        "must_assert": "The review names a consumer that detects boundaries by display FOUR/SIX and the concrete loss: highlights no longer returns a boundary clip (so social stops posting BOUNDARY), or mobile no longer shows its boundary banner.",
+        "tokens": [
+          "(highlights|social|mobile|clip|banner)",
+          "(boundary|BOUNDARY)"
+        ],
+        "parts": [
+          "Names highlights or mobile as a consumer that detects boundaries by FOUR/SIX.",
+          "States the concrete loss: highlights no longer returns a boundary clip (so social stops posting BOUNDARY), or mobile no longer shows its boundary banner."
+        ],
+        "not_enough": [
+          "Saying only that consumers may stop recognising boundaries."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "test-scoring-renamed-wicket-field-breaks-notifications",
+    "intent": "Catch that renaming wicket_counted breaks strict consumers and is masked in others",
+    "tests": "Scoring renames last_event.wicket_counted to wicket with no alias. Notifications, stats and archive require wicket_counted and reject the event (no wicket pushes, no ledger), while highlights and mobile fall back to display WICKET and keep working, which hides the break. A passing review must call it breaking and name a consumer that fails.",
+    "capabilities": [
+      "event-contract-break",
+      "cross-repo-impact"
+    ],
+    "github_repo": "srajat-leap/prlab-cricket-scoring",
+    "local": "cricket-scoring",
+    "patch": "patches/rename-wicket-counted.patch",
+    "branch": "rename-wicket-counted",
+    "title": "Rename wicket_counted to wicket on last_event",
+    "body": "Shorter field name for the event. wicket is true when scoring counted a dismissal.",
+    "claims": [
+      {
+        "id": "field-rename-breaks-event",
+        "must_assert": "Renaming last_event.wicket_counted to wicket without keeping the old field is a breaking change to the published event contract.",
+        "tokens": [
+          "wicket_counted",
+          "(rename|break|remov|consumer)"
+        ],
+        "parts": [
+          "Renaming last_event.wicket_counted to wicket without keeping the old field breaks the published event contract for its consumers."
+        ]
+      },
+      {
+        "id": "names-consumer-failing-on-rename",
+        "must_assert": "The review names a consumer that reads wicket_counted and what happens now: notifications stops sending wicket pushes (its model requires wicket_counted), stats or archive reject the snapshot, or highlights/mobile only keep working by falling back to display.",
+        "tokens": [
+          "(notification|push|stats|archive|highlights|mobile)",
+          "(wicket_counted|fail|reject|missing|fall)"
+        ],
+        "parts": [
+          "Names notifications, stats, archive, highlights or mobile as a consumer of wicket_counted.",
+          "Says what now goes wrong for it: validation or parsing fails (the snapshot is rejected), wicket pushes or wicket handling stop, or highlights/mobile keep working only by falling back to display."
+        ],
+        "not_enough": [
+          "Naming a consumer that does not read wicket_counted (such as broadcast), or saying only that consumers must be updated."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "test-protocol-runs-off-bat-total-double-counts-extras",
+    "intent": "Catch that redefining runs_off_bat double-counts extras downstream",
+    "tests": "Protocol redefines runs_off_bat as the total for the delivery, extras included, while extras.runs still carries the extras. Scoring adds runs_off_bat and extras.runs, so every wide and no-ball is counted twice in the score, the stats ledger copies it, and fantasy pays extra batting points. A passing review must say the extras are now counted twice and name that downstream effect.",
+    "capabilities": [
+      "cross-repo-impact",
+      "local-semantic-consequence"
+    ],
+    "github_repo": "srajat-leap/prlab-cricket-protocol",
+    "local": "cricket-protocol",
+    "patch": "patches/runs-off-bat-total.patch",
+    "branch": "runs-off-bat-total",
+    "title": "runs_off_bat carries the total runs on the ball",
+    "body": "Clients kept adding runs_off_bat and extras.runs themselves. runs_off_bat now carries the total for the delivery; extras.runs stays for the breakdown.",
+    "claims": [
+      {
+        "id": "extras-reported-twice",
+        "must_assert": "runs_off_bat now includes extras while extras.runs still reports them, so the same runs are carried twice on every wide or no-ball, and any consumer summing the two double-counts.",
+        "tokens": [
+          "(extras|wide|no.?ball)",
+          "(twice|double|both|sum|add)"
+        ],
+        "parts": [
+          "runs_off_bat now includes the extras that extras.runs also reports, so extras are double-counted by anything that adds the two, such as a consumer still following the old contract."
+        ]
+      },
+      {
+        "id": "names-double-count-downstream",
+        "must_assert": "The review names the downstream effect: scoring computes runs_off_bat plus extras.runs, so the published score over-counts extras, and that inflated total flows into the stats ledger or fantasy batting points.",
+        "tokens": [
+          "(scoring|stats|ledger|fantasy)",
+          "(double|twice|inflat|over.?count|extra)"
+        ],
+        "parts": [
+          "Says scoring, which adds runs_off_bat and extras.runs, now over-counts extras in the published score.",
+          "Says the inflated total reaches the stats ledger or fantasy batting points."
+        ],
+        "not_enough": [
+          "Saying only that some consumer summing the two would double-count."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "test-highlights-split-kinds-stop-social-posts",
+    "intent": "Catch that splitting the boundary clip kind stops social boundary posts",
+    "tests": "Highlights splits the boundary clip kind into four and six. Social posts only for kind boundary, so every BOUNDARY post stops silently. A passing review must say the kind values changed and name social's lost posts.",
+    "capabilities": [
+      "event-contract-break",
+      "cross-repo-impact"
+    ],
+    "github_repo": "srajat-leap/prlab-cricket-highlights",
+    "local": "cricket-highlights",
+    "patch": "patches/split-boundary-clip-kinds.patch",
+    "branch": "split-boundary-clip-kinds",
+    "title": "Split boundary clips into four and six",
+    "body": "Editors want to filter fours and sixes separately. The clip kind is now four or six instead of boundary.",
+    "claims": [
+      {
+        "id": "boundary-kind-removed",
+        "must_assert": "clipFor no longer returns kind boundary; it returns four or six, a change to the values consumers of the clip contract match on.",
+        "tokens": [
+          "boundary",
+          "(kind|four|six)"
+        ],
+        "parts": [
+          "clipFor no longer returns kind boundary (it returns four or six), changing values that consumers of the clip contract match on."
+        ]
+      },
+      {
+        "id": "names-social-lost-posts",
+        "must_assert": "The review names social (postFor), which only posts for kind boundary, and says boundary posts stop: fours and sixes are no longer posted.",
+        "tokens": [
+          "(social|postFor|post)",
+          "(boundary|BOUNDARY)"
+        ],
+        "parts": [
+          "Names social (for example its postFor function or src/post.js) as a consumer that posts only for kind boundary.",
+          "Says boundary posts stop: fours and sixes are no longer posted."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "test-scoring-open-reset-endpoint",
+    "intent": "Catch an unauthenticated state-wiping endpoint and its downstream reach",
+    "tests": "Scoring adds POST /matches/{id}/reset with no authentication, on a service whose CORS allows every origin. Any caller or web page can wipe a live match; the gateway and mobile then show an unknown match, and the next snapshot restarts the stats ledger that fantasy settles from. A passing review must flag the missing authorization and name a downstream effect.",
+    "capabilities": [
+      "security",
+      "cross-repo-impact"
+    ],
+    "github_repo": "srajat-leap/prlab-cricket-scoring",
+    "local": "cricket-scoring",
+    "patch": "patches/ops-reset-endpoint.patch",
+    "branch": "ops-reset-endpoint",
+    "title": "Add a reset endpoint for ops",
+    "body": "Ops need to restart a match after a bad feed without a redeploy. POST /matches/{id}/reset clears its state.",
+    "claims": [
+      {
+        "id": "reset-unauthenticated",
+        "must_assert": "The reset endpoint has no authentication or authorization, and with CORS allowing every origin any caller or web page can wipe a live match's score.",
+        "tokens": [
+          "(auth|unauthenticated|anyone|any caller|CORS|origin)",
+          "reset"
+        ],
+        "parts": [
+          "The new reset endpoint has no authentication or authorization, so any caller can wipe or reset a live match. (Mentioning CORS is not required.)"
+        ]
+      },
+      {
+        "id": "names-reset-downstream",
+        "must_assert": "The review names a downstream effect of a reset: the live-gateway, mobile or broadcast then see an unknown match or a restarted score, or the stats ledger (and fantasy points settled from it) is restarted or overwritten.",
+        "tokens": [
+          "(gateway|mobile|broadcast|stats|ledger|fantasy)",
+          "(404|unknown|restart|overwrit|zero|0/0|lost)"
+        ],
+        "parts": [
+          "Names a downstream effect of a reset: the live-gateway, mobile or broadcast then see an unknown match or a restarted score, or the stats ledger (and fantasy points settled from it) restarts or is overwritten."
+        ],
+        "not_enough": [
+          "Saying only that the match data is deleted."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "test-gateway-origin-param-ssrf",
+    "intent": "Catch server-side request forgery through a caller-chosen upstream",
+    "tests": "The live-gateway accepts ?origin= and fetches scoring from that host. Any caller can make the gateway request arbitrary URLs from inside the network (SSRF), and because mobile trusts the gateway, serve forged scores to phones. A passing review must flag the SSRF and name the forged-data effect on clients.",
+    "capabilities": [
+      "security",
+      "cross-repo-impact"
+    ],
+    "github_repo": "srajat-leap/prlab-cricket-live-gateway",
+    "local": "cricket-live-gateway",
+    "patch": "patches/gateway-origin-override.patch",
+    "branch": "gateway-origin-override",
+    "title": "Allow an origin override for staging",
+    "body": "QA points the app at staging scoring. Accept ?origin= on /matches/{id}/score to pick the scoring origin per request.",
+    "claims": [
+      {
+        "id": "origin-param-ssrf",
+        "must_assert": "The origin query parameter lets any caller make the gateway send requests to an arbitrary host, including internal or cloud metadata addresses: server-side request forgery.",
+        "tokens": [
+          "(SSRF|server.?side request|arbitrary|internal|metadata|any host)",
+          "origin"
+        ],
+        "parts": [
+          "The origin parameter lets a caller make the gateway send requests to an arbitrary host, such as internal or cloud metadata addresses: server-side request forgery."
+        ]
+      },
+      {
+        "id": "names-forged-scores",
+        "must_assert": "The review says a caller-chosen origin lets the gateway serve attacker-controlled scores or events to its clients (mobile), which trust the gateway's response.",
+        "tokens": [
+          "(mobile|client|app)",
+          "(forg|spoof|fake|attacker|malicious|control)"
+        ],
+        "parts": [
+          "A caller-chosen origin lets attacker-controlled scores or events come back through the gateway's responses to its clients (such as mobile), which trust the gateway."
+        ],
+        "not_enough": [
+          "Describing only the SSRF request itself, without forged data reaching clients."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "test-archive-pickle-restore-rce",
+    "intent": "Catch remote code execution through unpickling a client upload",
+    "tests": "Archive adds POST /matches/{id}/restore that base64-decodes a client-supplied backup and passes it to pickle.loads, with no authentication. Unpickling untrusted data runs arbitrary code on the archive server. A passing review must name the code-execution risk.",
+    "capability": "security",
+    "github_repo": "srajat-leap/prlab-cricket-archive",
+    "local": "cricket-archive",
+    "patch": "patches/restore-history-backups.patch",
+    "branch": "restore-history-backups",
+    "title": "Restore history from backup files",
+    "body": "Support moves history between environments with the old tool's backup files. POST /matches/{id}/restore loads one.",
+    "claims": [
+      {
+        "id": "pickle-rce",
+        "must_assert": "Calling pickle.loads on a client-supplied backup lets any caller run arbitrary code on the archive server; the endpoint is unauthenticated.",
+        "tokens": [
+          "pickle",
+          "(arbitrary code|code execution|RCE|execute|untrusted|unsafe)"
+        ],
+        "parts": [
+          "Calling pickle.loads on a client-supplied backup lets a caller run arbitrary code on the archive server."
         ]
       }
     ]

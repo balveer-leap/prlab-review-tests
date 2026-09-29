@@ -1,7 +1,11 @@
 from __future__ import annotations
 
 import json
+import os
+import re
+import signal
 import subprocess
+import time
 from typing import Any
 
 
@@ -9,12 +13,45 @@ class GitHubError(RuntimeError):
     pass
 
 
-def run(args: list[str], cwd: str | None = None) -> str:
-    result = subprocess.run(args, cwd=cwd, check=False, text=True, capture_output=True)
-    if result.returncode != 0:
-        detail = (result.stderr or result.stdout or "").strip()
-        raise GitHubError(f"{' '.join(args)} failed: {detail}")
-    return result.stdout
+# Network failures worth retrying: the command never reached a decision on GitHub.
+TRANSIENT = re.compile(
+    r"connection reset|recv failure|timed out|timeout|temporary failure|could not resolve host"
+    r"|unable to access|tls|eof|http 50[0234]|502 bad gateway|503 service|unexpected disconnect",
+    re.I,
+)
+
+
+# A push or API call on a dropped connection can hang for good without this.
+COMMAND_TIMEOUT = 180
+# git aborts an HTTP transfer slower than 1 KB/s for 30 s instead of waiting on it.
+STALL_ABORT = {"GIT_HTTP_LOW_SPEED_LIMIT": "1000", "GIT_HTTP_LOW_SPEED_TIME": "30"}
+
+
+def run(args: list[str], cwd: str | None = None, attempts: int = 4) -> str:
+    """Run a gh/git command; retry a transient network failure or a hang, with backoff."""
+    for attempt in range(1, attempts + 1):
+        # Own process group: git push hands the network to a git-remote-https child
+        # that keeps the pipes open, so killing only git would still hang here.
+        proc = subprocess.Popen(
+            args, cwd=cwd, text=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+            start_new_session=True, env={**os.environ, **STALL_ABORT},
+        )
+        try:
+            stdout, stderr = proc.communicate(timeout=COMMAND_TIMEOUT)
+        except subprocess.TimeoutExpired:
+            os.killpg(proc.pid, signal.SIGKILL)
+            proc.communicate()
+            if attempt == attempts:
+                raise GitHubError(f"{' '.join(args)} timed out after {COMMAND_TIMEOUT}s") from None
+            time.sleep(5 * attempt)
+            continue
+        if proc.returncode == 0:
+            return stdout
+        detail = (stderr or stdout or "").strip()
+        if attempt == attempts or not TRANSIENT.search(detail):
+            raise GitHubError(f"{' '.join(args)} failed: {detail}")
+        time.sleep(5 * attempt)
+    raise AssertionError("unreachable")
 
 
 def gh_json(args: list[str]) -> Any:

@@ -1,0 +1,976 @@
+{
+  "tool": "claude-custom_skill",
+  "owner": "org-claudeskill",
+  "tool_options": {},
+  "judge": {
+    "mode": "llm",
+    "provider": "groq",
+    "model": "openai/gpt-oss-120b"
+  },
+  "run_at": "20260929T102247Z",
+  "generated_at": "20260929T102247Z",
+  "passed": 14,
+  "failed": 0,
+  "precision": 1.0,
+  "recall": 1.0,
+  "f1": 1.0,
+  "true_positives": 15,
+  "false_negatives": 0,
+  "false_positives": 0,
+  "by_capability": [
+    {
+      "id": "local-semantic-consequence",
+      "name": "Local semantic consequence",
+      "cases": [
+        "test-protocol-omitted-confirm-counts-wicket-single-repo"
+      ],
+      "true_positives": 1,
+      "false_negatives": 0,
+      "false_positives": 0,
+      "relevant_comments": 1,
+      "comments": 1,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "defect_comments": 0
+    },
+    {
+      "id": "cross-repo-impact",
+      "name": "Cross-repo impact",
+      "cases": [
+        "test-protocol-omitted-confirm-counts-wicket-with-downstream-context"
+      ],
+      "true_positives": 2,
+      "false_negatives": 0,
+      "false_positives": 0,
+      "relevant_comments": 1,
+      "comments": 1,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "defect_comments": 0
+    },
+    {
+      "id": "contract-leak",
+      "name": "Public contract leak",
+      "cases": [
+        "test-scoring-raw-ball-leaks-protocol-fields",
+        "test-scoring-match-pack-reexports-protocol-fields"
+      ],
+      "true_positives": 2,
+      "false_negatives": 0,
+      "false_positives": 0,
+      "relevant_comments": 2,
+      "comments": 2,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "defect_comments": 0
+    },
+    {
+      "id": "abstraction-bypass",
+      "name": "Published-contract bypass",
+      "cases": [
+        "test-broadcast-raw-ball-treats-missing-confirm-as-wicket",
+        "test-broadcast-match-pack-walk-bypasses-last-event"
+      ],
+      "true_positives": 2,
+      "false_negatives": 0,
+      "false_positives": 0,
+      "relevant_comments": 2,
+      "comments": 2,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "defect_comments": 0
+    },
+    {
+      "id": "display-vs-authority",
+      "name": "Display vs authoritative state",
+      "cases": [
+        "test-stats-not-out-display-increments-wickets",
+        "test-notifications-not-out-sends-wicket-push"
+      ],
+      "true_positives": 2,
+      "false_negatives": 0,
+      "false_positives": 0,
+      "relevant_comments": 2,
+      "comments": 2,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "defect_comments": 0
+    },
+    {
+      "id": "omitted-guard-as-true",
+      "name": "Omitted guard treated as true",
+      "cases": [
+        "test-fantasy-missing-confirm-pays-wicket-points",
+        "test-mobile-missing-confirm-shows-wicket-banner"
+      ],
+      "true_positives": 2,
+      "false_negatives": 0,
+      "false_positives": 0,
+      "relevant_comments": 2,
+      "comments": 2,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "defect_comments": 0
+    },
+    {
+      "id": "kind-relabel",
+      "name": "Outcome kind relabel",
+      "cases": [
+        "test-highlights-not-out-filed-as-wicket-clip",
+        "test-social-appeal-kind-posted-as-wicket"
+      ],
+      "true_positives": 2,
+      "false_negatives": 0,
+      "false_positives": 0,
+      "relevant_comments": 2,
+      "comments": 2,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "defect_comments": 0
+    },
+    {
+      "id": "leak-propagation",
+      "name": "Leak persistence or pass-through",
+      "cases": [
+        "test-archive-history-keeps-protocol-leaks",
+        "test-gateway-forwards-raw-ball-and-match-pack"
+      ],
+      "true_positives": 2,
+      "false_negatives": 0,
+      "false_positives": 0,
+      "relevant_comments": 2,
+      "comments": 2,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "defect_comments": 0
+    }
+  ],
+  "results": [
+    {
+      "case_id": "test-protocol-omitted-confirm-counts-wicket-single-repo",
+      "tool": "claude-custom_skill",
+      "pr_url": "https://github.com/org-claudeskill/prlab-cricket-protocol/pull/6",
+      "finding_passed": true,
+      "isolation_passed": true,
+      "intent": "Catch that omitting umpire_confirmed now counts a wicket",
+      "tests": "The protocol PR defaults a missing umpire_confirmed to true on a dismissal so older clients still parse. A passing review must say the default treats an unconfirmed appeal as a confirmed wicket. Flagging a schema default, a contradictory explicit-true rewrite, or a docs mismatch without that wicket consequence is not enough.",
+      "capability_id": "local-semantic-consequence",
+      "capability": "Local semantic consequence",
+      "capability_asks": "From the changed repo alone, can the tool infer that a local default or rewrite changes a domain decision \u2014 not only that a field has a new value?",
+      "capability_ids": [
+        "local-semantic-consequence"
+      ],
+      "claims": [
+        {
+          "claim_id": "omitted-confirm-counts-wicket",
+          "must_assert": "If umpire_confirmed is omitted on a dismissal, this change treats the dismissal as confirmed, so an unconfirmed appeal can be counted as a wicket.",
+          "passed": true,
+          "quote": "The PR makes an omitted `umpire_confirmed` on a dismissal default to `true`.",
+          "reason": "The review explicitly says the change defaults omitted umpire_confirmed to true, causing unconfirmed appeals to be counted as wickets.",
+          "tokens_expected": [
+            "umpire_confirmed",
+            "(omitted|default|missing)",
+            "wicket"
+          ],
+          "tokens_matched": [
+            "umpire_confirmed",
+            "(omitted|default|missing)",
+            "wicket"
+          ],
+          "tokens_missing": []
+        }
+      ],
+      "actual": "### Verdict: not safe to merge\n\nThe PR makes an omitted `umpire_confirmed` on a dismissal default to `true`. Before, an omitted value was rejected. Scoring now counts a wicket from a payload that never said the umpire confirmed it.\n\n**What changes at runtime:** `Wicket` now fills in `umpire_confirmed = (kind != \"none\")` when the field is missing. A payload like `{\"kind\": \"lbw\"}` now parses as a confirmed dismissal. Before, it raised a validation error. The repo's own invariant said \"an unconfirmed dismissal is not a wicket\" and \"Scoring must not treat a missing value as true\". This PR removes that guard.\n\n### Defect 1: an omitted flag becomes a counted wicket, and it spreads downstream\n\n- **Cause:** `cricket_protocol/models.py:31-51`. The default is `True`, and the `mode=\"before\"` validator sets `True` for any non-`none` kind. `schemas/ball_event.schema.json:45` also drops `umpire_confirmed` from `required`.\n- **Hop 1, prlab-cricket-scoring, `scoring/engine.py:48-50`:** `wicket_counted = kind is not NONE and event.wicket.umpire_confirmed`. An omitted flag now gives `wicket_counted=True`. `engine.py:56` increments `wickets`, and `engine.py:65` sets `display=\"WICKET\"` instead of `\"NOT_OUT\"`.\n- **Hop 2, consumers of the snapshot:**\n - prlab-cricket-notifications, `notifications/push.py:28-33`: sends a \"WICKET\" push.\n - prlab-cricket-highlights, `src/clip.js:9-10`: returns `{clip: true, kind: \"wicket\"}`. This is where the clip decision is made.\n - prlab-cricket-mobile, `src/screen.js:10-11`: shows a wicket banner.\n - prlab-cricket-broadcast, `src/animator.js:10-11`: plays the wicket animation.\n - prlab-cricket-stats, `stats/ledger.py:21-27`: copies the inflated `snapshot.wickets`.\n - prlab-cricket-archive, `archive/store.py:32-38`: stores the inflated `snapshot.wickets`.\n - prlab-cricket-live-gateway, `gateway/filter.py:34`: passes `wickets` through.\n- **Hop 3:**\n - prlab-cricket-social, `src/post.js:8-9`: publishes a \"WICKET\" post from the highlights clip.\n - prlab-cricket-fantasy, `fantasy/points.py:24`: `bowling = ledger.wickets * 20`. Each wicket invented this way adds 20 bowling points to the fantasy total, and settled points are wrong.\n\nNone of these consumers imports `cricket_protocol` or reads `umpire_confirmed`, so each one passes the wrong value along without noticing.\n\nThe compat case is the one this hits hardest. A mobile client that omits the flag while an appeal is still pending (an undecided LBW, for example) now produces a confirmed wicket. That wicket goes out as a push, a clip, a social post and fantasy points, and the stored history keeps it. Unconfirmed appeals go through the same path today, but they are explicitly marked `false`.\n\n### Defect 2: a contradictory payload is silently changed\n\n- **Cause:** `cricket_protocol/models.py:52-55`. `kind: \"none\"` with `umpire_confirmed: true` used to raise. It is now coerced to `false`.\n- **Effect:** malformed input is accepted and rewritten, so bad producers go undetected. This is lower severity. Scoring's own `kind is not NONE` check means it does not by itself create a wicket.\n\n### Documentation claims\n\nThe new field description says \"A present wicket.kind has historically meant the dismissal counted\". I could not confirm this in `.estate/`. Every scoring test, and `engine.py:48-50`, treats `umpire_confirmed=False` with a real kind as \"not out\" (`tests/test_engine.py:56-69`). The claim is unverified.\n\n### Suggested fix\n\nKeep the field required. If older clients must be supported, default an omitted flag to `False`, because a missing confirmation should never count as a wicket. Better still, have the mobile adapter send an explicit value. Reject the `kind: \"none\"` plus `true` combination instead of coercing it. Do this alongside a scoring change if scoring wants to interpret legacy payloads itself.",
+      "comments": [
+        "### Verdict: not safe to merge\n\nThe PR makes an omitted `umpire_confirmed` on a dismissal default to `true`. Before, an omitted value was rejected. Scoring now counts a wicket from a payload that never said the umpire confirmed it.\n\n**What changes at runtime:** `Wicket` now fills in `umpire_confirmed = (kind != \"none\")` when the field is missing. A payload like `{\"kind\": \"lbw\"}` now parses as a confirmed dismissal. Before, it raised a validation error. The repo's own invariant said \"an unconfirmed dismissal is not a wicket\" and \"Scoring must not treat a missing value as true\". This PR removes that guard.\n\n### Defect 1: an omitted flag becomes a counted wicket, and it spreads downstream\n\n- **Cause:** `cricket_protocol/models.py:31-51`. The default is `True`, and the `mode=\"before\"` validator sets `True` for any non-`none` kind. `schemas/ball_event.schema.json:45` also drops `umpire_confirmed` from `required`.\n- **Hop 1, prlab-cricket-scoring, `scoring/engine.py:48-50`:** `wicket_counted = kind is not NONE and event.wicket.umpire_confirmed`. An omitted flag now gives `wicket_counted=True`. `engine.py:56` increments `wickets`, and `engine.py:65` sets `display=\"WICKET\"` instead of `\"NOT_OUT\"`.\n- **Hop 2, consumers of the snapshot:**\n - prlab-cricket-notifications, `notifications/push.py:28-33`: sends a \"WICKET\" push.\n - prlab-cricket-highlights, `src/clip.js:9-10`: returns `{clip: true, kind: \"wicket\"}`. This is where the clip decision is made.\n - prlab-cricket-mobile, `src/screen.js:10-11`: shows a wicket banner.\n - prlab-cricket-broadcast, `src/animator.js:10-11`: plays the wicket animation.\n - prlab-cricket-stats, `stats/ledger.py:21-27`: copies the inflated `snapshot.wickets`.\n - prlab-cricket-archive, `archive/store.py:32-38`: stores the inflated `snapshot.wickets`.\n - prlab-cricket-live-gateway, `gateway/filter.py:34`: passes `wickets` through.\n- **Hop 3:**\n - prlab-cricket-social, `src/post.js:8-9`: publishes a \"WICKET\" post from the highlights clip.\n - prlab-cricket-fantasy, `fantasy/points.py:24`: `bowling = ledger.wickets * 20`. Each wicket invented this way adds 20 bowling points to the fantasy total, and settled points are wrong.\n\nNone of these consumers imports `cricket_protocol` or reads `umpire_confirmed`, so each one passes the wrong value along without noticing.\n\nThe compat case is the one this hits hardest. A mobile client that omits the flag while an appeal is still pending (an undecided LBW, for example) now produces a confirmed wicket. That wicket goes out as a push, a clip, a social post and fantasy points, and the stored history keeps it. Unconfirmed appeals go through the same path today, but they are explicitly marked `false`.\n\n### Defect 2: a contradictory payload is silently changed\n\n- **Cause:** `cricket_protocol/models.py:52-55`. `kind: \"none\"` with `umpire_confirmed: true` used to raise. It is now coerced to `false`.\n- **Effect:** malformed input is accepted and rewritten, so bad producers go undetected. This is lower severity. Scoring's own `kind is not NONE` check means it does not by itself create a wicket.\n\n### Documentation claims\n\nThe new field description says \"A present wicket.kind has historically meant the dismissal counted\". I could not confirm this in `.estate/`. Every scoring test, and `engine.py:48-50`, treats `umpire_confirmed=False` with a real kind as \"not out\" (`tests/test_engine.py:56-69`). The claim is unverified.\n\n### Suggested fix\n\nKeep the field required. If older clients must be supported, default an omitted flag to `False`, because a missing confirmation should never count as a wicket. Better still, have the mobile adapter send an explicit value. Reject the `kind: \"none\"` plus `true` combination instead of coercing it. Do this alongside a scoring change if scoring wants to interpret legacy payloads itself."
+      ],
+      "metrics": {
+        "true_positives": 1,
+        "false_negatives": 0,
+        "false_positives": 0,
+        "relevant_comments": 1,
+        "comments": 1,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "defect_comments": 0
+      },
+      "unexpected_bots": [],
+      "judge_mode": "llm",
+      "comment_verdicts": [
+        {
+          "index": 1,
+          "label": "trap",
+          "reason": "holds the quote the claim judge verified"
+        }
+      ]
+    },
+    {
+      "case_id": "test-protocol-omitted-confirm-counts-wicket-with-downstream-context",
+      "tool": "claude-custom_skill",
+      "pr_url": "https://github.com/org-claudeskill/prlab-cricket-protocol/pull/7",
+      "finding_passed": true,
+      "isolation_passed": true,
+      "intent": "Catch the omitted-confirm wicket trap and name a downstream consumer",
+      "tests": "Same protocol default as the other protocol case. A passing review must say omitted umpire_confirmed can count a wicket, and it must name a real downstream effect \u2014 scoring counting the wicket, the ledger copying it, or fantasy paying bowling points. Mentioning only that a field has a default fails the second claim.",
+      "capability_id": "cross-repo-impact",
+      "capability": "Cross-repo impact",
+      "capability_asks": "Can the tool connect a local contract change to a named downstream consumer?",
+      "capability_ids": [
+        "cross-repo-impact"
+      ],
+      "claims": [
+        {
+          "claim_id": "omitted-confirm-counts-wicket",
+          "must_assert": "If umpire_confirmed is omitted on a dismissal, this change treats the dismissal as confirmed, so an unconfirmed appeal can be counted as a wicket.",
+          "passed": true,
+          "quote": "Omitting `umpire_confirmed` on a dismissal now means \"out\" instead of a validation error. Unconfirmed appeals from older mobile clients will be scored as wickets.",
+          "reason": "The review explicitly says omitting the flag treats the dismissal as confirmed, causing unconfirmed appeals to be counted as wickets.",
+          "tokens_expected": [
+            "umpire_confirmed",
+            "(omitted|default|missing)",
+            "wicket"
+          ],
+          "tokens_matched": [
+            "umpire_confirmed",
+            "(omitted|default|missing)",
+            "wicket"
+          ],
+          "tokens_missing": []
+        },
+        {
+          "claim_id": "names-downstream-consumer",
+          "must_assert": "The review states a concrete downstream effect of the defaulted confirmation in a named consumer \u2014 for example scoring counting or incrementing the wicket, the stats ledger copying that wicket, or fantasy paying bowling points for it. Naming a downstream repo or hop without saying what it does wrong (for example 'scoring may rely on this invariant') is not enough, and neither is naming the field default alone.",
+          "passed": true,
+          "quote": "prlab-cricket-scoring, `scoring/engine.py:48-50`, is the first consumer. `wicket_counted = kind is not NONE and umpire_confirmed` is now true for an omitted flag. That drives `wickets=state.wickets + 1`",
+          "reason": "The review explicitly describes concrete downstream effects (e.g., incrementing wickets) in named consumers caused by the defaulted confirmation.",
+          "tokens_expected": [
+            "(scoring|stats|fantasy|ledger)",
+            "(count|increment|cop(y|ies)|pa(y|ys|id)|award|points)"
+          ],
+          "tokens_matched": [
+            "(scoring|stats|fantasy|ledger)",
+            "(count|increment|cop(y|ies)|pa(y|ys|id)|award|points)"
+          ],
+          "tokens_missing": []
+        }
+      ],
+      "actual": "### Verdict: not safe to merge\n\nOmitting `umpire_confirmed` on a dismissal now means \"out\" instead of a validation error. Unconfirmed appeals from older mobile clients will be scored as wickets.\n\n**Runtime change:** `Wicket` now fills a missing `umpire_confirmed` with `True` whenever `kind != \"none\"`. Before this PR, a missing value was rejected. The PR also downgrades `kind: none` + `umpire_confirmed: true` from an error to a silent rewrite to `False`.\n\n### Defect: a missing confirmation flag is counted as a wicket\n\n**Cause (this repo):**\n- `cricket_protocol/models.py:31-52` adds `default=True` and the `_default_omitted_confirmation` before-validator, which returns `kind_value != \"none\"`. A payload like `{\"kind\": \"lbw\"}` becomes confirmed.\n- `schemas/ball_event.schema.json:45-54` removes `umpire_confirmed` from `required` and adds `\"default\": true`.\n- The old description said \"Scoring must not treat a missing value as true \u2014 unconfirmed appeals are not wickets.\" The PR removes that guarantee.\n\n**Where it surfaces:**\n1. **prlab-cricket-scoring**, `scoring/engine.py:48-50`, is the first consumer. `wicket_counted = kind is not NONE and umpire_confirmed` is now true for an omitted flag. That drives `wickets=state.wickets + 1` (line 56), `last_event.wicket_counted=True` (line 67), and `display=\"WICKET\"` (line 25 via `_display`). Before, the payload was rejected at `scoring/app.py:21` (`record_ball(event: BallEvent)`).\n2. **prlab-cricket-notifications**, `notifications/push.py:27-33`. `wicket_counted` triggers a \"WICKET\" push for an appeal that was never confirmed.\n3. **prlab-cricket-highlights**, `src/clip.js:9-10`. `wicket_counted || display === \"WICKET\"` returns `{clip: true, kind: \"wicket\"}`.\n4. **prlab-cricket-social**, `src/post.js:7-9`. A `wicket` clip produces a public \"WICKET\" post, which is the third boundary from the protocol.\n5. **prlab-cricket-broadcast**, `src/animator.js:10-11` and `public/app.js:6`. It shows the wicket animation and the wrong `runs/wickets` line.\n6. **prlab-cricket-mobile**, `src/screen.js:10-11`. It shows the \"wicket\" banner. The wickets total on its screen (line 9) is inflated.\n7. **prlab-cricket-stats**, `stats/ledger.py:22-25`, copies `snapshot.wickets`. **prlab-cricket-fantasy**, `fantasy/points.py:24`, then computes `bowling_points = wickets * 20` (`WICKET_POINTS`, line 13). Each phantom wicket adds 20 fantasy points to the settled totals, and the ledger keeps the wrong count.\n\nSeveral of these consumers only read the snapshot, so they can't tell that the wicket came from a defaulted flag. Nothing downstream can detect it. Total wickets, fantasy points, pushes, and posts are wrong until someone corrects them by hand.\n\nThe mobile client that omits the field is the same client sending unconfirmed appeals. An omitted flag means \"unknown\", not \"confirmed\". The other paths in the PR, `kind: none` with `umpire_confirmed: true` and the \"NOT_OUT\" display at `scoring/engine.py:26-27`, work as before.\n\n### Claims I could not confirm\n- The new `models.py` description says \"A present wicket.kind has historically meant the dismissal counted.\" Nothing in `.estate/` supports this. The scoring engine and its tests (`prlab-cricket-scoring/tests/test_engine.py:56,66`) treat `kind: lbw` with `umpire_confirmed: false` as an appeal that does not count.\n- `.estate/prlab-cricket-mobile` has no code that builds `BallEvent` payloads. I found no evidence there of which clients omit the field, so the compat premise is unverified.\n\n### Suggested fix\nKeep the field required, or default it to `False`, so a missing flag can never count as a wicket. If compat is needed, do it in a mobile-specific adapter and confirm the appeal state explicitly. Do not change the protocol default for every producer.",
+      "comments": [
+        "### Verdict: not safe to merge\n\nOmitting `umpire_confirmed` on a dismissal now means \"out\" instead of a validation error. Unconfirmed appeals from older mobile clients will be scored as wickets.\n\n**Runtime change:** `Wicket` now fills a missing `umpire_confirmed` with `True` whenever `kind != \"none\"`. Before this PR, a missing value was rejected. The PR also downgrades `kind: none` + `umpire_confirmed: true` from an error to a silent rewrite to `False`.\n\n### Defect: a missing confirmation flag is counted as a wicket\n\n**Cause (this repo):**\n- `cricket_protocol/models.py:31-52` adds `default=True` and the `_default_omitted_confirmation` before-validator, which returns `kind_value != \"none\"`. A payload like `{\"kind\": \"lbw\"}` becomes confirmed.\n- `schemas/ball_event.schema.json:45-54` removes `umpire_confirmed` from `required` and adds `\"default\": true`.\n- The old description said \"Scoring must not treat a missing value as true \u2014 unconfirmed appeals are not wickets.\" The PR removes that guarantee.\n\n**Where it surfaces:**\n1. **prlab-cricket-scoring**, `scoring/engine.py:48-50`, is the first consumer. `wicket_counted = kind is not NONE and umpire_confirmed` is now true for an omitted flag. That drives `wickets=state.wickets + 1` (line 56), `last_event.wicket_counted=True` (line 67), and `display=\"WICKET\"` (line 25 via `_display`). Before, the payload was rejected at `scoring/app.py:21` (`record_ball(event: BallEvent)`).\n2. **prlab-cricket-notifications**, `notifications/push.py:27-33`. `wicket_counted` triggers a \"WICKET\" push for an appeal that was never confirmed.\n3. **prlab-cricket-highlights**, `src/clip.js:9-10`. `wicket_counted || display === \"WICKET\"` returns `{clip: true, kind: \"wicket\"}`.\n4. **prlab-cricket-social**, `src/post.js:7-9`. A `wicket` clip produces a public \"WICKET\" post, which is the third boundary from the protocol.\n5. **prlab-cricket-broadcast**, `src/animator.js:10-11` and `public/app.js:6`. It shows the wicket animation and the wrong `runs/wickets` line.\n6. **prlab-cricket-mobile**, `src/screen.js:10-11`. It shows the \"wicket\" banner. The wickets total on its screen (line 9) is inflated.\n7. **prlab-cricket-stats**, `stats/ledger.py:22-25`, copies `snapshot.wickets`. **prlab-cricket-fantasy**, `fantasy/points.py:24`, then computes `bowling_points = wickets * 20` (`WICKET_POINTS`, line 13). Each phantom wicket adds 20 fantasy points to the settled totals, and the ledger keeps the wrong count.\n\nSeveral of these consumers only read the snapshot, so they can't tell that the wicket came from a defaulted flag. Nothing downstream can detect it. Total wickets, fantasy points, pushes, and posts are wrong until someone corrects them by hand.\n\nThe mobile client that omits the field is the same client sending unconfirmed appeals. An omitted flag means \"unknown\", not \"confirmed\". The other paths in the PR, `kind: none` with `umpire_confirmed: true` and the \"NOT_OUT\" display at `scoring/engine.py:26-27`, work as before.\n\n### Claims I could not confirm\n- The new `models.py` description says \"A present wicket.kind has historically meant the dismissal counted.\" Nothing in `.estate/` supports this. The scoring engine and its tests (`prlab-cricket-scoring/tests/test_engine.py:56,66`) treat `kind: lbw` with `umpire_confirmed: false` as an appeal that does not count.\n- `.estate/prlab-cricket-mobile` has no code that builds `BallEvent` payloads. I found no evidence there of which clients omit the field, so the compat premise is unverified.\n\n### Suggested fix\nKeep the field required, or default it to `False`, so a missing flag can never count as a wicket. If compat is needed, do it in a mobile-specific adapter and confirm the appeal state explicitly. Do not change the protocol default for every producer."
+      ],
+      "metrics": {
+        "true_positives": 2,
+        "false_negatives": 0,
+        "false_positives": 0,
+        "relevant_comments": 1,
+        "comments": 1,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "defect_comments": 0
+      },
+      "unexpected_bots": [],
+      "judge_mode": "llm",
+      "comment_verdicts": [
+        {
+          "index": 1,
+          "label": "trap",
+          "reason": "holds the quote the claim judge verified"
+        }
+      ]
+    },
+    {
+      "case_id": "test-scoring-raw-ball-leaks-protocol-fields",
+      "tool": "claude-custom_skill",
+      "pr_url": "https://github.com/org-claudeskill/prlab-cricket-scoring/pull/5",
+      "finding_passed": true,
+      "isolation_passed": true,
+      "intent": "Catch raw_ball leaking BallEvent / protocol fields to product clients",
+      "tests": "Scoring copies the full validated BallEvent onto ScoreSnapshot.raw_ball as a debug envelope. Product clients (broadcast, gateway, archive) are supposed to see only the snapshot contract. A passing review must say publishing raw_ball exposes protocol fields such as umpire_confirmed or extras. Calling it a convenient debug field without the leak is not enough.",
+      "capability_id": "contract-leak",
+      "capability": "Public contract leak",
+      "capability_asks": "Can the tool see that a public response or nested object now exposes internal or forbidden fields?",
+      "capability_ids": [
+        "contract-leak"
+      ],
+      "claims": [
+        {
+          "claim_id": "raw-ball-leaks-protocol",
+          "must_assert": "Publishing raw_ball on the snapshot leaks protocol or BallEvent fields to product clients that should only see the score snapshot.",
+          "passed": true,
+          "quote": "`raw_ball` is now on every snapshot ... and the protocol-internal fields are now exposed to every direct reader of scoring.",
+          "reason": "The review explicitly states that adding raw_ball leaks protocol/internal fields to product clients.",
+          "tokens_expected": [
+            "raw_ball",
+            "(leak|protocol|BallEvent|product)"
+          ],
+          "tokens_matched": [
+            "raw_ball",
+            "(leak|protocol|BallEvent|product)"
+          ],
+          "tokens_missing": []
+        }
+      ],
+      "actual": "### Review: not safe to merge\n\n**Verdict: not safe to merge.** `raw_ball` is now on every snapshot that scoring returns from `/matches/{id}/score` and `/matches/{id}/balls`. It is populated with the full `BallEvent`, including `umpire_confirmed` and `extras`. Broadcast rejects the snapshot outright when it sees that key, and the protocol-internal fields are now exposed to every direct reader of scoring.\n\n**Runtime change:** `apply_ball` now sets `raw_ball=event.model_dump(mode=\"json\")` (`scoring/engine.py:70`). `ScoreSnapshot` gains the field (`scoring/snapshot.py:26-29`). `response_model=ScoreSnapshot` on both routes in `scoring/app.py` then serialises it to every caller. The route is unauthenticated, and CORS is `allow_origins=[\"*\"]`.\n\n### Defect 1: broadcast throws on every snapshot (breaking)\n- **Cause:** `scoring/engine.py:70` always sets `raw_ball` to a non-null dict, and `scoring/snapshot.py:26` exposes it. The key is therefore present in every response.\n- **Surfaces in `prlab-cricket-broadcast`:**\n - `src/scoreSnapshot.js:28-31` throws `ScoreSnapshot leaked raw_ball; broadcast must not read protocol events` whenever `\"raw_ball\" in snapshot`.\n - `src/client.js:9-15` (`fetchSnapshot`) calls `assertProductSnapshot` right after `response.json()`. It never returns `{ snapshot, animation }`, so no animation is produced.\n - `public/app.js:17-25` (the browser UI polling `/matches/${matchId}/score`) does not throw. It logs `console.warn(\"scoring leaked raw_ball; ignoring protocol fields\")` every second, and the score display still works.\n- **Confirmation:** `fetchSnapshot` has no caller elsewhere in the broadcast source. I could not confirm which entry point uses it in production, so the severity depends on whether an integration uses `client.js`. The `throw` at `src/scoreSnapshot.js:28-31` is unconditional, and `tests/animator.test.js:73-79` asserts that behaviour.\n\n### Defect 2: protocol-internal fields exposed to all direct scoring readers\n- **Cause:** `raw_ball` includes `wicket.umpire_confirmed` (`prlab-cricket-protocol/cricket_protocol/models.py:33`) and `extras`. The \"product clients should ignore it\" note in the PR body and in `schemas/score_snapshot.schema.json` is only a claim. Nothing in scoring enforces it, and the `/score` route is public with wildcard CORS.\n- **Surfaces in the estate:**\n - The `prlab-cricket-live-gateway` route `gateway/app.py:20-39` has `model_config = {\"extra\": \"ignore\"}` (`gateway/filter.py:27`), which drops `raw_ball` for mobile. The gateway is protected, but only because it is the only consumer that filters.\n - `prlab-cricket-archive/archive/store.py:29` also uses `extra: ignore`, so it is protected the same way.\n - `prlab-cricket-stats` (`stats/snapshot.py`) and `prlab-cricket-notifications` (`notifications/push.py`) use plain pydantic models, so they drop unknown keys by default. I found no code reading `raw_ball` there.\n - `prlab-cricket-highlights/src/snapshot.js` and `src/clip.js` read only known keys and are unaffected.\n - The broadcast browser UI and any other client that fetches scoring directly receive the raw payload.\n- **Not confirmed:** I found no downstream service that reinterprets `raw_ball` as a wicket signal. The risk is exposure and the broadcast rejection, not a downstream logic change.\n\n### Removed test guards\n`tests/test_engine.py` and `tests/test_app.py` previously asserted that `raw_ball` and `umpire_confirmed` never appear on the snapshot. This PR inverts those assertions. That is expected given the change, but it removes the guard that was protecting the consumers above.\n\n### Suggested fix\nDo not put `raw_ball` on the public snapshot model or response. For on-call debugging, use a separate debug route or logging that is not served from `/score`, or gate it behind auth and an explicit query flag. Then keep `ScoreSnapshot` and the schema unchanged.\n\n[Fix this \u2192](https://claude.ai/code?q=Remove%20raw_ball%20from%20ScoreSnapshot%20and%20score_snapshot.schema.json%20on%20branch%20eval%2Fscoring-leak-raw-ball%3B%20revert%20scoring%2Fengine.py%20raw_ball%20and%20restore%20tests%3B%20add%20a%20separate%20auth-gated%20debug%20route%20instead&repo=org-claudeskill/prlab-cricket-scoring)",
+      "comments": [
+        "### Review: not safe to merge\n\n**Verdict: not safe to merge.** `raw_ball` is now on every snapshot that scoring returns from `/matches/{id}/score` and `/matches/{id}/balls`. It is populated with the full `BallEvent`, including `umpire_confirmed` and `extras`. Broadcast rejects the snapshot outright when it sees that key, and the protocol-internal fields are now exposed to every direct reader of scoring.\n\n**Runtime change:** `apply_ball` now sets `raw_ball=event.model_dump(mode=\"json\")` (`scoring/engine.py:70`). `ScoreSnapshot` gains the field (`scoring/snapshot.py:26-29`). `response_model=ScoreSnapshot` on both routes in `scoring/app.py` then serialises it to every caller. The route is unauthenticated, and CORS is `allow_origins=[\"*\"]`.\n\n### Defect 1: broadcast throws on every snapshot (breaking)\n- **Cause:** `scoring/engine.py:70` always sets `raw_ball` to a non-null dict, and `scoring/snapshot.py:26` exposes it. The key is therefore present in every response.\n- **Surfaces in `prlab-cricket-broadcast`:**\n - `src/scoreSnapshot.js:28-31` throws `ScoreSnapshot leaked raw_ball; broadcast must not read protocol events` whenever `\"raw_ball\" in snapshot`.\n - `src/client.js:9-15` (`fetchSnapshot`) calls `assertProductSnapshot` right after `response.json()`. It never returns `{ snapshot, animation }`, so no animation is produced.\n - `public/app.js:17-25` (the browser UI polling `/matches/${matchId}/score`) does not throw. It logs `console.warn(\"scoring leaked raw_ball; ignoring protocol fields\")` every second, and the score display still works.\n- **Confirmation:** `fetchSnapshot` has no caller elsewhere in the broadcast source. I could not confirm which entry point uses it in production, so the severity depends on whether an integration uses `client.js`. The `throw` at `src/scoreSnapshot.js:28-31` is unconditional, and `tests/animator.test.js:73-79` asserts that behaviour.\n\n### Defect 2: protocol-internal fields exposed to all direct scoring readers\n- **Cause:** `raw_ball` includes `wicket.umpire_confirmed` (`prlab-cricket-protocol/cricket_protocol/models.py:33`) and `extras`. The \"product clients should ignore it\" note in the PR body and in `schemas/score_snapshot.schema.json` is only a claim. Nothing in scoring enforces it, and the `/score` route is public with wildcard CORS.\n- **Surfaces in the estate:**\n - The `prlab-cricket-live-gateway` route `gateway/app.py:20-39` has `model_config = {\"extra\": \"ignore\"}` (`gateway/filter.py:27`), which drops `raw_ball` for mobile. The gateway is protected, but only because it is the only consumer that filters.\n - `prlab-cricket-archive/archive/store.py:29` also uses `extra: ignore`, so it is protected the same way.\n - `prlab-cricket-stats` (`stats/snapshot.py`) and `prlab-cricket-notifications` (`notifications/push.py`) use plain pydantic models, so they drop unknown keys by default. I found no code reading `raw_ball` there.\n - `prlab-cricket-highlights/src/snapshot.js` and `src/clip.js` read only known keys and are unaffected.\n - The broadcast browser UI and any other client that fetches scoring directly receive the raw payload.\n- **Not confirmed:** I found no downstream service that reinterprets `raw_ball` as a wicket signal. The risk is exposure and the broadcast rejection, not a downstream logic change.\n\n### Removed test guards\n`tests/test_engine.py` and `tests/test_app.py` previously asserted that `raw_ball` and `umpire_confirmed` never appear on the snapshot. This PR inverts those assertions. That is expected given the change, but it removes the guard that was protecting the consumers above.\n\n### Suggested fix\nDo not put `raw_ball` on the public snapshot model or response. For on-call debugging, use a separate debug route or logging that is not served from `/score`, or gate it behind auth and an explicit query flag. Then keep `ScoreSnapshot` and the schema unchanged.\n\n[Fix this \u2192](https://claude.ai/code?q=Remove%20raw_ball%20from%20ScoreSnapshot%20and%20score_snapshot.schema.json%20on%20branch%20eval%2Fscoring-leak-raw-ball%3B%20revert%20scoring%2Fengine.py%20raw_ball%20and%20restore%20tests%3B%20add%20a%20separate%20auth-gated%20debug%20route%20instead&repo=org-claudeskill/prlab-cricket-scoring)"
+      ],
+      "metrics": {
+        "true_positives": 1,
+        "false_negatives": 0,
+        "false_positives": 0,
+        "relevant_comments": 1,
+        "comments": 1,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "defect_comments": 0
+      },
+      "unexpected_bots": [],
+      "judge_mode": "llm",
+      "comment_verdicts": [
+        {
+          "index": 1,
+          "label": "trap",
+          "reason": "holds the quote the claim judge verified"
+        }
+      ]
+    },
+    {
+      "case_id": "test-scoring-match-pack-reexports-protocol-fields",
+      "tool": "claude-custom_skill",
+      "pr_url": "https://github.com/org-claudeskill/prlab-cricket-scoring/pull/6",
+      "finding_passed": true,
+      "isolation_passed": true,
+      "intent": "Catch the nested match pack re-exporting extras or umpire_confirmed",
+      "tests": "Scoring adds match.innings.latest_over.latest_delivery so overlays can walk a structured pack instead of last_event strings. That nest copies protocol extras and umpire_confirmed onto the public snapshot. A passing review must say those fields are being re-exported to product clients. Complaining only that the JSON schema is underspecified is not enough.",
+      "capability_id": "contract-leak",
+      "capability": "Public contract leak",
+      "capability_asks": "Can the tool see that a public response or nested object now exposes internal or forbidden fields?",
+      "capability_ids": [
+        "contract-leak"
+      ],
+      "claims": [
+        {
+          "claim_id": "match-pack-reexports-protocol",
+          "must_assert": "The nested match pack re-exports protocol details such as extras or umpire_confirmed to product clients instead of keeping those fields inside scoring.",
+          "passed": true,
+          "quote": "GET /matches/{id}/score now also returns an optional match.innings.latest_over.latest_delivery object. It carries ... extras.type ... and wicket.umpire_confirmed.",
+          "reason": "The review explicitly says those protocol fields are now included in the nested match pack, confirming the re\u2011export.",
+          "tokens_expected": [
+            "(match pack|latest_delivery|umpire_confirmed|extras)",
+            "(leak|re-export|protocol|product)"
+          ],
+          "tokens_matched": [
+            "(match pack|latest_delivery|umpire_confirmed|extras)",
+            "(leak|re-export|protocol|product)"
+          ],
+          "tokens_missing": []
+        }
+      ],
+      "actual": "### Verdict: safe to merge\n\n**Runtime change:** `GET /matches/{id}/score` now also returns an optional `match.innings.latest_over.latest_delivery` object. It carries `striker`, `bowler`, `runs_off_bat`, `extras.type` and `extras.runs`, and `wicket.kind` and `wicket.umpire_confirmed`. The existing fields (`runs`, `wickets`, `overs`, `last_event`) are computed exactly as before.\n\n**Consumers checked in `.estate/`.** None of them read `match`, so none change behaviour:\n- **live-gateway:** `gateway/filter.py:13-37`. `IngestSnapshot` uses `extra: ignore` and `to_product` copies only the five known fields. `tests/test_filter.py:40-54` asserts that `match` is dropped. Nothing reaches mobile.\n - **mobile:** `src/screen.js:8-10` reads only `last_event`.\n- **broadcast:** `src/animator.js:9-10`, `public/app.js:4-6` and `src/scoreSnapshot.js:28-35` read only `last_event`. `assertProductSnapshot` checks for top-level `raw_ball` and `umpire_confirmed`. `umpire_confirmed` is nested under `match`, so it neither trips the check nor gets read.\n- **stats:** `stats/snapshot.py:9-` and `stats/ledger.py:21-26` use a pydantic model that ignores extra keys, so `match` is dropped. Wickets still come only from `snapshot.wickets`.\n - **fantasy:** `fantasy/points.py:138-146` uses ledger totals only.\n- **archive:** `archive/store.py:54-72` uses `extra: ignore` and stores only the known fields.\n- **notifications:** `notifications/push.py:173-180` uses `wicket_counted` only.\n- **highlights:** `src/clip.js:31-43` reads only `last_event`.\n - **social:** `src/post.js:16-24` sees only the highlight kind.\n\nFields like `wickets`, `wicket_counted` and `display` are unchanged. `engine.py` still counts a wicket only when the dismissal is confirmed.\n\n**No confirmed defects.**\n\n**Unverified risk (not a defect today):**\n- The pack exposes `wicket.kind` for unconfirmed appeals, for example an LBW with `umpire_confirmed=false`. `scoring/snapshot.py:47-50` says `umpire_confirmed` and `extras.type` are forbidden product fields, and `broadcast/src/scoreSnapshot.js:2-3` says the same. I found no consumer in `.estate/` that reads `match`.\n- A future overlay client that treats `wicket.kind != \"none\"` as a dismissal would show appeals as wickets. `scoring/overlay.py:14-17` guards against this. New clients should use `last_event.wicket_counted` or replicate that guard.",
+      "comments": [
+        "### Verdict: safe to merge\n\n**Runtime change:** `GET /matches/{id}/score` now also returns an optional `match.innings.latest_over.latest_delivery` object. It carries `striker`, `bowler`, `runs_off_bat`, `extras.type` and `extras.runs`, and `wicket.kind` and `wicket.umpire_confirmed`. The existing fields (`runs`, `wickets`, `overs`, `last_event`) are computed exactly as before.\n\n**Consumers checked in `.estate/`.** None of them read `match`, so none change behaviour:\n- **live-gateway:** `gateway/filter.py:13-37`. `IngestSnapshot` uses `extra: ignore` and `to_product` copies only the five known fields. `tests/test_filter.py:40-54` asserts that `match` is dropped. Nothing reaches mobile.\n - **mobile:** `src/screen.js:8-10` reads only `last_event`.\n- **broadcast:** `src/animator.js:9-10`, `public/app.js:4-6` and `src/scoreSnapshot.js:28-35` read only `last_event`. `assertProductSnapshot` checks for top-level `raw_ball` and `umpire_confirmed`. `umpire_confirmed` is nested under `match`, so it neither trips the check nor gets read.\n- **stats:** `stats/snapshot.py:9-` and `stats/ledger.py:21-26` use a pydantic model that ignores extra keys, so `match` is dropped. Wickets still come only from `snapshot.wickets`.\n - **fantasy:** `fantasy/points.py:138-146` uses ledger totals only.\n- **archive:** `archive/store.py:54-72` uses `extra: ignore` and stores only the known fields.\n- **notifications:** `notifications/push.py:173-180` uses `wicket_counted` only.\n- **highlights:** `src/clip.js:31-43` reads only `last_event`.\n - **social:** `src/post.js:16-24` sees only the highlight kind.\n\nFields like `wickets`, `wicket_counted` and `display` are unchanged. `engine.py` still counts a wicket only when the dismissal is confirmed.\n\n**No confirmed defects.**\n\n**Unverified risk (not a defect today):**\n- The pack exposes `wicket.kind` for unconfirmed appeals, for example an LBW with `umpire_confirmed=false`. `scoring/snapshot.py:47-50` says `umpire_confirmed` and `extras.type` are forbidden product fields, and `broadcast/src/scoreSnapshot.js:2-3` says the same. I found no consumer in `.estate/` that reads `match`.\n- A future overlay client that treats `wicket.kind != \"none\"` as a dismissal would show appeals as wickets. `scoring/overlay.py:14-17` guards against this. New clients should use `last_event.wicket_counted` or replicate that guard."
+      ],
+      "metrics": {
+        "true_positives": 1,
+        "false_negatives": 0,
+        "false_positives": 0,
+        "relevant_comments": 1,
+        "comments": 1,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "defect_comments": 0
+      },
+      "unexpected_bots": [],
+      "judge_mode": "llm",
+      "comment_verdicts": [
+        {
+          "index": 1,
+          "label": "trap",
+          "reason": "holds the quote the claim judge verified"
+        }
+      ]
+    },
+    {
+      "case_id": "test-broadcast-raw-ball-treats-missing-confirm-as-wicket",
+      "tool": "claude-custom_skill",
+      "pr_url": "https://github.com/org-claudeskill/prlab-cricket-broadcast/pull/5",
+      "finding_passed": true,
+      "isolation_passed": true,
+      "intent": "Catch TV animation treating a missing umpire_confirmed as a wicket via raw_ball",
+      "tests": "Broadcast starts reading extras.type and umpire_confirmed from snapshot.raw_ball so wides and appeals animate. If confirmation is omitted it treats the ball as a wicket before last_event. A passing review must say that bypasses scoring's last_event and can show a rejected appeal as a wicket. Coverage nits on no_ball without that confirmation bug fail the case.",
+      "capability_id": "abstraction-bypass",
+      "capability": "Published-contract bypass",
+      "capability_asks": "Can the tool flag a consumer reading producer internals \u2014 a leaked envelope or a nested walk \u2014 instead of the agreed public field?",
+      "capability_ids": [
+        "abstraction-bypass"
+      ],
+      "claims": [
+        {
+          "claim_id": "raw-ball-bypasses-last-event",
+          "must_assert": "Animating from raw_ball extras or umpire_confirmed bypasses scoring's last_event and can treat a missing confirmation as a wicket.",
+          "passed": true,
+          "quote": "An unconfirmed or missing `umpire_confirmed` can show a wicket that scoring did not count.",
+          "reason": "The review explicitly states that using raw_ball fields bypasses scoring's last_event and may treat a missing confirmation as a wicket.",
+          "tokens_expected": [
+            "raw_ball",
+            "(umpire_confirmed|extras)"
+          ],
+          "tokens_matched": [
+            "raw_ball",
+            "(umpire_confirmed|extras)"
+          ],
+          "tokens_missing": []
+        }
+      ],
+      "actual": "### Verdict: not safe to merge\n\nThe PR makes broadcast read protocol fields (`raw_ball.wicket.umpire_confirmed`, `raw_ball.extras.type`). Scoring's contract forbids those fields. If they are ever present, broadcast defaults a missing `umpire_confirmed` to true and shows a wicket that scoring did not count.\n\n**What changes at runtime:** `animationFor` in `src/animator.js` and `public/app.js` now prefers `snapshot.raw_ball` over `last_event`. The `raw_ball` guard in `assertProductSnapshot` is removed.\n\n### Defects\n\n1. **An unconfirmed or missing `umpire_confirmed` can show a wicket that scoring did not count.**\n - Cause: `src/animator.js:11-16` and `public/app.js:5-8` play \"wicket\" whenever `raw.wicket.umpire_confirmed !== false`. A missing flag counts as confirmed.\n - Contract: the protocol says the flag is required and has no default. A missing value is invalid and must not be treated as true (`prlab-cricket-protocol/cricket_protocol/models.py:33-39`, `invariants.py:9-10`). An unconfirmed dismissal is not a wicket, and only scoring decides that (`invariants.py:11`).\n - Scoring's decision is `wicket_counted` (`prlab-cricket-scoring/scoring/engine.py:48-50`), which the old code path used.\n - Where it surfaces: the on-air animation would say \"wicket\" while `snapshot.wickets` (from `engine.py:52-57`) is unchanged, so the TV graphic disagrees with the score. Any client of this stream, such as the stats ledger that reads only `snapshot.wickets` (`prlab-cricket-stats/stats/ledger.py:11-12`), would disagree with the animation.\n - Test: the new test \"raw_ball wicket without umpire flag plays wicket animation\" in `tests/animator.test.js` asserts this behaviour.\n\n2. **The comment justifying the default is unverified and appears false.**\n - The comment at `src/animator.js:11` says the default \"matches protocol mobile default\".\n - Protocol has no default (see above). In `prlab-cricket-mobile/src/screen.js` I found no `umpire_confirmed` or `raw_ball` handling at all.\n\n3. **The new dependency has no producer.**\n - Scoring's `ScoreSnapshot` (`prlab-cricket-scoring/scoring/snapshot.py:14-31`) has no `raw_ball` field.\n - Its JSON schema sets `additionalProperties: false` (`prlab-cricket-scoring/schemas/score_snapshot.schema.json:5`).\n - Scoring's test `prlab-cricket-scoring/tests/test_app.py:28` asserts `raw_ball` is absent.\n - The live-gateway (`tests/test_app.py:22-27`, `tests/test_filter.py:39-53`) and archive (`tests/test_app.py:25-29`) tests assert that `raw_ball` is stripped.\n - So against the current estate the new branches never fire. The wide and no-ball animations still don't change, because `last_event.display` already carries `WIDE` and `NO_BALL` (`prlab-cricket-scoring/scoring/snapshot.py:9-11`, `engine.py:30-31`).\n - The \"richer animations\" goal is not delivered without changing scoring, and if scoring later emits `raw_ball`, defect 1 activates.\n\n4. **The guard against leaked protocol data is removed.** `src/scoreSnapshot.js` used to throw when `raw_ball` or `umpire_confirmed` leaked, and `public/app.js` used to warn. Both are gone, so a scoring or gateway regression that leaks raw events would now drive the broadcast silently instead of failing loudly.\n\n### Suggested fix\nDrive animations only from `last_event`, as before. That means using `wicket_counted`, `display === \"WIDE\"` and `display === \"NO_BALL\"`. If richer wide or no-ball visuals need more data, add an explicit scoring-owned field to `ScoreSnapshot` and its schema in cricket-scoring. Do not read protocol fields in broadcast.\n \u00b7 branch `eval/broadcast-couple-raw-ball`",
+      "comments": [
+        "### Verdict: not safe to merge\n\nThe PR makes broadcast read protocol fields (`raw_ball.wicket.umpire_confirmed`, `raw_ball.extras.type`). Scoring's contract forbids those fields. If they are ever present, broadcast defaults a missing `umpire_confirmed` to true and shows a wicket that scoring did not count.\n\n**What changes at runtime:** `animationFor` in `src/animator.js` and `public/app.js` now prefers `snapshot.raw_ball` over `last_event`. The `raw_ball` guard in `assertProductSnapshot` is removed.\n\n### Defects\n\n1. **An unconfirmed or missing `umpire_confirmed` can show a wicket that scoring did not count.**\n - Cause: `src/animator.js:11-16` and `public/app.js:5-8` play \"wicket\" whenever `raw.wicket.umpire_confirmed !== false`. A missing flag counts as confirmed.\n - Contract: the protocol says the flag is required and has no default. A missing value is invalid and must not be treated as true (`prlab-cricket-protocol/cricket_protocol/models.py:33-39`, `invariants.py:9-10`). An unconfirmed dismissal is not a wicket, and only scoring decides that (`invariants.py:11`).\n - Scoring's decision is `wicket_counted` (`prlab-cricket-scoring/scoring/engine.py:48-50`), which the old code path used.\n - Where it surfaces: the on-air animation would say \"wicket\" while `snapshot.wickets` (from `engine.py:52-57`) is unchanged, so the TV graphic disagrees with the score. Any client of this stream, such as the stats ledger that reads only `snapshot.wickets` (`prlab-cricket-stats/stats/ledger.py:11-12`), would disagree with the animation.\n - Test: the new test \"raw_ball wicket without umpire flag plays wicket animation\" in `tests/animator.test.js` asserts this behaviour.\n\n2. **The comment justifying the default is unverified and appears false.**\n - The comment at `src/animator.js:11` says the default \"matches protocol mobile default\".\n - Protocol has no default (see above). In `prlab-cricket-mobile/src/screen.js` I found no `umpire_confirmed` or `raw_ball` handling at all.\n\n3. **The new dependency has no producer.**\n - Scoring's `ScoreSnapshot` (`prlab-cricket-scoring/scoring/snapshot.py:14-31`) has no `raw_ball` field.\n - Its JSON schema sets `additionalProperties: false` (`prlab-cricket-scoring/schemas/score_snapshot.schema.json:5`).\n - Scoring's test `prlab-cricket-scoring/tests/test_app.py:28` asserts `raw_ball` is absent.\n - The live-gateway (`tests/test_app.py:22-27`, `tests/test_filter.py:39-53`) and archive (`tests/test_app.py:25-29`) tests assert that `raw_ball` is stripped.\n - So against the current estate the new branches never fire. The wide and no-ball animations still don't change, because `last_event.display` already carries `WIDE` and `NO_BALL` (`prlab-cricket-scoring/scoring/snapshot.py:9-11`, `engine.py:30-31`).\n - The \"richer animations\" goal is not delivered without changing scoring, and if scoring later emits `raw_ball`, defect 1 activates.\n\n4. **The guard against leaked protocol data is removed.** `src/scoreSnapshot.js` used to throw when `raw_ball` or `umpire_confirmed` leaked, and `public/app.js` used to warn. Both are gone, so a scoring or gateway regression that leaks raw events would now drive the broadcast silently instead of failing loudly.\n\n### Suggested fix\nDrive animations only from `last_event`, as before. That means using `wicket_counted`, `display === \"WIDE\"` and `display === \"NO_BALL\"`. If richer wide or no-ball visuals need more data, add an explicit scoring-owned field to `ScoreSnapshot` and its schema in cricket-scoring. Do not read protocol fields in broadcast.\n \u00b7 branch `eval/broadcast-couple-raw-ball`"
+      ],
+      "metrics": {
+        "true_positives": 1,
+        "false_negatives": 0,
+        "false_positives": 0,
+        "relevant_comments": 1,
+        "comments": 1,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "defect_comments": 0
+      },
+      "unexpected_bots": [],
+      "judge_mode": "llm",
+      "comment_verdicts": [
+        {
+          "index": 1,
+          "label": "trap",
+          "reason": "holds the quote the claim judge verified"
+        }
+      ]
+    },
+    {
+      "case_id": "test-broadcast-match-pack-walk-bypasses-last-event",
+      "tool": "claude-custom_skill",
+      "pr_url": "https://github.com/org-claudeskill/prlab-cricket-broadcast/pull/6",
+      "finding_passed": true,
+      "isolation_passed": true,
+      "intent": "Catch walking match.innings.latest_over.latest_delivery instead of trusting last_event",
+      "tests": "Broadcast walks the nested match pack for overlay animations. That couples TV graphics to protocol extras and wicket confirmation instead of scoring's last_event. A passing review must say the walk bypasses last_event or re-reads confirmation/extras from the pack. Noting only that public/app.js duplicates animator.js is not enough.",
+      "capability_id": "abstraction-bypass",
+      "capability": "Published-contract bypass",
+      "capability_asks": "Can the tool flag a consumer reading producer internals \u2014 a leaked envelope or a nested walk \u2014 instead of the agreed public field?",
+      "capability_ids": [
+        "abstraction-bypass"
+      ],
+      "claims": [
+        {
+          "claim_id": "match-pack-walk-couples-protocol",
+          "must_assert": "Walking match.innings.latest_over.latest_delivery couples broadcast to protocol extras or wicket confirmation instead of trusting last_event.",
+          "passed": true,
+          "quote": "now reads `snapshot.match.innings.latest_over.latest_delivery` first. It only falls back to `last_event` if that pack is absent or has no wicket or extras.",
+          "reason": "The review explicitly says the code reads the match pack first, coupling broadcast to protocol fields instead of trusting last_event.",
+          "tokens_expected": [
+            "(latest_delivery|match\\.innings|umpire_confirmed)",
+            "(last_event|wicket|extras)"
+          ],
+          "tokens_matched": [
+            "(latest_delivery|match\\.innings|umpire_confirmed)",
+            "(last_event|wicket|extras)"
+          ],
+          "tokens_missing": []
+        }
+      ],
+      "actual": "### Verdict: not safe to merge\n\nThe new path can play a \"wicket\" overlay for a delivery that scoring did not count as a wicket. The path is dormant today, and this PR removes the guards that would have caught it.\n\n**What changes at runtime:** `animationFor` (`src/animator.js:9-21`, `public/app.js:5-10`) now reads `snapshot.match.innings.latest_over.latest_delivery` first. It only falls back to `last_event` if that pack is absent or has no wicket or extras. `assertProductSnapshot` and the `raw_ball` warning no longer reject protocol fields.\n\n### Defect 1: missing `umpire_confirmed` is treated as a confirmed wicket (fail-open)\n- **Cause:** `src/animator.js:11-16` and `public/app.js:6-8` return `\"wicket\"` when `wicket.kind` is set and `umpire_confirmed !== false`. The comment says \"overlays fail closed\", but this fails open. `src/scoreSnapshot.js:14` also types the field as optional.\n- **Contract:** The protocol requires the field and gives it no default. Omitting it is invalid (`.estate/prlab-cricket-protocol/schemas/ball_event.schema.json:45`, `cricket_protocol/models.py:33`, `invariants.py:9`).\n- **Where it surfaces:** Scoring only counts a wicket when the kind is set and the umpire confirmed (`.estate/prlab-cricket-scoring/scoring/engine.py:48-50`). It then sets `wicket_counted` from that. If the pack carries an LBW appeal without the flag, or with it stripped or serialised as null, broadcast shows a WICKET overlay while `snapshot.wickets` and `last_event.wicket_counted` (`engine.py:60-70`) are unchanged. The on-air graphic then contradicts the scoreboard. The PR's own test \"match pack wicket without umpire flag plays wicket animation\" (`tests/animator.test.js`) locks in this behaviour, and its `last_event` has `wicket_counted: false`.\n- **Fix:** Require `umpire_confirmed === true`, or better, use `last_event.wicket_counted` as the only wicket signal.\n\n### Defect 2: the guards that kept protocol data out of broadcast were removed\n- **Cause:** `src/scoreSnapshot.js:36-40` used to throw on `raw_ball` and `umpire_confirmed`. `public/app.js` used to warn on `raw_ball`. The comments and docs that forbade this coupling are gone too.\n- **Contract:** Scoring's `ScoreSnapshot` says \"Broadcast may depend only on this shape. Forbidden product fields: raw BallEvent, extras.type, umpire_confirmed\" (`.estate/prlab-cricket-scoring/scoring/snapshot.py:15-18`). That model has no `match` field. The stats service follows the same rule (`.estate/prlab-cricket-stats/stats/ledger.py:11`).\n- **Where it surfaces:** Broadcast polls scoring directly (`src/client.js:9`, default `http://127.0.0.1:8000`, and `README.md:7`). Scoring does not emit `match` today, so the new branch is dead code and nothing changes until it does. Other services show `match` is in flight elsewhere:\n - The archive tests carry `match.innings.latest_over.latest_delivery` alongside `raw_ball` (`.estate/prlab-cricket-archive/tests/test_store.py:39-40`).\n - The gateway test treats `match` as a protocol leak that must be dropped (`.estate/prlab-cricket-live-gateway/tests/test_filter.py:40-54`).\n - The gateway's `IngestSnapshot`/`to_product` (`.estate/prlab-cricket-live-gateway/gateway/filter.py:21-35`) strips it before mobile.\n- **Consequence:** If scoring or an upstream proxy ever attaches `match`, broadcast will silently switch to protocol-derived logic. Combined with Defect 1, that produces the wrong overlays. Broadcast also diverges from what mobile sees through the gateway. I found no consumer in `.estate/` that documents `match` as an approved product field.\n- **Fix:** Keep `match` out of the broadcast contract. Restore the assertions and drive animations from `last_event` only, unless scoring's `ScoreSnapshot` formally adds the pack and its wicket semantics.\n\n### Unverified\n- The PR description says the goal is to avoid parsing `last_event.display`. `display` is scoring-owned (`snapshot.py:7-9`). I found no estate consumer that requires broadcast to use the nested pack.\n \u00b7 branch `eval/broadcast-law-of-demeter`",
+      "comments": [
+        "### Verdict: not safe to merge\n\nThe new path can play a \"wicket\" overlay for a delivery that scoring did not count as a wicket. The path is dormant today, and this PR removes the guards that would have caught it.\n\n**What changes at runtime:** `animationFor` (`src/animator.js:9-21`, `public/app.js:5-10`) now reads `snapshot.match.innings.latest_over.latest_delivery` first. It only falls back to `last_event` if that pack is absent or has no wicket or extras. `assertProductSnapshot` and the `raw_ball` warning no longer reject protocol fields.\n\n### Defect 1: missing `umpire_confirmed` is treated as a confirmed wicket (fail-open)\n- **Cause:** `src/animator.js:11-16` and `public/app.js:6-8` return `\"wicket\"` when `wicket.kind` is set and `umpire_confirmed !== false`. The comment says \"overlays fail closed\", but this fails open. `src/scoreSnapshot.js:14` also types the field as optional.\n- **Contract:** The protocol requires the field and gives it no default. Omitting it is invalid (`.estate/prlab-cricket-protocol/schemas/ball_event.schema.json:45`, `cricket_protocol/models.py:33`, `invariants.py:9`).\n- **Where it surfaces:** Scoring only counts a wicket when the kind is set and the umpire confirmed (`.estate/prlab-cricket-scoring/scoring/engine.py:48-50`). It then sets `wicket_counted` from that. If the pack carries an LBW appeal without the flag, or with it stripped or serialised as null, broadcast shows a WICKET overlay while `snapshot.wickets` and `last_event.wicket_counted` (`engine.py:60-70`) are unchanged. The on-air graphic then contradicts the scoreboard. The PR's own test \"match pack wicket without umpire flag plays wicket animation\" (`tests/animator.test.js`) locks in this behaviour, and its `last_event` has `wicket_counted: false`.\n- **Fix:** Require `umpire_confirmed === true`, or better, use `last_event.wicket_counted` as the only wicket signal.\n\n### Defect 2: the guards that kept protocol data out of broadcast were removed\n- **Cause:** `src/scoreSnapshot.js:36-40` used to throw on `raw_ball` and `umpire_confirmed`. `public/app.js` used to warn on `raw_ball`. The comments and docs that forbade this coupling are gone too.\n- **Contract:** Scoring's `ScoreSnapshot` says \"Broadcast may depend only on this shape. Forbidden product fields: raw BallEvent, extras.type, umpire_confirmed\" (`.estate/prlab-cricket-scoring/scoring/snapshot.py:15-18`). That model has no `match` field. The stats service follows the same rule (`.estate/prlab-cricket-stats/stats/ledger.py:11`).\n- **Where it surfaces:** Broadcast polls scoring directly (`src/client.js:9`, default `http://127.0.0.1:8000`, and `README.md:7`). Scoring does not emit `match` today, so the new branch is dead code and nothing changes until it does. Other services show `match` is in flight elsewhere:\n - The archive tests carry `match.innings.latest_over.latest_delivery` alongside `raw_ball` (`.estate/prlab-cricket-archive/tests/test_store.py:39-40`).\n - The gateway test treats `match` as a protocol leak that must be dropped (`.estate/prlab-cricket-live-gateway/tests/test_filter.py:40-54`).\n - The gateway's `IngestSnapshot`/`to_product` (`.estate/prlab-cricket-live-gateway/gateway/filter.py:21-35`) strips it before mobile.\n- **Consequence:** If scoring or an upstream proxy ever attaches `match`, broadcast will silently switch to protocol-derived logic. Combined with Defect 1, that produces the wrong overlays. Broadcast also diverges from what mobile sees through the gateway. I found no consumer in `.estate/` that documents `match` as an approved product field.\n- **Fix:** Keep `match` out of the broadcast contract. Restore the assertions and drive animations from `last_event` only, unless scoring's `ScoreSnapshot` formally adds the pack and its wicket semantics.\n\n### Unverified\n- The PR description says the goal is to avoid parsing `last_event.display`. `display` is scoring-owned (`snapshot.py:7-9`). I found no estate consumer that requires broadcast to use the nested pack.\n \u00b7 branch `eval/broadcast-law-of-demeter`"
+      ],
+      "metrics": {
+        "true_positives": 1,
+        "false_negatives": 0,
+        "false_positives": 0,
+        "relevant_comments": 1,
+        "comments": 1,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "defect_comments": 0
+      },
+      "unexpected_bots": [],
+      "judge_mode": "llm",
+      "comment_verdicts": [
+        {
+          "index": 1,
+          "label": "trap",
+          "reason": "holds the quote the claim judge verified"
+        }
+      ]
+    },
+    {
+      "case_id": "test-stats-not-out-display-increments-wickets",
+      "tool": "claude-custom_skill",
+      "pr_url": "https://github.com/org-claudeskill/prlab-cricket-stats/pull/3",
+      "finding_passed": true,
+      "isolation_passed": true,
+      "intent": "Catch incrementing ledger wickets when last_event.display is NOT_OUT",
+      "tests": "Stats increments MatchLedger.wickets when the display is NOT_OUT so analytics includes appeal volume. Scoring already said the batter was not out (wicket_counted is false). A passing review must say an appeal is now counted as a dismissal. Updating comments that the ledger used to copy snapshot.wickets, without the NOT_OUT increment, fails the case.",
+      "capability_id": "display-vs-authority",
+      "capability": "Display vs authoritative state",
+      "capability_asks": "Can the tool reject treating a presentation or display value as the source of truth for a decision or side effect?",
+      "capability_ids": [
+        "display-vs-authority"
+      ],
+      "claims": [
+        {
+          "claim_id": "not-out-counted-as-wicket",
+          "must_assert": "Incrementing wickets when the display is NOT_OUT counts an appeal as a dismissal even though scoring said the batter was not out.",
+          "passed": true,
+          "quote": "`apply_snapshot` now adds a wicket for an appeal the umpire did not give",
+          "reason": "The review states that wickets are incremented when display is NOT_OUT, counting an appeal as a dismissal even though the batter was not out.",
+          "tokens_expected": [
+            "NOT_OUT",
+            "wicket"
+          ],
+          "tokens_matched": [
+            "NOT_OUT",
+            "wicket"
+          ],
+          "tokens_missing": []
+        }
+      ],
+      "actual": "### Review\n\n**Verdict: not safe to merge.** `apply_snapshot` now adds a wicket for an appeal the umpire did not give, and the fantasy service converts that wicket into 20 points.\n\n**What changes at runtime:** when `snapshot.last_event.display == \"NOT_OUT\"`, `MatchLedger.wickets` is `snapshot.wickets + 1`. Before, it was a straight copy of `snapshot.wickets`.\n\n### Defect: not-out appeals are paid as wickets in fantasy\n\n- **Cause (this repo):** `stats/ledger.py` lines 22-25 (the added `wickets += 1`). The `MatchLedger` docstring in the same file says \"Forbidden: last_event.display as a wicket signal \u2026 Wickets come from snapshot.wickets only.\" The PR breaks that rule. I did not use the docstring as evidence. The consumers below confirm the rule.\n- **Origin of the value:** `prlab-cricket-scoring/scoring/engine.py` lines 23-27 emit `display=\"NOT_OUT\"` only when a wicket kind is set and `wicket_counted` is false. Lines 48-50 and 56 show that `snapshot.wickets` is incremented only when `umpire_confirmed` is true. So `NOT_OUT` means an appeal that was explicitly not given, and the snapshot's `wickets` already excludes it.\n- **Where it surfaces:**\n - `prlab-cricket-fantasy/fantasy/app.py` lines 47-53: `POST /matches/{id}/ledgers` accepts the ledger and stores the settled result.\n - `prlab-cricket-fantasy/fantasy/points.py` line 24: `bowling = ledger.wickets * WICKET_POINTS`, with `WICKET_POINTS = 20` on line 12. Each not-out ball gives the bowler +20 fantasy points. `total` on line 29 rises with it, and `GET /matches/{id}/points` returns it.\n - I could not find the code that calls the fantasy endpoint. `fantasy/ledger.py` is a duplicate of `MatchLedger`, and its `wickets` field carries no marker for \"appeal volume\".\n\n### Secondary effect: the count is not monotonic\n\nThe +1 applies only to the snapshot whose last ball is `NOT_OUT`. On the next ball the ledger drops back to `snapshot.wickets`. The bowler's points therefore rise by 20 on that ball and fall by 20 on the next. Fantasy overwrites `_points[match_id]` on each POST (`app.py` line 52). The stored value depends on which snapshot was sent last, so it is not a stable total for any consumer.\n\n### Not confirmed\n\nThe PR body says \"Most referrals are upheld\". I checked this against scoring. `NOT_OUT` is the case where the wicket was not upheld, so the claim contradicts the source.\n\n### Suggestion\n\nDon't put appeal volume into `wickets`. Add a separate field, for example `appeals: int`, to the ledger. Fantasy and other consumers ignore fields they don't model, so a new field would not change their wicket totals. Revert the `tests/test_ledger.py` change that now asserts `wickets == 1`.\n \u00b7 branch `eval/stats-count-not-out`",
+      "comments": [
+        "### Review\n\n**Verdict: not safe to merge.** `apply_snapshot` now adds a wicket for an appeal the umpire did not give, and the fantasy service converts that wicket into 20 points.\n\n**What changes at runtime:** when `snapshot.last_event.display == \"NOT_OUT\"`, `MatchLedger.wickets` is `snapshot.wickets + 1`. Before, it was a straight copy of `snapshot.wickets`.\n\n### Defect: not-out appeals are paid as wickets in fantasy\n\n- **Cause (this repo):** `stats/ledger.py` lines 22-25 (the added `wickets += 1`). The `MatchLedger` docstring in the same file says \"Forbidden: last_event.display as a wicket signal \u2026 Wickets come from snapshot.wickets only.\" The PR breaks that rule. I did not use the docstring as evidence. The consumers below confirm the rule.\n- **Origin of the value:** `prlab-cricket-scoring/scoring/engine.py` lines 23-27 emit `display=\"NOT_OUT\"` only when a wicket kind is set and `wicket_counted` is false. Lines 48-50 and 56 show that `snapshot.wickets` is incremented only when `umpire_confirmed` is true. So `NOT_OUT` means an appeal that was explicitly not given, and the snapshot's `wickets` already excludes it.\n- **Where it surfaces:**\n - `prlab-cricket-fantasy/fantasy/app.py` lines 47-53: `POST /matches/{id}/ledgers` accepts the ledger and stores the settled result.\n - `prlab-cricket-fantasy/fantasy/points.py` line 24: `bowling = ledger.wickets * WICKET_POINTS`, with `WICKET_POINTS = 20` on line 12. Each not-out ball gives the bowler +20 fantasy points. `total` on line 29 rises with it, and `GET /matches/{id}/points` returns it.\n - I could not find the code that calls the fantasy endpoint. `fantasy/ledger.py` is a duplicate of `MatchLedger`, and its `wickets` field carries no marker for \"appeal volume\".\n\n### Secondary effect: the count is not monotonic\n\nThe +1 applies only to the snapshot whose last ball is `NOT_OUT`. On the next ball the ledger drops back to `snapshot.wickets`. The bowler's points therefore rise by 20 on that ball and fall by 20 on the next. Fantasy overwrites `_points[match_id]` on each POST (`app.py` line 52). The stored value depends on which snapshot was sent last, so it is not a stable total for any consumer.\n\n### Not confirmed\n\nThe PR body says \"Most referrals are upheld\". I checked this against scoring. `NOT_OUT` is the case where the wicket was not upheld, so the claim contradicts the source.\n\n### Suggestion\n\nDon't put appeal volume into `wickets`. Add a separate field, for example `appeals: int`, to the ledger. Fantasy and other consumers ignore fields they don't model, so a new field would not change their wicket totals. Revert the `tests/test_ledger.py` change that now asserts `wickets == 1`.\n \u00b7 branch `eval/stats-count-not-out`"
+      ],
+      "metrics": {
+        "true_positives": 1,
+        "false_negatives": 0,
+        "false_positives": 0,
+        "relevant_comments": 1,
+        "comments": 1,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "defect_comments": 0
+      },
+      "unexpected_bots": [],
+      "judge_mode": "llm",
+      "comment_verdicts": [
+        {
+          "index": 1,
+          "label": "trap",
+          "reason": "holds the quote the claim judge verified"
+        }
+      ]
+    },
+    {
+      "case_id": "test-fantasy-missing-confirm-pays-wicket-points",
+      "tool": "claude-custom_skill",
+      "pr_url": "https://github.com/org-claudeskill/prlab-cricket-fantasy/pull/3",
+      "finding_passed": true,
+      "isolation_passed": true,
+      "intent": "Catch paying bowling wicket points from last_ball when confirmation is missing",
+      "tests": "Fantasy settles bowling from last_ball.wicket and treats a missing umpire_confirmed as given. That can award 20 wicket points the ledger total never granted. A passing review must say omitted confirmation pays wicket points. Complaining only that last-ball settlement overwrites an aggregate of three wickets, without the missing-confirm award, is a different bug.",
+      "capability_id": "omitted-guard-as-true",
+      "capability": "Omitted guard treated as true",
+      "capability_asks": "Can the tool catch logic that treats a missing confirmation or guard flag as granted?",
+      "capability_ids": [
+        "omitted-guard-as-true"
+      ],
+      "claims": [
+        {
+          "claim_id": "missing-confirm-pays-wicket",
+          "must_assert": "Settling bowling from last_ball.wicket when confirmation is missing awards wicket points that the ledger wicket total did not grant.",
+          "passed": true,
+          "quote": "Fantasy would now award 20 bowling points for a dismissal that scoring never counted, and would disagree with `snapshot.wickets`.",
+          "reason": "The review states that missing umpire confirmation leads to awarding wicket points that the ledger's wicket total does not provide.",
+          "tokens_expected": [
+            "(last_ball|umpire_confirmed)",
+            "(wicket|bowling|points)"
+          ],
+          "tokens_matched": [
+            "(last_ball|umpire_confirmed)",
+            "(wicket|bowling|points)"
+          ],
+          "tokens_missing": []
+        }
+      ],
+      "actual": "### Verdict: not safe to merge\n\n**Runtime change:** `settle()` now reads an optional `ledger.last_ball.wicket`. If the kind isn't `\"none\"` and `umpire_confirmed` is anything but `False` (including missing), it sets `bowling = WICKET_POINTS`. This replaces the `ledger.wickets` total.\n\n### Defects\n\n**1. Unconfirmed appeals are paid as wickets.**\n- **Cause:** `fantasy/points.py:25-29` treats a missing `umpire_confirmed` as true. `fantasy/ledger.py:6-8` also defaults the field to `None`.\n- **Contract it breaks:** The protocol makes `umpire_confirmed` required, with no default. `.estate/prlab-cricket-protocol/cricket_protocol/models.py:31-38` says \"Scoring must not treat a missing value as true \u2014 unconfirmed appeals are not wickets.\" `.estate/prlab-cricket-protocol/cricket_protocol/invariants.py:9-12` says \"umpire_confirmed has no default; omitting it is invalid\" and \"an unconfirmed dismissal is not a wicket \u2014 only scoring may decide that\".\n- **Where it surfaces:** Scoring is the only place that decides a wicket. `.estate/prlab-cricket-scoring/scoring/engine.py:48-50` counts a wicket only when `umpire_confirmed` is truthy. Fantasy would now award 20 bowling points for a dismissal that scoring never counted, and would disagree with `snapshot.wickets`. The wicket-related notifications, highlights and mobile screens all read scoring's `wicket_counted`, so they would show no wicket for the same ball.\n- **Input that triggers it:** A ledger with `last_ball: {\"wicket\": {\"kind\": \"lbw\"}}`. This is the case the PR's new test asserts pays 20 points.\n\n**2. The wicket total is overwritten, not added to.**\n- **Cause:** `fantasy/points.py:28` assigns `bowling = WICKET_POINTS` instead of adding to the existing total.\n- **Failure:** Take a ledger with `wickets=3` and a confirmed `last_ball` wicket. Bowling drops from 60 to 20, so fantasy under-pays.\n- **Related:** `last_ball` is a single ball, so it should never replace a cumulative total.\n\n**3. The new input has no producer, and its intended source is forbidden.**\n- **Producer:** `.estate/prlab-cricket-stats/stats/ledger.py:9-21` builds the ledger fantasy consumes. It copies only `match_id`, `runs`, `wickets` and `overs`, and says `raw_ball` and `umpire_confirmed` are forbidden and \"Wickets come from snapshot.wickets only.\"\n- **Other services:** Ingest and gateway models strip unknown keys (`.estate/prlab-cricket-live-gateway/gateway/filter.py:28-45`, `.estate/prlab-cricket-archive/archive/store.py:24-25`).\n- **What this means:** Nothing in `.estate` sends `last_ball` to fantasy. The new branch only runs if a leaked raw-ball payload reaches it, and then it is wrong for the reasons above.\n\n### Suggested fix\nRemove the `last_ball` path, and take wickets only from `ledger.wickets`, which scoring has already confirmed. If a per-ball input is ever needed, make `umpire_confirmed` required and treat only `True` as a wicket.\n \u00b7 branch `eval/fantasy-pay-last-ball`",
+      "comments": [
+        "### Verdict: not safe to merge\n\n**Runtime change:** `settle()` now reads an optional `ledger.last_ball.wicket`. If the kind isn't `\"none\"` and `umpire_confirmed` is anything but `False` (including missing), it sets `bowling = WICKET_POINTS`. This replaces the `ledger.wickets` total.\n\n### Defects\n\n**1. Unconfirmed appeals are paid as wickets.**\n- **Cause:** `fantasy/points.py:25-29` treats a missing `umpire_confirmed` as true. `fantasy/ledger.py:6-8` also defaults the field to `None`.\n- **Contract it breaks:** The protocol makes `umpire_confirmed` required, with no default. `.estate/prlab-cricket-protocol/cricket_protocol/models.py:31-38` says \"Scoring must not treat a missing value as true \u2014 unconfirmed appeals are not wickets.\" `.estate/prlab-cricket-protocol/cricket_protocol/invariants.py:9-12` says \"umpire_confirmed has no default; omitting it is invalid\" and \"an unconfirmed dismissal is not a wicket \u2014 only scoring may decide that\".\n- **Where it surfaces:** Scoring is the only place that decides a wicket. `.estate/prlab-cricket-scoring/scoring/engine.py:48-50` counts a wicket only when `umpire_confirmed` is truthy. Fantasy would now award 20 bowling points for a dismissal that scoring never counted, and would disagree with `snapshot.wickets`. The wicket-related notifications, highlights and mobile screens all read scoring's `wicket_counted`, so they would show no wicket for the same ball.\n- **Input that triggers it:** A ledger with `last_ball: {\"wicket\": {\"kind\": \"lbw\"}}`. This is the case the PR's new test asserts pays 20 points.\n\n**2. The wicket total is overwritten, not added to.**\n- **Cause:** `fantasy/points.py:28` assigns `bowling = WICKET_POINTS` instead of adding to the existing total.\n- **Failure:** Take a ledger with `wickets=3` and a confirmed `last_ball` wicket. Bowling drops from 60 to 20, so fantasy under-pays.\n- **Related:** `last_ball` is a single ball, so it should never replace a cumulative total.\n\n**3. The new input has no producer, and its intended source is forbidden.**\n- **Producer:** `.estate/prlab-cricket-stats/stats/ledger.py:9-21` builds the ledger fantasy consumes. It copies only `match_id`, `runs`, `wickets` and `overs`, and says `raw_ball` and `umpire_confirmed` are forbidden and \"Wickets come from snapshot.wickets only.\"\n- **Other services:** Ingest and gateway models strip unknown keys (`.estate/prlab-cricket-live-gateway/gateway/filter.py:28-45`, `.estate/prlab-cricket-archive/archive/store.py:24-25`).\n- **What this means:** Nothing in `.estate` sends `last_ball` to fantasy. The new branch only runs if a leaked raw-ball payload reaches it, and then it is wrong for the reasons above.\n\n### Suggested fix\nRemove the `last_ball` path, and take wickets only from `ledger.wickets`, which scoring has already confirmed. If a per-ball input is ever needed, make `umpire_confirmed` required and treat only `True` as a wicket.\n \u00b7 branch `eval/fantasy-pay-last-ball`"
+      ],
+      "metrics": {
+        "true_positives": 1,
+        "false_negatives": 0,
+        "false_positives": 0,
+        "relevant_comments": 1,
+        "comments": 1,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "defect_comments": 0
+      },
+      "unexpected_bots": [],
+      "judge_mode": "llm",
+      "comment_verdicts": [
+        {
+          "index": 1,
+          "label": "trap",
+          "reason": "holds the quote the claim judge verified"
+        }
+      ]
+    },
+    {
+      "case_id": "test-highlights-not-out-filed-as-wicket-clip",
+      "tool": "claude-custom_skill",
+      "pr_url": "https://github.com/org-claudeskill/prlab-cricket-highlights/pull/3",
+      "finding_passed": true,
+      "isolation_passed": true,
+      "intent": "Catch filing a NOT_OUT appeal as a wicket highlight clip",
+      "tests": "Highlights labels NOT_OUT events as kind=wicket so editors can search one replay bucket. Social then publishes that clip. A passing review must say a refused appeal is mislabeled as a wicket highlight. Replay-discoverability rationale without the mislabel fails the case.",
+      "capability_id": "kind-relabel",
+      "capability": "Outcome kind relabel",
+      "capability_asks": "Can the tool catch a classification change that files or publishes one outcome under another kind?",
+      "capability_ids": [
+        "kind-relabel"
+      ],
+      "claims": [
+        {
+          "claim_id": "appeal-filed-as-wicket-clip",
+          "must_assert": "Treating NOT_OUT as a wicket clip mislabels an appeal as a wicket highlight.",
+          "passed": true,
+          "quote": "Unconfirmed appeals (`NOT_OUT`) would now be published by the social service as public `WICKET` posts.",
+          "reason": "The review states that NOT_OUT is treated as a wicket clip, causing appeals to be posted as wicket highlights.",
+          "tokens_expected": [
+            "NOT_OUT",
+            "wicket"
+          ],
+          "tokens_matched": [
+            "NOT_OUT",
+            "wicket"
+          ],
+          "tokens_missing": []
+        }
+      ],
+      "actual": "**Verdict: not safe to merge.** Unconfirmed appeals (`NOT_OUT`) would now be published by the social service as public `WICKET` posts.\n\n### Runtime change\n`clipFor` in `src/clip.js:15-18` now returns `{ clip: true, kind: \"wicket\" }` for `display === \"NOT_OUT\"`. Before, it returned `{ clip: false, kind: \"appeal\" }`. `kind: \"wicket\"` no longer means the wicket was counted.\n\n### Defect: a social `WICKET` post for a ball that is not a wicket\n- **Cause (this repo):** `src/clip.js:15-18`. The `NOT_OUT` branch reuses `kind: \"wicket\"`, which collides with the counted-wicket branch at `src/clip.js:10-12`.\n- **Source of NOT_OUT (scoring):** `.estate/prlab-cricket-scoring/scoring/engine.py:23-27`. `NOT_OUT` is emitted when `wicket_counted` is false but `event.wicket.kind` is not `NONE`. That means a dismissal was appealed or recorded and not counted, for example with `umpire_confirmed=False`. The scoring docstring at line 42 says it is the only place wickets are counted.\n- **Surfaces (social):** `.estate/prlab-cricket-social/src/post.js:16-19`. `postFor` returns `{ post: true, text: \"WICKET\" }` for any `kind === \"wicket\" && clip`. It never sees `display` or `wicket_counted`. It only receives the `{clip, kind}` pair, so it cannot tell an appeal from a real dismissal.\n- **Previous behaviour was deliberate:** the social test `.estate/prlab-cricket-social/tests/post.test.js:14` asserts that `{ clip: false, kind: \"appeal\" }` is not posted. The comment at `post.js:11` says \"Appeals are not wickets.\"\n- **Result:** every not-out appeal produces a public \"WICKET\" post. The wicket is later not given or overturned, so the post is wrong.\n- **Consumers of the social post:** I found none in `.estate/`. The social service is the last hop I could anchor, so I can't confirm effects past it.\n\n### Not affected\nThe other services I checked derive their wicket handling from `display` and `wicket_counted` in the scoring snapshot, not from highlights' `kind`. These are mobile (`src/screen.js:10`), broadcast (`src/animator.js:10`) and notifications (`push.py:31`). I found no consumer of highlights' `kind` other than social.\n\n### Suggested fix\nKeep `kind: \"appeal\"` for the wrong-post case and make the editors' search cover both kinds. Alternatively, add a separate field, for example `package: \"wicket-replay\"`, and leave `kind` semantics alone. If `kind` must change, update social's contract (`highlight.js`, `post.js`) in the same rollout so appeals are excluded.\n \u00b7 branch `eval/highlights-clip-appeals`",
+      "comments": [
+        "**Verdict: not safe to merge.** Unconfirmed appeals (`NOT_OUT`) would now be published by the social service as public `WICKET` posts.\n\n### Runtime change\n`clipFor` in `src/clip.js:15-18` now returns `{ clip: true, kind: \"wicket\" }` for `display === \"NOT_OUT\"`. Before, it returned `{ clip: false, kind: \"appeal\" }`. `kind: \"wicket\"` no longer means the wicket was counted.\n\n### Defect: a social `WICKET` post for a ball that is not a wicket\n- **Cause (this repo):** `src/clip.js:15-18`. The `NOT_OUT` branch reuses `kind: \"wicket\"`, which collides with the counted-wicket branch at `src/clip.js:10-12`.\n- **Source of NOT_OUT (scoring):** `.estate/prlab-cricket-scoring/scoring/engine.py:23-27`. `NOT_OUT` is emitted when `wicket_counted` is false but `event.wicket.kind` is not `NONE`. That means a dismissal was appealed or recorded and not counted, for example with `umpire_confirmed=False`. The scoring docstring at line 42 says it is the only place wickets are counted.\n- **Surfaces (social):** `.estate/prlab-cricket-social/src/post.js:16-19`. `postFor` returns `{ post: true, text: \"WICKET\" }` for any `kind === \"wicket\" && clip`. It never sees `display` or `wicket_counted`. It only receives the `{clip, kind}` pair, so it cannot tell an appeal from a real dismissal.\n- **Previous behaviour was deliberate:** the social test `.estate/prlab-cricket-social/tests/post.test.js:14` asserts that `{ clip: false, kind: \"appeal\" }` is not posted. The comment at `post.js:11` says \"Appeals are not wickets.\"\n- **Result:** every not-out appeal produces a public \"WICKET\" post. The wicket is later not given or overturned, so the post is wrong.\n- **Consumers of the social post:** I found none in `.estate/`. The social service is the last hop I could anchor, so I can't confirm effects past it.\n\n### Not affected\nThe other services I checked derive their wicket handling from `display` and `wicket_counted` in the scoring snapshot, not from highlights' `kind`. These are mobile (`src/screen.js:10`), broadcast (`src/animator.js:10`) and notifications (`push.py:31`). I found no consumer of highlights' `kind` other than social.\n\n### Suggested fix\nKeep `kind: \"appeal\"` for the wrong-post case and make the editors' search cover both kinds. Alternatively, add a separate field, for example `package: \"wicket-replay\"`, and leave `kind` semantics alone. If `kind` must change, update social's contract (`highlight.js`, `post.js`) in the same rollout so appeals are excluded.\n \u00b7 branch `eval/highlights-clip-appeals`"
+      ],
+      "metrics": {
+        "true_positives": 1,
+        "false_negatives": 0,
+        "false_positives": 0,
+        "relevant_comments": 1,
+        "comments": 1,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "defect_comments": 0
+      },
+      "unexpected_bots": [],
+      "judge_mode": "llm",
+      "comment_verdicts": [
+        {
+          "index": 1,
+          "label": "trap",
+          "reason": "holds the quote the claim judge verified"
+        }
+      ]
+    },
+    {
+      "case_id": "test-social-appeal-kind-posted-as-wicket",
+      "tool": "claude-custom_skill",
+      "pr_url": "https://github.com/org-claudeskill/prlab-cricket-social/pull/3",
+      "finding_passed": true,
+      "isolation_passed": true,
+      "intent": "Catch posting WICKET on the public timeline when highlight kind is appeal",
+      "tests": "Social posts WICKET whenever highlights returns kind=appeal so the timeline stays live during reviews. A failed appeal becomes a public wicket. A passing review must say that. Stale docstring or README that still says only scored wickets are posted, without calling out the public WICKET for an appeal, is not enough.",
+      "capability_id": "kind-relabel",
+      "capability": "Outcome kind relabel",
+      "capability_asks": "Can the tool catch a classification change that files or publishes one outcome under another kind?",
+      "capability_ids": [
+        "kind-relabel"
+      ],
+      "claims": [
+        {
+          "claim_id": "appeal-posted-as-wicket",
+          "must_assert": "Posting WICKET when the highlight kind is appeal treats a failed appeal as a public wicket.",
+          "passed": true,
+          "quote": "Defect: unconfirmed appeals are posted as wickets",
+          "reason": "The review states that posting \"WICKET\" for appeal causes unconfirmed (failed) appeals to be treated as wickets.",
+          "tokens_expected": [
+            "appeal",
+            "WICKET"
+          ],
+          "tokens_matched": [
+            "appeal",
+            "WICKET"
+          ],
+          "tokens_missing": []
+        }
+      ],
+      "actual": "**Verdict: not safe to merge.** `postFor` now publishes \"WICKET\" for every appeal, and highlights emits `kind: \"appeal\"` only for dismissals scoring has not counted as wickets.\n\n### What changes at runtime\n`src/post.js:11-13` returns `{ post: true, text: \"WICKET\" }` for any `kind === \"appeal\"`, whatever `clip` is. Before this change, appeals returned `post: false`.\n\n### Defect: unconfirmed appeals are posted as wickets\nWhere the `appeal` value comes from:\n- **highlights:** `prlab-cricket-highlights/src/clip.js:15-16` returns `{ clip: false, kind: \"appeal\" }` when `last_event.display === \"NOT_OUT\"`.\n- **scoring:** `prlab-cricket-scoring/scoring/engine.py:24-27` sets `NOT_OUT` when a dismissal kind is present but `wicket_counted` is false. `engine.py:47-49` sets `wicket_counted` only when `umpire_confirmed` is true.\n\nSo `appeal` means the umpire has not confirmed the dismissal. That includes a not-out decision after a review. The PR would post \"WICKET\" for these, and the batter can carry on batting.\n\nThe protocol says the same thing: `prlab-cricket-protocol/cricket_protocol/invariants.py:10` reads \"an unconfirmed dismissal is not a wicket \u2014 only scoring may decide that\". The new branch in `post.js` decides that an appeal is a wicket, which bypasses scoring.\n\nOther services already agree with this rule:\n- **notifications:** `prlab-cricket-notifications/notifications/push.py:28-33` sends \"WICKET\" only when `wicket_counted` is true.\n- **stats:** `prlab-cricket-stats/stats/ledger.py:11` forbids using `display` as a wicket signal.\n\nThe social timeline would therefore disagree with push alerts, the scoreboard, stats and fantasy. Fantasy awards 20 points per wicket from the stats ledger, so a post claiming a wicket that never counted contradicts that ledger.\n\n**Who reads the post:** I found no service in `.estate/` that consumes this service's post output. The harm is in the public timeline itself, and I can't anchor it to a further consumer. I searched for `social`, `postFor` and `timeline` and found no matches.\n\n### Unverified claim\nThe PR description says the change \"keeps the timeline live during reviews\". I found nothing in `.estate/` that requires or confirms this.\n\n### Suggested fix\nEither keep appeals unposted, or post a distinct label such as \"REVIEW\" or \"APPEAL\". Post \"WICKET\" only for `kind === \"wicket\"`, which highlights emits when `wicket_counted` is true or `display === \"WICKET\"`.",
+      "comments": [
+        "**Verdict: not safe to merge.** `postFor` now publishes \"WICKET\" for every appeal, and highlights emits `kind: \"appeal\"` only for dismissals scoring has not counted as wickets.\n\n### What changes at runtime\n`src/post.js:11-13` returns `{ post: true, text: \"WICKET\" }` for any `kind === \"appeal\"`, whatever `clip` is. Before this change, appeals returned `post: false`.\n\n### Defect: unconfirmed appeals are posted as wickets\nWhere the `appeal` value comes from:\n- **highlights:** `prlab-cricket-highlights/src/clip.js:15-16` returns `{ clip: false, kind: \"appeal\" }` when `last_event.display === \"NOT_OUT\"`.\n- **scoring:** `prlab-cricket-scoring/scoring/engine.py:24-27` sets `NOT_OUT` when a dismissal kind is present but `wicket_counted` is false. `engine.py:47-49` sets `wicket_counted` only when `umpire_confirmed` is true.\n\nSo `appeal` means the umpire has not confirmed the dismissal. That includes a not-out decision after a review. The PR would post \"WICKET\" for these, and the batter can carry on batting.\n\nThe protocol says the same thing: `prlab-cricket-protocol/cricket_protocol/invariants.py:10` reads \"an unconfirmed dismissal is not a wicket \u2014 only scoring may decide that\". The new branch in `post.js` decides that an appeal is a wicket, which bypasses scoring.\n\nOther services already agree with this rule:\n- **notifications:** `prlab-cricket-notifications/notifications/push.py:28-33` sends \"WICKET\" only when `wicket_counted` is true.\n- **stats:** `prlab-cricket-stats/stats/ledger.py:11` forbids using `display` as a wicket signal.\n\nThe social timeline would therefore disagree with push alerts, the scoreboard, stats and fantasy. Fantasy awards 20 points per wicket from the stats ledger, so a post claiming a wicket that never counted contradicts that ledger.\n\n**Who reads the post:** I found no service in `.estate/` that consumes this service's post output. The harm is in the public timeline itself, and I can't anchor it to a further consumer. I searched for `social`, `postFor` and `timeline` and found no matches.\n\n### Unverified claim\nThe PR description says the change \"keeps the timeline live during reviews\". I found nothing in `.estate/` that requires or confirms this.\n\n### Suggested fix\nEither keep appeals unposted, or post a distinct label such as \"REVIEW\" or \"APPEAL\". Post \"WICKET\" only for `kind === \"wicket\"`, which highlights emits when `wicket_counted` is true or `display === \"WICKET\"`."
+      ],
+      "metrics": {
+        "true_positives": 1,
+        "false_negatives": 0,
+        "false_positives": 0,
+        "relevant_comments": 1,
+        "comments": 1,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "defect_comments": 0
+      },
+      "unexpected_bots": [],
+      "judge_mode": "llm",
+      "comment_verdicts": [
+        {
+          "index": 1,
+          "label": "trap",
+          "reason": "holds the quote the claim judge verified"
+        }
+      ]
+    },
+    {
+      "case_id": "test-archive-history-keeps-protocol-leaks",
+      "tool": "claude-custom_skill",
+      "pr_url": "https://github.com/org-claudeskill/prlab-cricket-archive/pull/3",
+      "finding_passed": true,
+      "isolation_passed": true,
+      "intent": "Catch persisting raw_ball or the match pack in history instead of the product snapshot",
+      "tests": "Archive now stores raw_ball and match on every snapshot for support replays. Protocol fields stay in process-wide history. A passing review must say those envelopes keep protocol leaks in history. Memory-limit or missing-match-fixture comments without the persist/leak point fail the case.",
+      "capability_id": "leak-propagation",
+      "capability": "Leak persistence or pass-through",
+      "capability_asks": "Can the tool see that storing or forwarding an internal envelope keeps leaked fields beyond the producer?",
+      "capability_ids": [
+        "leak-propagation"
+      ],
+      "claims": [
+        {
+          "claim_id": "history-keeps-protocol-leaks",
+          "must_assert": "Persisting raw_ball or the match pack keeps protocol fields in history instead of storing only the product snapshot.",
+          "passed": true,
+          "quote": "store_snapshot used to drop raw_ball and match. It now persists them, and POST /matches/{id}/snapshots and GET /matches/{id}/history return them.",
+          "reason": "The review explicitly says persisting raw_ball and match causes protocol fields to appear in history, matching the claim.",
+          "tokens_expected": [
+            "raw_ball",
+            "(persist|leak|history|match)"
+          ],
+          "tokens_matched": [
+            "raw_ball",
+            "(persist|leak|history|match)"
+          ],
+          "tokens_missing": []
+        }
+      ],
+      "actual": "### Review\n\n**Verdict: not safe to merge.** The change makes a public, unauthenticated, CORS-`*` endpoint return raw `BallEvent` data. The estate's own rules forbid product clients from receiving that data.\n\n**Runtime change:** `store_snapshot` used to drop `raw_ball` and `match`. It now persists them, and `POST /matches/{id}/snapshots` and `GET /matches/{id}/history` return them.\n\n### Defect: protocol envelopes are exposed on a product-facing API\n- **Cause (this repo):** `archive/store.py` adds `raw_ball` and `match` to `StoredSnapshot` (lines 19-20) and copies them in `store_snapshot` (lines 41-42). `archive/app.py` serves them with `response_model=StoredSnapshot`. The app has `allow_origins=[\"*\"]` and no auth, so any browser origin can read them.\n- **Contract violated (confirmed):**\n - `prlab-cricket-protocol/cricket_protocol/invariants.py:11-12` says \"cricket-broadcast must consume ScoreSnapshot, never BallEvent\". It also says \"ScoreSnapshot must not echo raw BallEvent fields for product clients\".\n - `prlab-cricket-protocol/cricket_protocol/models.py:46-52` says BallEvent is interpreted only by scoring, and broadcast \"must never see it\".\n - Persisting `raw_ball` exposes raw `wicket.kind`, `umpire_confirmed` and `extras.type`. Product code must not interpret these, because only scoring decides what counts as a wicket (`invariants.py:10`).\n- **Where it surfaces:**\n - `prlab-cricket-broadcast/src/scoreSnapshot.js:29-30` throws `\"ScoreSnapshot leaked raw_ball\"` if it receives this field.\n - `prlab-cricket-broadcast/public/app.js:23-24` logs a warning for the same case.\n - `prlab-cricket-stats/stats/ledger.py:10-13` lists `raw_ball` and the match pack as forbidden inputs.\n - Any client that replays `/history` into broadcast or stats would hit these paths.\n- **Unverified:** I found no repository in `.estate/` that calls archive's `/history` today. The failure above therefore applies only if a consumer is pointed at the archive. The exposure of raw data on the public endpoint is real regardless.\n\nThe PR description says support needs these envelopes. Serving them from the public `/history` route is the problem. Either keep the product response models stripped and store the envelopes in a separate support-only path with authentication, or restrict CORS and add auth before returning them.",
+      "comments": [
+        "### Review\n\n**Verdict: not safe to merge.** The change makes a public, unauthenticated, CORS-`*` endpoint return raw `BallEvent` data. The estate's own rules forbid product clients from receiving that data.\n\n**Runtime change:** `store_snapshot` used to drop `raw_ball` and `match`. It now persists them, and `POST /matches/{id}/snapshots` and `GET /matches/{id}/history` return them.\n\n### Defect: protocol envelopes are exposed on a product-facing API\n- **Cause (this repo):** `archive/store.py` adds `raw_ball` and `match` to `StoredSnapshot` (lines 19-20) and copies them in `store_snapshot` (lines 41-42). `archive/app.py` serves them with `response_model=StoredSnapshot`. The app has `allow_origins=[\"*\"]` and no auth, so any browser origin can read them.\n- **Contract violated (confirmed):**\n - `prlab-cricket-protocol/cricket_protocol/invariants.py:11-12` says \"cricket-broadcast must consume ScoreSnapshot, never BallEvent\". It also says \"ScoreSnapshot must not echo raw BallEvent fields for product clients\".\n - `prlab-cricket-protocol/cricket_protocol/models.py:46-52` says BallEvent is interpreted only by scoring, and broadcast \"must never see it\".\n - Persisting `raw_ball` exposes raw `wicket.kind`, `umpire_confirmed` and `extras.type`. Product code must not interpret these, because only scoring decides what counts as a wicket (`invariants.py:10`).\n- **Where it surfaces:**\n - `prlab-cricket-broadcast/src/scoreSnapshot.js:29-30` throws `\"ScoreSnapshot leaked raw_ball\"` if it receives this field.\n - `prlab-cricket-broadcast/public/app.js:23-24` logs a warning for the same case.\n - `prlab-cricket-stats/stats/ledger.py:10-13` lists `raw_ball` and the match pack as forbidden inputs.\n - Any client that replays `/history` into broadcast or stats would hit these paths.\n- **Unverified:** I found no repository in `.estate/` that calls archive's `/history` today. The failure above therefore applies only if a consumer is pointed at the archive. The exposure of raw data on the public endpoint is real regardless.\n\nThe PR description says support needs these envelopes. Serving them from the public `/history` route is the problem. Either keep the product response models stripped and store the envelopes in a separate support-only path with authentication, or restrict CORS and add auth before returning them."
+      ],
+      "metrics": {
+        "true_positives": 1,
+        "false_negatives": 0,
+        "false_positives": 0,
+        "relevant_comments": 1,
+        "comments": 1,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "defect_comments": 0
+      },
+      "unexpected_bots": [],
+      "judge_mode": "llm",
+      "comment_verdicts": [
+        {
+          "index": 1,
+          "label": "trap",
+          "reason": "holds the quote the claim judge verified"
+        }
+      ]
+    },
+    {
+      "case_id": "test-notifications-not-out-sends-wicket-push",
+      "tool": "claude-custom_skill",
+      "pr_url": "https://github.com/org-claudeskill/prlab-cricket-notifications/pull/3",
+      "finding_passed": true,
+      "isolation_passed": true,
+      "intent": "Catch sending a WICKET push when display is NOT_OUT and wicket_counted is not required",
+      "tests": "Notifications send the WICKET push when last_event.display is WICKET or NOT_OUT, not only when wicket_counted is true. Fans get a wicket alert for an appeal that was not given. A passing review must say that. An untested WICKET-display branch or stale 'counted wickets only' docs, without the NOT_OUT push, fail the case.",
+      "capability_id": "display-vs-authority",
+      "capability": "Display vs authoritative state",
+      "capability_asks": "Can the tool reject treating a presentation or display value as the source of truth for a decision or side effect?",
+      "capability_ids": [
+        "display-vs-authority"
+      ],
+      "claims": [
+        {
+          "claim_id": "push-on-appeal-display",
+          "must_assert": "Sending a WICKET push when display is NOT_OUT (or otherwise not requiring wicket_counted) notifies fans for an appeal that was not given.",
+          "passed": true,
+          "quote": "The PR sends a \"WICKET\" push for appeals the umpire has not confirmed.",
+          "reason": "The review explicitly says the code sends a WICKET push for unconfirmed appeals, matching the claim.",
+          "tokens_expected": [
+            "NOT_OUT",
+            "(wicket_counted|WICKET|push|notif)"
+          ],
+          "tokens_matched": [
+            "NOT_OUT",
+            "(wicket_counted|WICKET|push|notif)"
+          ],
+          "tokens_missing": []
+        }
+      ],
+      "actual": "### Review\n\n**Verdict: not safe to merge.** The PR sends a \"WICKET\" push for appeals the umpire has not confirmed. The scoring service, which decides what counts as a wicket, marks those events as not-out. Every other service that reads them treats them as not-out.\n\n**Runtime change:** `notify()` now returns `send=True,` when `display` is `\"NOT_OUT\"`, and not only when `wicket_counted` is true.\n\n### Defect: the push contradicts the scoring source of truth\n\n- **Where it comes from in this repo:** `notifications/push.py:28-29` treats `display in {\"WICKET\", \"NOT_OUT\"}` as a wicket. The body it builds at `notifications/push.py:33` is `runs/wickets (overs)`.\n- **Why `NOT_OUT` is not a wicket:**\n - `prlab-cricket-scoring/scoring/engine.py:48-50` sets `wicket_counted` only if `wicket.kind` is not NONE **and** `umpire_confirmed` is true.\n - `prlab-cricket-scoring/scoring/engine.py:23-27` gives `display=\"NOT_OUT\"` to an event that has a wicket kind but is not confirmed.\n - `prlab-cricket-scoring/scoring/engine.py:56` increments `wickets` only when `wicket_counted` is true. For a `NOT_OUT` event the push therefore reads \"WICKET\" while the score in the body is unchanged.\n - `prlab-cricket-protocol/cricket_protocol/models.py:36` states that \"unconfirmed appeals are not wickets\".\n- **Where it surfaces:**\n - `prlab-cricket-mobile/src/screen.js:10-15` shows `NOT_OUT` as a `\"not-out\"` banner. A user gets a \"WICKET\" push, opens the app and sees \"not-out\".\n - `prlab-cricket-broadcast/src/animator.js:10-13` and `prlab-cricket-highlights/src/clip.js:9-15` handle `NOT_OUT` separately from a wicket.\n - `prlab-cricket-social/src/post.js:2` says \"Appeals are not wickets\". Social posts a wicket only for clips of kind `wicket`, so a social post and a push about the same delivery would disagree.\n - Appeals that the umpire later turns down will each have produced a false \"WICKET\" alert.\n- **Why this is a runtime defect:** the wicket alert now depends on an unconfirmed state that a later event can overturn. The push has no wording to tell the user it was only an appeal.\n\n**Not verified:** I found no service in `.estate/` that consumes `Push` output, such as a delivery service. What happens after the push is sent, for example device delivery, is outside what I could check.\n\n### Suggested fix\n\nIf appeal alerts are wanted, send them as a separate push. For example, use title `\"APPEAL\"` for `NOT_OUT`, and keep `\"WICKET\"` for `wicket_counted`.",
+      "comments": [
+        "### Review\n\n**Verdict: not safe to merge.** The PR sends a \"WICKET\" push for appeals the umpire has not confirmed. The scoring service, which decides what counts as a wicket, marks those events as not-out. Every other service that reads them treats them as not-out.\n\n**Runtime change:** `notify()` now returns `send=True,` when `display` is `\"NOT_OUT\"`, and not only when `wicket_counted` is true.\n\n### Defect: the push contradicts the scoring source of truth\n\n- **Where it comes from in this repo:** `notifications/push.py:28-29` treats `display in {\"WICKET\", \"NOT_OUT\"}` as a wicket. The body it builds at `notifications/push.py:33` is `runs/wickets (overs)`.\n- **Why `NOT_OUT` is not a wicket:**\n - `prlab-cricket-scoring/scoring/engine.py:48-50` sets `wicket_counted` only if `wicket.kind` is not NONE **and** `umpire_confirmed` is true.\n - `prlab-cricket-scoring/scoring/engine.py:23-27` gives `display=\"NOT_OUT\"` to an event that has a wicket kind but is not confirmed.\n - `prlab-cricket-scoring/scoring/engine.py:56` increments `wickets` only when `wicket_counted` is true. For a `NOT_OUT` event the push therefore reads \"WICKET\" while the score in the body is unchanged.\n - `prlab-cricket-protocol/cricket_protocol/models.py:36` states that \"unconfirmed appeals are not wickets\".\n- **Where it surfaces:**\n - `prlab-cricket-mobile/src/screen.js:10-15` shows `NOT_OUT` as a `\"not-out\"` banner. A user gets a \"WICKET\" push, opens the app and sees \"not-out\".\n - `prlab-cricket-broadcast/src/animator.js:10-13` and `prlab-cricket-highlights/src/clip.js:9-15` handle `NOT_OUT` separately from a wicket.\n - `prlab-cricket-social/src/post.js:2` says \"Appeals are not wickets\". Social posts a wicket only for clips of kind `wicket`, so a social post and a push about the same delivery would disagree.\n - Appeals that the umpire later turns down will each have produced a false \"WICKET\" alert.\n- **Why this is a runtime defect:** the wicket alert now depends on an unconfirmed state that a later event can overturn. The push has no wording to tell the user it was only an appeal.\n\n**Not verified:** I found no service in `.estate/` that consumes `Push` output, such as a delivery service. What happens after the push is sent, for example device delivery, is outside what I could check.\n\n### Suggested fix\n\nIf appeal alerts are wanted, send them as a separate push. For example, use title `\"APPEAL\"` for `NOT_OUT`, and keep `\"WICKET\"` for `wicket_counted`."
+      ],
+      "metrics": {
+        "true_positives": 1,
+        "false_negatives": 0,
+        "false_positives": 0,
+        "relevant_comments": 1,
+        "comments": 1,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "defect_comments": 0
+      },
+      "unexpected_bots": [],
+      "judge_mode": "llm",
+      "comment_verdicts": [
+        {
+          "index": 1,
+          "label": "trap",
+          "reason": "holds the quote the claim judge verified"
+        }
+      ]
+    },
+    {
+      "case_id": "test-gateway-forwards-raw-ball-and-match-pack",
+      "tool": "claude-custom_skill",
+      "pr_url": "https://github.com/org-claudeskill/prlab-cricket-live-gateway/pull/3",
+      "finding_passed": true,
+      "isolation_passed": true,
+      "intent": "Catch the live gateway forwarding raw_ball or match instead of stripping them",
+      "tests": "The gateway used to drop protocol leaks. This change forwards scoring JSON as received, including raw_ball and match, so the truck can keep extra fields. Mobile and other clients then see protocol fields. A passing review must say those envelopes are forwarded/not stripped. Null-vs-omitted response-shape nits without the pass-through leak fail the case.",
+      "capability_id": "leak-propagation",
+      "capability": "Leak persistence or pass-through",
+      "capability_asks": "Can the tool see that storing or forwarding an internal envelope keeps leaked fields beyond the producer?",
+      "capability_ids": [
+        "leak-propagation"
+      ],
+      "claims": [
+        {
+          "claim_id": "gateway-forwards-leaks",
+          "must_assert": "Forwarding raw_ball or the match pack lets downstream clients see protocol fields that the gateway should have stripped.",
+          "passed": true,
+          "quote": "The gateway now forwards `raw_ball`, `match` and any other unknown keys to hop 3. The gateway's own contract and the estate's design say those must be stripped.",
+          "reason": "The review states that forwarding raw_ball or match exposes protocol fields that should be stripped, confirming the claim.",
+          "tokens_expected": [
+            "(raw_ball|match)",
+            "(forward|pass|strip|leak|mobile)"
+          ],
+          "tokens_matched": [
+            "(raw_ball|match)",
+            "(forward|pass|strip|leak|mobile)"
+          ],
+          "tokens_missing": []
+        }
+      ],
+      "actual": "### Verdict: not safe to merge\n\nThe gateway now forwards `raw_ball`, `match` and any other unknown keys to hop 3. The gateway's own contract and the estate's design say those must be stripped. Only one live consumer is confirmed to break today, and it is a guard rather than a crash in production traffic. The reason to block is that the last protocol-leak barrier is removed and nothing else in the estate replaces it.\n\n**Runtime change:** `IngestSnapshot` and `ProductSnapshot` switch from `extra: ignore` and an explicit field copy to `extra: allow` plus `raw_ball` and `match`. `to_product` becomes `model_validate(payload.model_dump())`. Every key on `/ingest` and on the scoring response is now echoed by `GET /matches/{id}/score` and `POST /ingest`.\n\n### Defects\n\n**1. Broadcast rejects any snapshot that contains `raw_ball`.**\n- Cause: `gateway/filter.py:19-20` and `:30-33` (`raw_ball` field plus `extra: allow`), and `gateway/filter.py:36`, which passes it through.\n- Surfaces: `prlab-cricket-broadcast/src/scoreSnapshot.js:28-31` throws `ScoreSnapshot leaked raw_ball`. It is called from `prlab-cricket-broadcast/src/client.js:13-14`. `prlab-cricket-broadcast/public/app.js:23-25` only logs a warning for the same condition.\n- Scope: broadcast takes its origin from a configurable `scoringOrigin` (`client.js:8-9`, `app.js:1`). If that origin is ever pointed at the gateway, `fetchSnapshot` fails on every snapshot that carries `raw_ball`. I found no config in `.estate/` that does this today.\n\n**2. The protocol-leak barrier is removed, and the mobile client's contract still assumes it.**\n- Cause: `gateway/filter.py:36` no longer strips protocol data.\n- Surfaces: `prlab-cricket-mobile/src/screen.js:19-20` documents \"Gateway already stripped protocol leaks\". `prlab-cricket-mobile/src/snapshot.js:2-18` defines a snapshot with only 5 keys and says \"Do not import protocol\". The mobile code reads only `last_event`, `runs`, `wickets` and `overs`, so it does not crash. Once the gateway forwards `raw_ball.extras.type` and `umpire_confirmed`, any future mobile change that reads them breaks the hop-0 to hop-3 layering, and nothing downstream would catch it. The PR description's \"the truck might need\" is not backed by any consumer in `.estate/`. I found no reader of `raw_ball` or `match` in mobile.\n\n**3. Live scoring never sends these fields, so this only widens `/ingest`.**\n- Scoring's `ScoreSnapshot` is the 5-key product shape: `prlab-cricket-scoring/scoring/snapshot.py:15-25`. Its `response_model` filters the response, and `prlab-cricket-scoring/tests/test_app.py:28` asserts `raw_ball` is absent.\n- On the `GET /matches/{id}/score` path, the new fields are therefore always `None`. Only `POST /ingest` (`gateway/app.py`) lets a caller inject arbitrary keys. `POST /ingest` is public and sits behind `allow_origins=[\"*\"]`, and it is a test hook that now echoes arbitrary JSON.\n- One consequence: `raw_ball: None` and `match: None` are now serialised as explicit `null` keys on every response. That trips broadcast's `\"raw_ball\" in snapshot` check (`scoreSnapshot.js:29`, `app.js:23`) even when there is no protocol data, so broadcast throws on every snapshot, not only leaky ones.\n\n**Unverified:** The docstring claim that hop 3 \"drops overlay fields\" it needs is not confirmed by any consumer. No file in `.estate/` reads `raw_ball` or `match` from the gateway. The archive service (`prlab-cricket-archive/archive/store.py:21-39`) explicitly drops these keys, which shows the estate expects them not to travel.\n\n### Suggested fix\nKeep `extra: ignore` and the explicit field copy in `to_product`. If a specific overlay field is genuinely needed, add it as an explicit, typed product field, agree it with the mobile and broadcast owners, and update scoring's `ScoreSnapshot` schema first.\n \u00b7 branch `eval/gateway-pass-through`",
+      "comments": [
+        "### Verdict: not safe to merge\n\nThe gateway now forwards `raw_ball`, `match` and any other unknown keys to hop 3. The gateway's own contract and the estate's design say those must be stripped. Only one live consumer is confirmed to break today, and it is a guard rather than a crash in production traffic. The reason to block is that the last protocol-leak barrier is removed and nothing else in the estate replaces it.\n\n**Runtime change:** `IngestSnapshot` and `ProductSnapshot` switch from `extra: ignore` and an explicit field copy to `extra: allow` plus `raw_ball` and `match`. `to_product` becomes `model_validate(payload.model_dump())`. Every key on `/ingest` and on the scoring response is now echoed by `GET /matches/{id}/score` and `POST /ingest`.\n\n### Defects\n\n**1. Broadcast rejects any snapshot that contains `raw_ball`.**\n- Cause: `gateway/filter.py:19-20` and `:30-33` (`raw_ball` field plus `extra: allow`), and `gateway/filter.py:36`, which passes it through.\n- Surfaces: `prlab-cricket-broadcast/src/scoreSnapshot.js:28-31` throws `ScoreSnapshot leaked raw_ball`. It is called from `prlab-cricket-broadcast/src/client.js:13-14`. `prlab-cricket-broadcast/public/app.js:23-25` only logs a warning for the same condition.\n- Scope: broadcast takes its origin from a configurable `scoringOrigin` (`client.js:8-9`, `app.js:1`). If that origin is ever pointed at the gateway, `fetchSnapshot` fails on every snapshot that carries `raw_ball`. I found no config in `.estate/` that does this today.\n\n**2. The protocol-leak barrier is removed, and the mobile client's contract still assumes it.**\n- Cause: `gateway/filter.py:36` no longer strips protocol data.\n- Surfaces: `prlab-cricket-mobile/src/screen.js:19-20` documents \"Gateway already stripped protocol leaks\". `prlab-cricket-mobile/src/snapshot.js:2-18` defines a snapshot with only 5 keys and says \"Do not import protocol\". The mobile code reads only `last_event`, `runs`, `wickets` and `overs`, so it does not crash. Once the gateway forwards `raw_ball.extras.type` and `umpire_confirmed`, any future mobile change that reads them breaks the hop-0 to hop-3 layering, and nothing downstream would catch it. The PR description's \"the truck might need\" is not backed by any consumer in `.estate/`. I found no reader of `raw_ball` or `match` in mobile.\n\n**3. Live scoring never sends these fields, so this only widens `/ingest`.**\n- Scoring's `ScoreSnapshot` is the 5-key product shape: `prlab-cricket-scoring/scoring/snapshot.py:15-25`. Its `response_model` filters the response, and `prlab-cricket-scoring/tests/test_app.py:28` asserts `raw_ball` is absent.\n- On the `GET /matches/{id}/score` path, the new fields are therefore always `None`. Only `POST /ingest` (`gateway/app.py`) lets a caller inject arbitrary keys. `POST /ingest` is public and sits behind `allow_origins=[\"*\"]`, and it is a test hook that now echoes arbitrary JSON.\n- One consequence: `raw_ball: None` and `match: None` are now serialised as explicit `null` keys on every response. That trips broadcast's `\"raw_ball\" in snapshot` check (`scoreSnapshot.js:29`, `app.js:23`) even when there is no protocol data, so broadcast throws on every snapshot, not only leaky ones.\n\n**Unverified:** The docstring claim that hop 3 \"drops overlay fields\" it needs is not confirmed by any consumer. No file in `.estate/` reads `raw_ball` or `match` from the gateway. The archive service (`prlab-cricket-archive/archive/store.py:21-39`) explicitly drops these keys, which shows the estate expects them not to travel.\n\n### Suggested fix\nKeep `extra: ignore` and the explicit field copy in `to_product`. If a specific overlay field is genuinely needed, add it as an explicit, typed product field, agree it with the mobile and broadcast owners, and update scoring's `ScoreSnapshot` schema first.\n \u00b7 branch `eval/gateway-pass-through`"
+      ],
+      "metrics": {
+        "true_positives": 1,
+        "false_negatives": 0,
+        "false_positives": 0,
+        "relevant_comments": 1,
+        "comments": 1,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "defect_comments": 0
+      },
+      "unexpected_bots": [],
+      "judge_mode": "llm",
+      "comment_verdicts": [
+        {
+          "index": 1,
+          "label": "trap",
+          "reason": "holds the quote the claim judge verified"
+        }
+      ]
+    },
+    {
+      "case_id": "test-mobile-missing-confirm-shows-wicket-banner",
+      "tool": "claude-custom_skill",
+      "pr_url": "https://github.com/org-claudeskill/prlab-cricket-mobile/pull/3",
+      "finding_passed": true,
+      "isolation_passed": true,
+      "intent": "Catch showing a wicket banner from the match-pack wicket when umpire_confirmed is missing",
+      "tests": "Mobile reads the banner from match.innings.latest_over.latest_delivery when the snapshot has a match pack, so the phone matches the truck. If umpire_confirmed is omitted it still shows a wicket. A passing review must say an unconfirmed dismissal becomes a wicket banner. Saying ScoreSnapshot does not declare match, without the missing-flag banner, fails the case.",
+      "capability_id": "omitted-guard-as-true",
+      "capability": "Omitted guard treated as true",
+      "capability_asks": "Can the tool catch logic that treats a missing confirmation or guard flag as granted?",
+      "capability_ids": [
+        "omitted-guard-as-true"
+      ],
+      "claims": [
+        {
+          "claim_id": "missing-flag-shows-wicket-banner",
+          "must_assert": "Reading the banner from the match-pack wicket when umpire_confirmed is missing shows a wicket for an unconfirmed dismissal.",
+          "passed": true,
+          "quote": "it shows a \"wicket\" banner for a wicket the umpire hasn't confirmed.",
+          "reason": "The review states that a missing umpire_confirmed results in a wicket banner for an unconfirmed dismissal.",
+          "tokens_expected": [
+            "(latest_delivery|umpire_confirmed|match\\.innings)",
+            "(banner|wicket)"
+          ],
+          "tokens_matched": [
+            "(latest_delivery|umpire_confirmed|match\\.innings)",
+            "(banner|wicket)"
+          ],
+          "tokens_missing": []
+        }
+      ],
+      "actual": "### Review: PR #3, read the wicket banner from the match pack\n\n**Verdict: not safe to merge.** The new branch never runs against the real feed. If it ever does run, it shows a \"wicket\" banner for a wicket the umpire hasn't confirmed.\n\n**Runtime change:** `screenFor` now checks `snapshot.match.innings.latest_over.latest_delivery.wicket` first. It returns the `wicket` banner when `kind` isn't `none` and `umpire_confirmed !== false`. Before, the banner came only from `last_event`.\n\n#### Defect 1: the `match` pack never reaches mobile, so the new code is dead\n- **Cause:** `src/screen.js:10-15` reads `snapshot.match...`.\n- **Where it surfaces:** `prlab-cricket-live-gateway/gateway/filter.py:13-18` and `:30-37`. `ProductSnapshot` has only `match_id`, `runs`, `wickets`, `overs` and `last_event`. `to_product` copies just those fields, and `IngestSnapshot` uses `extra: ignore`. `prlab-cricket-live-gateway/tests/test_filter.py:25-60` feeds in a `match.innings.latest_over.latest_delivery.wicket` payload and asserts `\"match\" not in dumped`.\n- **Upstream:** `prlab-cricket-scoring/scoring/snapshot.py:15-25` defines `ScoreSnapshot` with no `match` field. It also lists `umpire_confirmed` as a forbidden product field.\n- **Effect:** the mobile app receives no `match` object, so the `delivery` branch never fires. The PR description says overlays will \"match the truck\". I couldn't confirm that in `.estate/`: no service emits this pack to mobile, so that claim is unverified.\n\n#### Defect 2: if a pack does arrive, a missing `umpire_confirmed` is treated as confirmed\n- **Cause:** `src/screen.js:12` uses `umpire_confirmed !== false`. A missing or `undefined` flag counts as confirmed. The test change in `tests/screen.test.js` (\"match pack without umpire flag shows wicket banner\") locks this in. It replaces the previous \"unconfirmed appeal shows not-out banner\" test.\n- **Where it surfaces:** `prlab-cricket-scoring/scoring/engine.py:48-49` counts a wicket only when `kind != NONE and umpire_confirmed`. `prlab-cricket-protocol/cricket_protocol/models.py:33` and `schemas/ball_event.schema.json:45` make the flag required, so omitting it is invalid. The mobile check therefore contradicts the scoring rule.\n- **Downstream:** if the pack is ever forwarded, an unconfirmed LBW appeal would show a \"wicket\" banner. Meanwhile `snapshot.wickets` is unchanged and `last_event.display` is `NOT_OUT`. Other consumers use only `last_event`. `prlab-cricket-notifications/notifications/push.py:28` uses `wicket_counted`. `prlab-cricket-highlights/src/clip.js:9` and `prlab-cricket-broadcast/src/animator.js:10` use `wicket_counted` or `display`. Mobile would disagree with all of them.\n\n#### Suggested fix\nDrop the `match`-pack branch and keep the banner driven by `last_event`. `last_event.wicket_counted` already encodes the umpire-confirmed rule. If the pack is really needed, add it to the gateway `ProductSnapshot` first. Then require `umpire_confirmed === true` rather than `!== false`.\n \u00b7 branch `eval/mobile-banner-match-pack`",
+      "comments": [
+        "### Review: PR #3, read the wicket banner from the match pack\n\n**Verdict: not safe to merge.** The new branch never runs against the real feed. If it ever does run, it shows a \"wicket\" banner for a wicket the umpire hasn't confirmed.\n\n**Runtime change:** `screenFor` now checks `snapshot.match.innings.latest_over.latest_delivery.wicket` first. It returns the `wicket` banner when `kind` isn't `none` and `umpire_confirmed !== false`. Before, the banner came only from `last_event`.\n\n#### Defect 1: the `match` pack never reaches mobile, so the new code is dead\n- **Cause:** `src/screen.js:10-15` reads `snapshot.match...`.\n- **Where it surfaces:** `prlab-cricket-live-gateway/gateway/filter.py:13-18` and `:30-37`. `ProductSnapshot` has only `match_id`, `runs`, `wickets`, `overs` and `last_event`. `to_product` copies just those fields, and `IngestSnapshot` uses `extra: ignore`. `prlab-cricket-live-gateway/tests/test_filter.py:25-60` feeds in a `match.innings.latest_over.latest_delivery.wicket` payload and asserts `\"match\" not in dumped`.\n- **Upstream:** `prlab-cricket-scoring/scoring/snapshot.py:15-25` defines `ScoreSnapshot` with no `match` field. It also lists `umpire_confirmed` as a forbidden product field.\n- **Effect:** the mobile app receives no `match` object, so the `delivery` branch never fires. The PR description says overlays will \"match the truck\". I couldn't confirm that in `.estate/`: no service emits this pack to mobile, so that claim is unverified.\n\n#### Defect 2: if a pack does arrive, a missing `umpire_confirmed` is treated as confirmed\n- **Cause:** `src/screen.js:12` uses `umpire_confirmed !== false`. A missing or `undefined` flag counts as confirmed. The test change in `tests/screen.test.js` (\"match pack without umpire flag shows wicket banner\") locks this in. It replaces the previous \"unconfirmed appeal shows not-out banner\" test.\n- **Where it surfaces:** `prlab-cricket-scoring/scoring/engine.py:48-49` counts a wicket only when `kind != NONE and umpire_confirmed`. `prlab-cricket-protocol/cricket_protocol/models.py:33` and `schemas/ball_event.schema.json:45` make the flag required, so omitting it is invalid. The mobile check therefore contradicts the scoring rule.\n- **Downstream:** if the pack is ever forwarded, an unconfirmed LBW appeal would show a \"wicket\" banner. Meanwhile `snapshot.wickets` is unchanged and `last_event.display` is `NOT_OUT`. Other consumers use only `last_event`. `prlab-cricket-notifications/notifications/push.py:28` uses `wicket_counted`. `prlab-cricket-highlights/src/clip.js:9` and `prlab-cricket-broadcast/src/animator.js:10` use `wicket_counted` or `display`. Mobile would disagree with all of them.\n\n#### Suggested fix\nDrop the `match`-pack branch and keep the banner driven by `last_event`. `last_event.wicket_counted` already encodes the umpire-confirmed rule. If the pack is really needed, add it to the gateway `ProductSnapshot` first. Then require `umpire_confirmed === true` rather than `!== false`.\n \u00b7 branch `eval/mobile-banner-match-pack`"
+      ],
+      "metrics": {
+        "true_positives": 1,
+        "false_negatives": 0,
+        "false_positives": 0,
+        "relevant_comments": 1,
+        "comments": 1,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "defect_comments": 0
+      },
+      "unexpected_bots": [],
+      "judge_mode": "llm",
+      "comment_verdicts": [
+        {
+          "index": 1,
+          "label": "trap",
+          "reason": "holds the quote the claim judge verified"
+        }
+      ]
+    }
+  ]
+}

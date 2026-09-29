@@ -1,0 +1,62 @@
+diff --git a/schemas/score_snapshot.schema.json b/schemas/score_snapshot.schema.json
+index fe6ddd5..7f156e9 100644
+--- a/schemas/score_snapshot.schema.json
++++ b/schemas/score_snapshot.schema.json
+@@ -8,7 +8,7 @@
+     "match_id": { "type": "string" },
+     "runs": { "type": "integer", "minimum": 0 },
+     "wickets": { "type": "integer", "minimum": 0 },
+-    "overs": { "type": "string" },
++    "overs": { "type": "number" },
+     "last_event": {
+       "type": "object",
+       "additionalProperties": false,
+diff --git a/scoring/engine.py b/scoring/engine.py
+index accf1ef..d7ad110 100644
+--- a/scoring/engine.py
++++ b/scoring/engine.py
+@@ -15,9 +15,9 @@ class InningsState:
+     legal_balls: int = 0
+ 
+ 
+-def format_overs(legal_balls: int) -> str:
++def format_overs(legal_balls: int) -> float:
+     overs, balls = divmod(legal_balls, 6)
+-    return f"{overs}.{balls}"
++    return float(f"{overs}.{balls}")
+ 
+ 
+ def _display(event: BallEvent, wicket_counted: bool, runs_added: int) -> str:
+diff --git a/scoring/snapshot.py b/scoring/snapshot.py
+index 09c58f4..7042735 100644
+--- a/scoring/snapshot.py
++++ b/scoring/snapshot.py
+@@ -21,5 +21,5 @@ class ScoreSnapshot(BaseModel):
+     match_id: str
+     runs: int
+     wickets: int
+-    overs: str
++    overs: float = Field(description="Overs bowled as a number, e.g. 12.3 for 12 overs and 3 balls.")
+     last_event: LastEvent
+diff --git a/tests/test_engine.py b/tests/test_engine.py
+index 0ae5952..5cfc3fa 100644
+--- a/tests/test_engine.py
++++ b/tests/test_engine.py
+@@ -24,7 +24,7 @@ def test_four_increments_runs_and_legal_ball() -> None:
+     _, snapshot = apply_ball(state, ball(runs_off_bat=4))
+     assert snapshot.runs == 4
+     assert snapshot.wickets == 0
+-    assert snapshot.overs == "0.1"
++    assert snapshot.overs == 0.1
+     assert snapshot.last_event.display == "FOUR"
+     assert snapshot.last_event.legal_delivery is True
+ 
+@@ -35,7 +35,7 @@ def test_wide_adds_extras_without_legal_ball() -> None:
+         state, ball(extras={"type": "wide", "runs": 1})
+     )
+     assert snapshot.runs == 1
+-    assert snapshot.overs == "0.0"
++    assert snapshot.overs == 0.0
+     assert snapshot.last_event.display == "WIDE"
+     assert snapshot.last_event.legal_delivery is False
+ 

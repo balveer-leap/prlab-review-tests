@@ -1,0 +1,41 @@
+diff --git a/scoring/engine.py b/scoring/engine.py
+index accf1ef..07054f7 100644
+--- a/scoring/engine.py
++++ b/scoring/engine.py
+@@ -29,10 +29,6 @@ def _display(event: BallEvent, wicket_counted: bool, runs_added: int) -> str:
+         return "WIDE"
+     if event.extras.type is ExtraType.NO_BALL:
+         return "NO_BALL"
+-    if event.runs_off_bat == 4:
+-        return "FOUR"
+-    if event.runs_off_bat == 6:
+-        return "SIX"
+     if runs_added == 0:
+         return "DOT"
+     return str(runs_added)
+diff --git a/scoring/snapshot.py b/scoring/snapshot.py
+index 09c58f4..d050331 100644
+--- a/scoring/snapshot.py
++++ b/scoring/snapshot.py
+@@ -5,7 +5,7 @@ from pydantic import BaseModel, Field
+ 
+ class LastEvent(BaseModel):
+     display: str = Field(
+-        description="Scoring-owned label: DOT, runs, FOUR, SIX, WIDE, NO_BALL, WICKET, NOT_OUT."
++        description="Scoring-owned label: DOT, runs (1, 2, 4, 6, ...), WIDE, NO_BALL, WICKET, NOT_OUT."
+     )
+     runs_added: int
+     wicket_counted: bool
+diff --git a/tests/test_engine.py b/tests/test_engine.py
+index 0ae5952..73ced81 100644
+--- a/tests/test_engine.py
++++ b/tests/test_engine.py
+@@ -25,7 +25,7 @@ def test_four_increments_runs_and_legal_ball() -> None:
+     assert snapshot.runs == 4
+     assert snapshot.wickets == 0
+     assert snapshot.overs == "0.1"
+-    assert snapshot.last_event.display == "FOUR"
++    assert snapshot.last_event.display == "4"
+     assert snapshot.last_event.legal_delivery is True
+ 
+ 

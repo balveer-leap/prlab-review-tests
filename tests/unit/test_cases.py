@@ -29,7 +29,7 @@ def test_case_ids_start_with_test_and_describe_intent() -> None:
         assert case.capability.name
         assert case.capability.asks.endswith("?")
         assert case.capabilities[0] is case.capability
-        assert "wicket" in case.tests.lower() or "leak" in case.tests.lower() or "protocol" in case.tests.lower()
+        assert "a passing review must" in case.tests.lower(), case.id
 
 
 def test_capabilities_live_in_a_shared_catalog() -> None:
@@ -75,3 +75,67 @@ def test_downstream_case_names_a_consumer() -> None:
     )
     ids = {claim.id for claim in case.claims}
     assert "names-downstream-consumer" in ids
+
+
+def test_owner_override_moves_pr_repo(monkeypatch) -> None:
+    monkeypatch.delenv("PRLAB_OWNER", raising=False)
+    default = {case.id: case for case in load_cases()}
+    for case in load_cases(owner="org-coderabbit1"):
+        name = default[case.id].github_repo.split("/", 1)[1]
+        assert case.github_repo == f"org-coderabbit1/{name}"
+
+
+def test_load_cases_without_owner_is_raw_data(monkeypatch) -> None:
+    monkeypatch.setenv("PRLAB_OWNER", "org-qodo1")
+    assert all(case.github_repo.startswith("srajat-leap/") for case in load_cases())
+
+
+def test_resolve_owner_prefers_explicit_then_env_then_config(monkeypatch) -> None:
+    from prlab_eval.cases import resolve_owner
+
+    monkeypatch.delenv("PRLAB_OWNER", raising=False)
+    assert resolve_owner("coderabbit") == "org-coderabbit1"
+    assert resolve_owner("greptile") == "org-greptile"
+    monkeypatch.setenv("PRLAB_OWNER", "org-qodo1")
+    assert resolve_owner("coderabbit") == "org-qodo1"
+    assert resolve_owner("coderabbit", "org-x") == "org-x"
+
+
+def test_resolve_owner_never_falls_back_silently(monkeypatch) -> None:
+    import pytest
+
+    from prlab_eval.cases import OwnerError, resolve_owner
+
+    monkeypatch.delenv("PRLAB_OWNER", raising=False)
+    with pytest.raises(OwnerError, match="no GitHub owner"):
+        resolve_owner("some-new-tool")
+    with pytest.raises(OwnerError, match="no --tool"):
+        resolve_owner(None)
+
+
+def test_every_registered_tool_has_an_owner() -> None:
+    from prlab_eval.cases import load_owners
+    from prlab_eval.tools import TOOLS
+
+    assert set(TOOLS) <= set(load_owners())
+
+
+def test_owner_mismatch_warns_only_on_difference() -> None:
+    from prlab_eval.cases import owner_mismatch
+
+    assert owner_mismatch("qodo", "org-qodo1") == ""
+    assert "org-qodo1" in owner_mismatch("qodo", "org-coderabbit1")
+    assert owner_mismatch("unknown", "anything") == ""
+
+
+def test_a_monorepo_owner_points_every_case_at_one_repo_and_folder() -> None:
+    cases = load_cases(owner="org-x/prlab-cricket-estate")
+    assert {case.github_repo for case in cases} == {"org-x/prlab-cricket-estate"}
+    assert {case.local for case in cases} == {"prlab-cricket-estate"}
+    by_id = {case.id: case for case in cases}
+    assert by_id["test-scoring-raw-ball-leaks-protocol-fields"].subdir == "cricket-scoring"
+    assert all(case.subdir for case in cases)
+
+
+def test_a_plain_owner_has_no_subdir() -> None:
+    assert not any(case.subdir for case in load_cases(owner="org-x"))

@@ -1,0 +1,833 @@
+{
+ "about": "Hand-labelled verdicts for every claim of the 7 reviewers' reviews of the 23 cases (reports under reports/, 1 Oct 2026). true = the review states the claim. Labels started from the old Haiku/Sonnet judges where they agreed and were read by hand where they split or where a new judge disagreed; 'src' says which. Use it to measure a judge change: run the judge on these claims and count disagreements.",
+ "labels": {
+  "claude-custom_skill|test-archive-history-keeps-protocol-leaks|history-keeps-protocol-leaks": {
+   "gold": true,
+   "src": "agreed"
+  },
+  "claude-custom_skill|test-archive-pickle-restore-rce|pickle-rce": {
+   "gold": true,
+   "src": "agreed"
+  },
+  "claude-custom_skill|test-broadcast-match-pack-walk-bypasses-last-event|match-pack-walk-couples-protocol": {
+   "gold": true,
+   "src": "adjudicated"
+  },
+  "claude-custom_skill|test-broadcast-raw-ball-treats-missing-confirm-as-wicket|raw-ball-bypasses-last-event": {
+   "gold": true,
+   "src": "adjudicated"
+  },
+  "claude-custom_skill|test-fantasy-missing-confirm-pays-wicket-points|missing-confirm-pays-wicket": {
+   "gold": true,
+   "src": "agreed"
+  },
+  "claude-custom_skill|test-gateway-forwards-raw-ball-and-match-pack|gateway-forwards-leaks": {
+   "gold": true,
+   "src": "agreed"
+  },
+  "claude-custom_skill|test-gateway-origin-param-ssrf|names-forged-scores": {
+   "gold": true,
+   "src": "agreed"
+  },
+  "claude-custom_skill|test-gateway-origin-param-ssrf|origin-param-ssrf": {
+   "gold": true,
+   "src": "agreed"
+  },
+  "claude-custom_skill|test-highlights-not-out-filed-as-wicket-clip|appeal-filed-as-wicket-clip": {
+   "gold": true,
+   "src": "adjudicated"
+  },
+  "claude-custom_skill|test-highlights-split-kinds-stop-social-posts|boundary-kind-removed": {
+   "gold": true,
+   "src": "agreed"
+  },
+  "claude-custom_skill|test-highlights-split-kinds-stop-social-posts|names-social-lost-posts": {
+   "gold": true,
+   "src": "agreed"
+  },
+  "claude-custom_skill|test-mobile-missing-confirm-shows-wicket-banner|missing-flag-shows-wicket-banner": {
+   "gold": true,
+   "src": "agreed"
+  },
+  "claude-custom_skill|test-notifications-not-out-sends-wicket-push|push-on-appeal-display": {
+   "gold": true,
+   "src": "adjudicated"
+  },
+  "claude-custom_skill|test-protocol-omitted-confirm-counts-wicket-single-repo|omitted-confirm-counts-wicket": {
+   "gold": true,
+   "src": "agreed"
+  },
+  "claude-custom_skill|test-protocol-omitted-confirm-counts-wicket-with-downstream-context|names-downstream-consumer": {
+   "gold": true,
+   "src": "agreed"
+  },
+  "claude-custom_skill|test-protocol-omitted-confirm-counts-wicket-with-downstream-context|omitted-confirm-counts-wicket": {
+   "gold": true,
+   "src": "agreed"
+  },
+  "claude-custom_skill|test-protocol-runs-off-bat-total-double-counts-extras|extras-reported-twice": {
+   "gold": true,
+   "src": "agreed"
+  },
+  "claude-custom_skill|test-protocol-runs-off-bat-total-double-counts-extras|names-double-count-downstream": {
+   "gold": false,
+   "src": "corrected on review (old judges both passed it)"
+  },
+  "claude-custom_skill|test-scoring-match-pack-reexports-protocol-fields|match-pack-reexports-protocol": {
+   "gold": true,
+   "src": "agreed"
+  },
+  "claude-custom_skill|test-scoring-no-content-breaks-gateway-and-broadcast|names-broken-consumer": {
+   "gold": true,
+   "src": "agreed"
+  },
+  "claude-custom_skill|test-scoring-no-content-breaks-gateway-and-broadcast|status-change-breaks-callers": {
+   "gold": true,
+   "src": "agreed"
+  },
+  "claude-custom_skill|test-scoring-numeric-boundaries-silence-highlights|display-values-removed": {
+   "gold": true,
+   "src": "adjudicated"
+  },
+  "claude-custom_skill|test-scoring-numeric-boundaries-silence-highlights|names-silent-boundary-loss": {
+   "gold": true,
+   "src": "agreed"
+  },
+  "claude-custom_skill|test-scoring-open-reset-endpoint|names-reset-downstream": {
+   "gold": true,
+   "src": "agreed"
+  },
+  "claude-custom_skill|test-scoring-open-reset-endpoint|reset-unauthenticated": {
+   "gold": true,
+   "src": "agreed"
+  },
+  "claude-custom_skill|test-scoring-overs-number-breaks-string-consumers|names-consumer-rejecting-overs": {
+   "gold": true,
+   "src": "agreed"
+  },
+  "claude-custom_skill|test-scoring-overs-number-breaks-string-consumers|overs-type-change-breaks-contract": {
+   "gold": true,
+   "src": "agreed"
+  },
+  "claude-custom_skill|test-scoring-raw-ball-leaks-protocol-fields|raw-ball-leaks-protocol": {
+   "gold": true,
+   "src": "agreed"
+  },
+  "claude-custom_skill|test-scoring-renamed-wicket-field-breaks-notifications|field-rename-breaks-event": {
+   "gold": true,
+   "src": "agreed"
+  },
+  "claude-custom_skill|test-scoring-renamed-wicket-field-breaks-notifications|names-consumer-failing-on-rename": {
+   "gold": true,
+   "src": "adjudicated"
+  },
+  "claude-custom_skill|test-social-appeal-kind-posted-as-wicket|appeal-posted-as-wicket": {
+   "gold": true,
+   "src": "agreed"
+  },
+  "claude-custom_skill|test-stats-not-out-display-increments-wickets|not-out-counted-as-wicket": {
+   "gold": true,
+   "src": "agreed"
+  },
+  "claude-plain|test-archive-history-keeps-protocol-leaks|history-keeps-protocol-leaks": {
+   "gold": true,
+   "src": "adjudicated"
+  },
+  "claude-plain|test-archive-pickle-restore-rce|pickle-rce": {
+   "gold": true,
+   "src": "agreed"
+  },
+  "claude-plain|test-broadcast-match-pack-walk-bypasses-last-event|match-pack-walk-couples-protocol": {
+   "gold": true,
+   "src": "agreed"
+  },
+  "claude-plain|test-broadcast-raw-ball-treats-missing-confirm-as-wicket|raw-ball-bypasses-last-event": {
+   "gold": true,
+   "src": "agreed"
+  },
+  "claude-plain|test-fantasy-missing-confirm-pays-wicket-points|missing-confirm-pays-wicket": {
+   "gold": true,
+   "src": "agreed"
+  },
+  "claude-plain|test-gateway-forwards-raw-ball-and-match-pack|gateway-forwards-leaks": {
+   "gold": true,
+   "src": "agreed"
+  },
+  "claude-plain|test-gateway-origin-param-ssrf|names-forged-scores": {
+   "gold": true,
+   "src": "adjudicated"
+  },
+  "claude-plain|test-gateway-origin-param-ssrf|origin-param-ssrf": {
+   "gold": true,
+   "src": "agreed"
+  },
+  "claude-plain|test-highlights-not-out-filed-as-wicket-clip|appeal-filed-as-wicket-clip": {
+   "gold": true,
+   "src": "agreed"
+  },
+  "claude-plain|test-highlights-split-kinds-stop-social-posts|boundary-kind-removed": {
+   "gold": true,
+   "src": "agreed"
+  },
+  "claude-plain|test-highlights-split-kinds-stop-social-posts|names-social-lost-posts": {
+   "gold": false,
+   "src": "agreed"
+  },
+  "claude-plain|test-mobile-missing-confirm-shows-wicket-banner|missing-flag-shows-wicket-banner": {
+   "gold": true,
+   "src": "agreed"
+  },
+  "claude-plain|test-notifications-not-out-sends-wicket-push|push-on-appeal-display": {
+   "gold": true,
+   "src": "agreed"
+  },
+  "claude-plain|test-protocol-omitted-confirm-counts-wicket-single-repo|omitted-confirm-counts-wicket": {
+   "gold": true,
+   "src": "agreed"
+  },
+  "claude-plain|test-protocol-omitted-confirm-counts-wicket-with-downstream-context|names-downstream-consumer": {
+   "gold": true,
+   "src": "adjudicated"
+  },
+  "claude-plain|test-protocol-omitted-confirm-counts-wicket-with-downstream-context|omitted-confirm-counts-wicket": {
+   "gold": true,
+   "src": "agreed"
+  },
+  "claude-plain|test-protocol-runs-off-bat-total-double-counts-extras|extras-reported-twice": {
+   "gold": true,
+   "src": "agreed"
+  },
+  "claude-plain|test-protocol-runs-off-bat-total-double-counts-extras|names-double-count-downstream": {
+   "gold": false,
+   "src": "agreed"
+  },
+  "claude-plain|test-scoring-match-pack-reexports-protocol-fields|match-pack-reexports-protocol": {
+   "gold": true,
+   "src": "adjudicated (both quotes wrongly rejected)"
+  },
+  "claude-plain|test-scoring-no-content-breaks-gateway-and-broadcast|names-broken-consumer": {
+   "gold": false,
+   "src": "agreed"
+  },
+  "claude-plain|test-scoring-no-content-breaks-gateway-and-broadcast|status-change-breaks-callers": {
+   "gold": true,
+   "src": "agreed"
+  },
+  "claude-plain|test-scoring-numeric-boundaries-silence-highlights|display-values-removed": {
+   "gold": true,
+   "src": "agreed"
+  },
+  "claude-plain|test-scoring-numeric-boundaries-silence-highlights|names-silent-boundary-loss": {
+   "gold": false,
+   "src": "agreed"
+  },
+  "claude-plain|test-scoring-open-reset-endpoint|names-reset-downstream": {
+   "gold": false,
+   "src": "agreed"
+  },
+  "claude-plain|test-scoring-open-reset-endpoint|reset-unauthenticated": {
+   "gold": true,
+   "src": "agreed"
+  },
+  "claude-plain|test-scoring-overs-number-breaks-string-consumers|names-consumer-rejecting-overs": {
+   "gold": false,
+   "src": "agreed"
+  },
+  "claude-plain|test-scoring-overs-number-breaks-string-consumers|overs-type-change-breaks-contract": {
+   "gold": true,
+   "src": "agreed"
+  },
+  "claude-plain|test-scoring-raw-ball-leaks-protocol-fields|raw-ball-leaks-protocol": {
+   "gold": true,
+   "src": "agreed"
+  },
+  "claude-plain|test-scoring-renamed-wicket-field-breaks-notifications|field-rename-breaks-event": {
+   "gold": true,
+   "src": "agreed"
+  },
+  "claude-plain|test-scoring-renamed-wicket-field-breaks-notifications|names-consumer-failing-on-rename": {
+   "gold": false,
+   "src": "adjudicated"
+  },
+  "claude-plain|test-social-appeal-kind-posted-as-wicket|appeal-posted-as-wicket": {
+   "gold": true,
+   "src": "agreed"
+  },
+  "claude-plain|test-stats-not-out-display-increments-wickets|not-out-counted-as-wicket": {
+   "gold": true,
+   "src": "agreed"
+  },
+  "codeant-monorepo|test-archive-history-keeps-protocol-leaks|history-keeps-protocol-leaks": {
+   "gold": true,
+   "src": "agreed"
+  },
+  "codeant-monorepo|test-archive-pickle-restore-rce|pickle-rce": {
+   "gold": true,
+   "src": "agreed"
+  },
+  "codeant-monorepo|test-broadcast-match-pack-walk-bypasses-last-event|match-pack-walk-couples-protocol": {
+   "gold": false,
+   "src": "agreed"
+  },
+  "codeant-monorepo|test-broadcast-raw-ball-treats-missing-confirm-as-wicket|raw-ball-bypasses-last-event": {
+   "gold": false,
+   "src": "agreed"
+  },
+  "codeant-monorepo|test-fantasy-missing-confirm-pays-wicket-points|missing-confirm-pays-wicket": {
+   "gold": true,
+   "src": "adjudicated"
+  },
+  "codeant-monorepo|test-gateway-forwards-raw-ball-and-match-pack|gateway-forwards-leaks": {
+   "gold": false,
+   "src": "adjudicated"
+  },
+  "codeant-monorepo|test-gateway-origin-param-ssrf|names-forged-scores": {
+   "gold": false,
+   "src": "agreed"
+  },
+  "codeant-monorepo|test-gateway-origin-param-ssrf|origin-param-ssrf": {
+   "gold": true,
+   "src": "agreed"
+  },
+  "codeant-monorepo|test-highlights-not-out-filed-as-wicket-clip|appeal-filed-as-wicket-clip": {
+   "gold": true,
+   "src": "agreed"
+  },
+  "codeant-monorepo|test-highlights-split-kinds-stop-social-posts|boundary-kind-removed": {
+   "gold": false,
+   "src": "agreed"
+  },
+  "codeant-monorepo|test-highlights-split-kinds-stop-social-posts|names-social-lost-posts": {
+   "gold": false,
+   "src": "agreed"
+  },
+  "codeant-monorepo|test-mobile-missing-confirm-shows-wicket-banner|missing-flag-shows-wicket-banner": {
+   "gold": false,
+   "src": "agreed"
+  },
+  "codeant-monorepo|test-notifications-not-out-sends-wicket-push|push-on-appeal-display": {
+   "gold": false,
+   "src": "agreed"
+  },
+  "codeant-monorepo|test-protocol-omitted-confirm-counts-wicket-single-repo|omitted-confirm-counts-wicket": {
+   "gold": false,
+   "src": "agreed"
+  },
+  "codeant-monorepo|test-protocol-omitted-confirm-counts-wicket-with-downstream-context|names-downstream-consumer": {
+   "gold": false,
+   "src": "agreed"
+  },
+  "codeant-monorepo|test-protocol-omitted-confirm-counts-wicket-with-downstream-context|omitted-confirm-counts-wicket": {
+   "gold": false,
+   "src": "agreed"
+  },
+  "codeant-monorepo|test-protocol-runs-off-bat-total-double-counts-extras|extras-reported-twice": {
+   "gold": true,
+   "src": "agreed"
+  },
+  "codeant-monorepo|test-protocol-runs-off-bat-total-double-counts-extras|names-double-count-downstream": {
+   "gold": false,
+   "src": "agreed"
+  },
+  "codeant-monorepo|test-scoring-match-pack-reexports-protocol-fields|match-pack-reexports-protocol": {
+   "gold": true,
+   "src": "agreed"
+  },
+  "codeant-monorepo|test-scoring-no-content-breaks-gateway-and-broadcast|names-broken-consumer": {
+   "gold": true,
+   "src": "agreed"
+  },
+  "codeant-monorepo|test-scoring-no-content-breaks-gateway-and-broadcast|status-change-breaks-callers": {
+   "gold": true,
+   "src": "adjudicated"
+  },
+  "codeant-monorepo|test-scoring-numeric-boundaries-silence-highlights|display-values-removed": {
+   "gold": false,
+   "src": "agreed"
+  },
+  "codeant-monorepo|test-scoring-numeric-boundaries-silence-highlights|names-silent-boundary-loss": {
+   "gold": false,
+   "src": "agreed"
+  },
+  "codeant-monorepo|test-scoring-open-reset-endpoint|names-reset-downstream": {
+   "gold": false,
+   "src": "agreed"
+  },
+  "codeant-monorepo|test-scoring-open-reset-endpoint|reset-unauthenticated": {
+   "gold": false,
+   "src": "agreed"
+  },
+  "codeant-monorepo|test-scoring-overs-number-breaks-string-consumers|names-consumer-rejecting-overs": {
+   "gold": true,
+   "src": "agreed"
+  },
+  "codeant-monorepo|test-scoring-overs-number-breaks-string-consumers|overs-type-change-breaks-contract": {
+   "gold": true,
+   "src": "agreed"
+  },
+  "codeant-monorepo|test-scoring-raw-ball-leaks-protocol-fields|raw-ball-leaks-protocol": {
+   "gold": true,
+   "src": "agreed"
+  },
+  "codeant-monorepo|test-scoring-renamed-wicket-field-breaks-notifications|field-rename-breaks-event": {
+   "gold": true,
+   "src": "agreed"
+  },
+  "codeant-monorepo|test-scoring-renamed-wicket-field-breaks-notifications|names-consumer-failing-on-rename": {
+   "gold": true,
+   "src": "agreed"
+  },
+  "codeant-monorepo|test-social-appeal-kind-posted-as-wicket|appeal-posted-as-wicket": {
+   "gold": true,
+   "src": "agreed"
+  },
+  "codeant-monorepo|test-stats-not-out-display-increments-wickets|not-out-counted-as-wicket": {
+   "gold": true,
+   "src": "agreed"
+  },
+  "codeant|test-archive-history-keeps-protocol-leaks|history-keeps-protocol-leaks": {
+   "gold": true,
+   "src": "restored on second review: states retention in history"
+  },
+  "codeant|test-archive-pickle-restore-rce|pickle-rce": {
+   "gold": false,
+   "src": "agreed"
+  },
+  "codeant|test-broadcast-match-pack-walk-bypasses-last-event|match-pack-walk-couples-protocol": {
+   "gold": false,
+   "src": "agreed"
+  },
+  "codeant|test-broadcast-raw-ball-treats-missing-confirm-as-wicket|raw-ball-bypasses-last-event": {
+   "gold": false,
+   "src": "agreed"
+  },
+  "codeant|test-fantasy-missing-confirm-pays-wicket-points|missing-confirm-pays-wicket": {
+   "gold": false,
+   "src": "corrected on review (old judges both passed it)"
+  },
+  "codeant|test-gateway-forwards-raw-ball-and-match-pack|gateway-forwards-leaks": {
+   "gold": true,
+   "src": "adjudicated"
+  },
+  "codeant|test-gateway-origin-param-ssrf|names-forged-scores": {
+   "gold": false,
+   "src": "agreed"
+  },
+  "codeant|test-gateway-origin-param-ssrf|origin-param-ssrf": {
+   "gold": false,
+   "src": "agreed"
+  },
+  "codeant|test-highlights-not-out-filed-as-wicket-clip|appeal-filed-as-wicket-clip": {
+   "gold": false,
+   "src": "agreed"
+  },
+  "codeant|test-highlights-split-kinds-stop-social-posts|boundary-kind-removed": {
+   "gold": false,
+   "src": "agreed"
+  },
+  "codeant|test-highlights-split-kinds-stop-social-posts|names-social-lost-posts": {
+   "gold": false,
+   "src": "agreed"
+  },
+  "codeant|test-mobile-missing-confirm-shows-wicket-banner|missing-flag-shows-wicket-banner": {
+   "gold": false,
+   "src": "agreed"
+  },
+  "codeant|test-notifications-not-out-sends-wicket-push|push-on-appeal-display": {
+   "gold": false,
+   "src": "agreed"
+  },
+  "codeant|test-protocol-omitted-confirm-counts-wicket-single-repo|omitted-confirm-counts-wicket": {
+   "gold": false,
+   "src": "agreed"
+  },
+  "codeant|test-protocol-omitted-confirm-counts-wicket-with-downstream-context|names-downstream-consumer": {
+   "gold": false,
+   "src": "agreed"
+  },
+  "codeant|test-protocol-omitted-confirm-counts-wicket-with-downstream-context|omitted-confirm-counts-wicket": {
+   "gold": false,
+   "src": "agreed"
+  },
+  "codeant|test-protocol-runs-off-bat-total-double-counts-extras|extras-reported-twice": {
+   "gold": true,
+   "src": "agreed"
+  },
+  "codeant|test-protocol-runs-off-bat-total-double-counts-extras|names-double-count-downstream": {
+   "gold": false,
+   "src": "agreed"
+  },
+  "codeant|test-scoring-match-pack-reexports-protocol-fields|match-pack-reexports-protocol": {
+   "gold": true,
+   "src": "agreed"
+  },
+  "codeant|test-scoring-no-content-breaks-gateway-and-broadcast|names-broken-consumer": {
+   "gold": false,
+   "src": "agreed"
+  },
+  "codeant|test-scoring-no-content-breaks-gateway-and-broadcast|status-change-breaks-callers": {
+   "gold": false,
+   "src": "agreed"
+  },
+  "codeant|test-scoring-numeric-boundaries-silence-highlights|display-values-removed": {
+   "gold": false,
+   "src": "agreed"
+  },
+  "codeant|test-scoring-numeric-boundaries-silence-highlights|names-silent-boundary-loss": {
+   "gold": false,
+   "src": "agreed"
+  },
+  "codeant|test-scoring-open-reset-endpoint|names-reset-downstream": {
+   "gold": false,
+   "src": "agreed"
+  },
+  "codeant|test-scoring-open-reset-endpoint|reset-unauthenticated": {
+   "gold": false,
+   "src": "agreed"
+  },
+  "codeant|test-scoring-overs-number-breaks-string-consumers|names-consumer-rejecting-overs": {
+   "gold": false,
+   "src": "agreed"
+  },
+  "codeant|test-scoring-overs-number-breaks-string-consumers|overs-type-change-breaks-contract": {
+   "gold": false,
+   "src": "agreed"
+  },
+  "codeant|test-scoring-raw-ball-leaks-protocol-fields|raw-ball-leaks-protocol": {
+   "gold": true,
+   "src": "agreed"
+  },
+  "codeant|test-scoring-renamed-wicket-field-breaks-notifications|field-rename-breaks-event": {
+   "gold": false,
+   "src": "agreed"
+  },
+  "codeant|test-scoring-renamed-wicket-field-breaks-notifications|names-consumer-failing-on-rename": {
+   "gold": false,
+   "src": "agreed"
+  },
+  "codeant|test-social-appeal-kind-posted-as-wicket|appeal-posted-as-wicket": {
+   "gold": false,
+   "src": "agreed"
+  },
+  "codeant|test-stats-not-out-display-increments-wickets|not-out-counted-as-wicket": {
+   "gold": true,
+   "src": "agreed"
+  },
+  "coderabbit|test-archive-history-keeps-protocol-leaks|history-keeps-protocol-leaks": {
+   "gold": true,
+   "src": "agreed"
+  },
+  "coderabbit|test-archive-pickle-restore-rce|pickle-rce": {
+   "gold": true,
+   "src": "agreed"
+  },
+  "coderabbit|test-broadcast-match-pack-walk-bypasses-last-event|match-pack-walk-couples-protocol": {
+   "gold": false,
+   "src": "adjudicated"
+  },
+  "coderabbit|test-broadcast-raw-ball-treats-missing-confirm-as-wicket|raw-ball-bypasses-last-event": {
+   "gold": true,
+   "src": "agreed"
+  },
+  "coderabbit|test-fantasy-missing-confirm-pays-wicket-points|missing-confirm-pays-wicket": {
+   "gold": true,
+   "src": "agreed"
+  },
+  "coderabbit|test-gateway-forwards-raw-ball-and-match-pack|gateway-forwards-leaks": {
+   "gold": false,
+   "src": "agreed"
+  },
+  "coderabbit|test-gateway-origin-param-ssrf|names-forged-scores": {
+   "gold": false,
+   "src": "agreed"
+  },
+  "coderabbit|test-gateway-origin-param-ssrf|origin-param-ssrf": {
+   "gold": true,
+   "src": "agreed"
+  },
+  "coderabbit|test-highlights-not-out-filed-as-wicket-clip|appeal-filed-as-wicket-clip": {
+   "gold": true,
+   "src": "agreed"
+  },
+  "coderabbit|test-highlights-split-kinds-stop-social-posts|boundary-kind-removed": {
+   "gold": true,
+   "src": "agreed"
+  },
+  "coderabbit|test-highlights-split-kinds-stop-social-posts|names-social-lost-posts": {
+   "gold": true,
+   "src": "agreed"
+  },
+  "coderabbit|test-mobile-missing-confirm-shows-wicket-banner|missing-flag-shows-wicket-banner": {
+   "gold": true,
+   "src": "agreed"
+  },
+  "coderabbit|test-notifications-not-out-sends-wicket-push|push-on-appeal-display": {
+   "gold": false,
+   "src": "agreed"
+  },
+  "coderabbit|test-protocol-omitted-confirm-counts-wicket-single-repo|omitted-confirm-counts-wicket": {
+   "gold": false,
+   "src": "adjudicated"
+  },
+  "coderabbit|test-protocol-omitted-confirm-counts-wicket-with-downstream-context|names-downstream-consumer": {
+   "gold": false,
+   "src": "agreed"
+  },
+  "coderabbit|test-protocol-omitted-confirm-counts-wicket-with-downstream-context|omitted-confirm-counts-wicket": {
+   "gold": false,
+   "src": "corrected on review (old judges both passed it)"
+  },
+  "coderabbit|test-protocol-runs-off-bat-total-double-counts-extras|extras-reported-twice": {
+   "gold": true,
+   "src": "agreed"
+  },
+  "coderabbit|test-protocol-runs-off-bat-total-double-counts-extras|names-double-count-downstream": {
+   "gold": false,
+   "src": "corrected on review (old judges both passed it)"
+  },
+  "coderabbit|test-scoring-match-pack-reexports-protocol-fields|match-pack-reexports-protocol": {
+   "gold": true,
+   "src": "agreed"
+  },
+  "coderabbit|test-scoring-no-content-breaks-gateway-and-broadcast|names-broken-consumer": {
+   "gold": true,
+   "src": "agreed"
+  },
+  "coderabbit|test-scoring-no-content-breaks-gateway-and-broadcast|status-change-breaks-callers": {
+   "gold": true,
+   "src": "agreed"
+  },
+  "coderabbit|test-scoring-numeric-boundaries-silence-highlights|display-values-removed": {
+   "gold": true,
+   "src": "agreed"
+  },
+  "coderabbit|test-scoring-numeric-boundaries-silence-highlights|names-silent-boundary-loss": {
+   "gold": true,
+   "src": "adjudicated"
+  },
+  "coderabbit|test-scoring-open-reset-endpoint|names-reset-downstream": {
+   "gold": false,
+   "src": "agreed"
+  },
+  "coderabbit|test-scoring-open-reset-endpoint|reset-unauthenticated": {
+   "gold": false,
+   "src": "agreed"
+  },
+  "coderabbit|test-scoring-overs-number-breaks-string-consumers|names-consumer-rejecting-overs": {
+   "gold": true,
+   "src": "agreed"
+  },
+  "coderabbit|test-scoring-overs-number-breaks-string-consumers|overs-type-change-breaks-contract": {
+   "gold": true,
+   "src": "agreed"
+  },
+  "coderabbit|test-scoring-raw-ball-leaks-protocol-fields|raw-ball-leaks-protocol": {
+   "gold": false,
+   "src": "corrected on review (old judges both passed it)"
+  },
+  "coderabbit|test-scoring-renamed-wicket-field-breaks-notifications|field-rename-breaks-event": {
+   "gold": true,
+   "src": "agreed"
+  },
+  "coderabbit|test-scoring-renamed-wicket-field-breaks-notifications|names-consumer-failing-on-rename": {
+   "gold": true,
+   "src": "agreed"
+  },
+  "coderabbit|test-social-appeal-kind-posted-as-wicket|appeal-posted-as-wicket": {
+   "gold": true,
+   "src": "adjudicated"
+  },
+  "coderabbit|test-stats-not-out-display-increments-wickets|not-out-counted-as-wicket": {
+   "gold": true,
+   "src": "agreed"
+  },
+  "greptile|test-archive-history-keeps-protocol-leaks|history-keeps-protocol-leaks": {
+   "gold": true,
+   "src": "agreed"
+  },
+  "greptile|test-archive-pickle-restore-rce|pickle-rce": {
+   "gold": true,
+   "src": "agreed"
+  },
+  "greptile|test-broadcast-match-pack-walk-bypasses-last-event|match-pack-walk-couples-protocol": {
+   "gold": true,
+   "src": "adjudicated"
+  },
+  "greptile|test-broadcast-raw-ball-treats-missing-confirm-as-wicket|raw-ball-bypasses-last-event": {
+   "gold": true,
+   "src": "agreed"
+  },
+  "greptile|test-fantasy-missing-confirm-pays-wicket-points|missing-confirm-pays-wicket": {
+   "gold": true,
+   "src": "agreed"
+  },
+  "greptile|test-gateway-forwards-raw-ball-and-match-pack|gateway-forwards-leaks": {
+   "gold": false,
+   "src": "corrected on review (old judges both passed it)"
+  },
+  "greptile|test-gateway-origin-param-ssrf|names-forged-scores": {
+   "gold": false,
+   "src": "agreed"
+  },
+  "greptile|test-gateway-origin-param-ssrf|origin-param-ssrf": {
+   "gold": true,
+   "src": "agreed"
+  },
+  "greptile|test-highlights-not-out-filed-as-wicket-clip|appeal-filed-as-wicket-clip": {
+   "gold": true,
+   "src": "agreed"
+  },
+  "greptile|test-highlights-split-kinds-stop-social-posts|boundary-kind-removed": {
+   "gold": true,
+   "src": "agreed"
+  },
+  "greptile|test-highlights-split-kinds-stop-social-posts|names-social-lost-posts": {
+   "gold": true,
+   "src": "agreed"
+  },
+  "greptile|test-mobile-missing-confirm-shows-wicket-banner|missing-flag-shows-wicket-banner": {
+   "gold": true,
+   "src": "agreed"
+  },
+  "greptile|test-notifications-not-out-sends-wicket-push|push-on-appeal-display": {
+   "gold": true,
+   "src": "agreed"
+  },
+  "greptile|test-protocol-omitted-confirm-counts-wicket-single-repo|omitted-confirm-counts-wicket": {
+   "gold": false,
+   "src": "adjudicated"
+  },
+  "greptile|test-protocol-omitted-confirm-counts-wicket-with-downstream-context|names-downstream-consumer": {
+   "gold": false,
+   "src": "agreed"
+  },
+  "greptile|test-protocol-omitted-confirm-counts-wicket-with-downstream-context|omitted-confirm-counts-wicket": {
+   "gold": false,
+   "src": "adjudicated"
+  },
+  "greptile|test-protocol-runs-off-bat-total-double-counts-extras|extras-reported-twice": {
+   "gold": true,
+   "src": "agreed"
+  },
+  "greptile|test-protocol-runs-off-bat-total-double-counts-extras|names-double-count-downstream": {
+   "gold": false,
+   "src": "corrected on review (old judges both passed it)"
+  },
+  "greptile|test-scoring-match-pack-reexports-protocol-fields|match-pack-reexports-protocol": {
+   "gold": true,
+   "src": "agreed"
+  },
+  "greptile|test-scoring-no-content-breaks-gateway-and-broadcast|names-broken-consumer": {
+   "gold": true,
+   "src": "adjudicated"
+  },
+  "greptile|test-scoring-no-content-breaks-gateway-and-broadcast|status-change-breaks-callers": {
+   "gold": true,
+   "src": "agreed"
+  },
+  "greptile|test-scoring-numeric-boundaries-silence-highlights|display-values-removed": {
+   "gold": true,
+   "src": "agreed"
+  },
+  "greptile|test-scoring-numeric-boundaries-silence-highlights|names-silent-boundary-loss": {
+   "gold": true,
+   "src": "adjudicated"
+  },
+  "greptile|test-scoring-open-reset-endpoint|names-reset-downstream": {
+   "gold": false,
+   "src": "agreed"
+  },
+  "greptile|test-scoring-open-reset-endpoint|reset-unauthenticated": {
+   "gold": true,
+   "src": "adjudicated"
+  },
+  "greptile|test-scoring-overs-number-breaks-string-consumers|names-consumer-rejecting-overs": {
+   "gold": true,
+   "src": "agreed"
+  },
+  "greptile|test-scoring-overs-number-breaks-string-consumers|overs-type-change-breaks-contract": {
+   "gold": true,
+   "src": "agreed"
+  },
+  "greptile|test-scoring-raw-ball-leaks-protocol-fields|raw-ball-leaks-protocol": {
+   "gold": false,
+   "src": "corrected on review (old judges both passed it)"
+  },
+  "greptile|test-scoring-renamed-wicket-field-breaks-notifications|field-rename-breaks-event": {
+   "gold": true,
+   "src": "agreed"
+  },
+  "greptile|test-scoring-renamed-wicket-field-breaks-notifications|names-consumer-failing-on-rename": {
+   "gold": true,
+   "src": "agreed"
+  },
+  "greptile|test-social-appeal-kind-posted-as-wicket|appeal-posted-as-wicket": {
+   "gold": true,
+   "src": "agreed"
+  },
+  "greptile|test-stats-not-out-display-increments-wickets|not-out-counted-as-wicket": {
+   "gold": true,
+   "src": "agreed"
+  },
+  "qodo|test-archive-history-keeps-protocol-leaks|history-keeps-protocol-leaks": {
+   "gold": true,
+   "src": "adjudicated"
+  },
+  "qodo|test-broadcast-match-pack-walk-bypasses-last-event|match-pack-walk-couples-protocol": {
+   "gold": true,
+   "src": "adjudicated"
+  },
+  "qodo|test-broadcast-raw-ball-treats-missing-confirm-as-wicket|raw-ball-bypasses-last-event": {
+   "gold": false,
+   "src": "adjudicated"
+  },
+  "qodo|test-fantasy-missing-confirm-pays-wicket-points|missing-confirm-pays-wicket": {
+   "gold": false,
+   "src": "agreed"
+  },
+  "qodo|test-gateway-forwards-raw-ball-and-match-pack|gateway-forwards-leaks": {
+   "gold": false,
+   "src": "adjudicated"
+  },
+  "qodo|test-highlights-not-out-filed-as-wicket-clip|appeal-filed-as-wicket-clip": {
+   "gold": false,
+   "src": "re-adjudicated"
+  },
+  "qodo|test-mobile-missing-confirm-shows-wicket-banner|missing-flag-shows-wicket-banner": {
+   "gold": false,
+   "src": "corrected on review (old judges both passed it)"
+  },
+  "qodo|test-notifications-not-out-sends-wicket-push|push-on-appeal-display": {
+   "gold": false,
+   "src": "corrected on review (old judges both passed it)"
+  },
+  "qodo|test-protocol-omitted-confirm-counts-wicket-single-repo|omitted-confirm-counts-wicket": {
+   "gold": false,
+   "src": "agreed"
+  },
+  "qodo|test-protocol-omitted-confirm-counts-wicket-with-downstream-context|names-downstream-consumer": {
+   "gold": false,
+   "src": "corrected on review (old judges both passed it)"
+  },
+  "qodo|test-protocol-omitted-confirm-counts-wicket-with-downstream-context|omitted-confirm-counts-wicket": {
+   "gold": false,
+   "src": "agreed"
+  },
+  "qodo|test-scoring-match-pack-reexports-protocol-fields|match-pack-reexports-protocol": {
+   "gold": true,
+   "src": "agreed"
+  },
+  "qodo|test-scoring-raw-ball-leaks-protocol-fields|raw-ball-leaks-protocol": {
+   "gold": true,
+   "src": "agreed"
+  },
+  "qodo|test-social-appeal-kind-posted-as-wicket|appeal-posted-as-wicket": {
+   "gold": false,
+   "src": "re-adjudicated"
+  },
+  "qodo|test-stats-not-out-display-increments-wickets|not-out-counted-as-wicket": {
+   "gold": true,
+   "src": "agreed"
+  }
+ }
+}

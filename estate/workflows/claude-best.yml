@@ -1,0 +1,129 @@
+# org-claudeskill — Claude Code GitHub Action, TUNED FOR A MULTI-REPO ESTATE.
+#
+# Two differences from org-claudplain (out of the box), and only two:
+#   1. Read-only clones of the other 10 services are placed in .estate/ before the
+#      review runs, so Claude can actually read a consumer's source.
+#   2. A review prompt that makes Claude trace data and event dependencies, not just
+#      imports, and that forbids repeating a documented claim without verifying it.
+#
+# FAIRNESS: the prompt below is domain-agnostic. It does not mention cricket,
+# wickets, umpires, confirmation flags, or any trap. It would read identically in
+# a payments estate or a logistics estate. Nothing about the answer is leaked to it.
+name: Claude Review (estate-aware)
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+      issues: write
+      id-token: write
+      actions: read
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          # Depth 1 only. TRAPS.md (the per-repo answer key) and the original
+          # READMEs were deleted in 8089e6d but stay readable in history, so a
+          # full clone hands the reviewer the traps it is being scored on.
+          fetch-depth: 1
+
+      - name: Clone the rest of the estate (read-only context)
+        env:
+          # The repos are public, so the clones need no credentials. ESTATE_TOKEN is
+          # only consulted if the estate is ever flipped back to private.
+          ESTATE_TOKEN: ${{ secrets.ESTATE_TOKEN }}
+        run: |
+          set -u
+          REPO="${{ github.event.repository.name }}"       # prlab-cricket-mobile
+          OWNER="${{ github.repository_owner }}"           # org-claudeskill
+          mkdir -p .estate
+          for r in protocol scoring broadcast stats fantasy highlights \
+                   social archive notifications live-gateway mobile; do
+            name="prlab-cricket-${r}"
+            [ "$name" = "$REPO" ] && continue
+            url="https://github.com/${OWNER}/${name}.git"
+            # actions/checkout left an Authorization extraheader (this repo's job
+            # token) in git config. An empty value clears it, so the clone does not
+            # send two credentials. Public repos need none; ESTATE_TOKEN is only a
+            # fallback, sent as a per-command header and never put in the URL: a URL
+            # credential is saved in .estate/*/.git/config, where Claude can read it.
+            clear=(-c "http.https://github.com/.extraheader=")
+            if git "${clear[@]}" clone --depth 1 --quiet "$url" ".estate/${name}" 2>/dev/null; then
+              echo "  cloned ${name}"
+            elif [ -n "${ESTATE_TOKEN:-}" ] && git "${clear[@]}" \
+                -c "http.https://github.com/.extraheader=AUTHORIZATION: basic $(printf 'x-access-token:%s' "$ESTATE_TOKEN" | base64 | tr -d '\n')" \
+                clone --depth 1 --quiet "$url" ".estate/${name}" 2>/dev/null; then
+              echo "  cloned ${name} (with ESTATE_TOKEN)"
+            else
+              echo "  SKIP ${name} (clone failed — is ${OWNER}/${name} readable?)"
+            fi
+          done
+          if grep -rqs "${ESTATE_TOKEN:-no-token-set}" .estate/*/.git/config; then
+            echo "ESTATE_TOKEN found in a clone's .git/config; stopping before Claude runs" >&2
+            exit 1
+          fi
+          # A review without the siblings is the out-of-the-box variant under the
+          # wrong name. Fail the job instead of letting it review blind.
+          cloned=$(find .estate -mindepth 1 -maxdepth 1 -type d | wc -l | tr -d ' ')
+          if [ "$cloned" -lt 10 ]; then
+            echo "only ${cloned}/10 sibling repos cloned; refusing to review without the estate" >&2
+            exit 1
+          fi
+          echo "estate contents:"; ls -1 .estate || echo "  (empty)"
+
+      - uses: anthropics/claude-code-action@v1
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          # track_progress puts the result on the PR as a comment. Without it the
+          # review only lands in the workflow log.
+          track_progress: true
+          # No shell: the siblings are cloned above, and Read/Grep/Glob search them.
+          # An unrestricted Bash could curl or git-clone the public harness repo,
+          # which holds every trap. The action's default web tools stay disallowed.
+          claude_args: "--max-turns 60 --allowedTools Read,Grep,Glob,LS"
+          prompt: |
+            Review this pull request for defects that would reach production.
+
+            This repository is one service in a multi-repository estate. Read-only
+            clones of the other services are in `.estate/`. They are NOT part of this
+            pull request: never review them, never propose changes to them, and never
+            count them as changed files. Use them only as evidence.
+
+            Method:
+
+            1. Read the diff. State in one sentence what behaviour changes at runtime.
+
+            2. For every value, field, flag, status, or message this diff writes,
+               emits, stores, serialises, or returns, find who consumes it. Search
+               `.estate/` for the field name, the route, the schema key, the event
+               name, and the message shape - not only for import statements. A service
+               that never imports this package still breaks when the MEANING of a value
+               it reads changes. Data and event dependencies count as dependencies.
+
+            3. Follow each consumer to ITS consumers, up to three boundaries out. Stop
+               when the value is no longer propagated or reinterpreted.
+
+            4. Anchor every hop. For each one, cite the consuming repository, the file
+               path, and the line range. A claim you cannot anchor to a file and line
+               inside `.estate/` does not belong in the review.
+
+            5. Treat README files, comments, and any other documentation in THIS
+               repository as claims, not as evidence. If a document asserts a
+               downstream consequence, verify it against that consumer's source before
+               repeating it, and name the file that confirmed it. If you cannot confirm
+               it, say the claim is unverified.
+
+            6. Decide whether the change is safe to merge, and say so explicitly.
+
+            Report, as a single PR comment:
+
+            - A one-line verdict: "safe to merge" or "not safe to merge", plus the reason.
+            - Each defect: what breaks at runtime; the file and line in THIS repository
+              that causes it; and the repository, file, and line where it surfaces.
+            - Nothing about style, formatting, naming, or test coverage unless it causes
+              a runtime defect.

@@ -1,0 +1,2301 @@
+{
+  "tool": "codeant",
+  "owner": "org-codeant",
+  "tool_options": {},
+  "judge": {
+    "mode": "llm",
+    "provider": "panel",
+    "model": "bedrock/us.anthropic.claude-haiku-4-5-20251001-v1:0,bedrock/us.anthropic.claude-sonnet-4-5-20250929-v1:0;bedrock/deepseek.v3.2",
+    "claims_judged_by": "bifrost/bedrock/us.anthropic.claude-haiku-4-5-20251001-v1:0"
+  },
+  "rescored_from": "review-eval-codeant-org-codeant-bifrost-rescored-20261001T040929Z.json",
+  "run_at": "20260930T052828Z",
+  "generated_at": "20261001T085251Z",
+  "passed": 5,
+  "failed": 18,
+  "precision": 0.8333333333333334,
+  "recall": 0.1875,
+  "f1": 0.3061224489795918,
+  "true_positives": 6,
+  "false_negatives": 26,
+  "false_positives": 4,
+  "by_capability": [
+    {
+      "id": "local-semantic-consequence",
+      "name": "Local semantic consequence",
+      "cases": [
+        "test-protocol-omitted-confirm-counts-wicket-single-repo",
+        "test-protocol-runs-off-bat-total-double-counts-extras"
+      ],
+      "true_positives": 1,
+      "false_negatives": 2,
+      "false_positives": 1,
+      "relevant_comments": 2,
+      "comments": 3,
+      "precision": 0.6666666666666666,
+      "recall": 0.3333333333333333,
+      "f1": 0.4444444444444444,
+      "defect_comments": 1
+    },
+    {
+      "id": "cross-repo-impact",
+      "name": "Cross-repo impact",
+      "cases": [
+        "test-protocol-omitted-confirm-counts-wicket-with-downstream-context",
+        "test-scoring-no-content-breaks-gateway-and-broadcast",
+        "test-scoring-overs-number-breaks-string-consumers",
+        "test-scoring-numeric-boundaries-silence-highlights",
+        "test-scoring-renamed-wicket-field-breaks-notifications",
+        "test-protocol-runs-off-bat-total-double-counts-extras",
+        "test-highlights-split-kinds-stop-social-posts",
+        "test-scoring-open-reset-endpoint",
+        "test-gateway-origin-param-ssrf"
+      ],
+      "true_positives": 1,
+      "false_negatives": 17,
+      "false_positives": 2,
+      "relevant_comments": 6,
+      "comments": 8,
+      "precision": 0.75,
+      "recall": 0.05555555555555555,
+      "f1": 0.10344827586206895,
+      "defect_comments": 5
+    },
+    {
+      "id": "contract-leak",
+      "name": "Public contract leak",
+      "cases": [
+        "test-scoring-raw-ball-leaks-protocol-fields",
+        "test-scoring-match-pack-reexports-protocol-fields"
+      ],
+      "true_positives": 2,
+      "false_negatives": 0,
+      "false_positives": 0,
+      "relevant_comments": 3,
+      "comments": 3,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "defect_comments": 1
+    },
+    {
+      "id": "abstraction-bypass",
+      "name": "Published-contract bypass",
+      "cases": [
+        "test-broadcast-raw-ball-treats-missing-confirm-as-wicket",
+        "test-broadcast-match-pack-walk-bypasses-last-event"
+      ],
+      "true_positives": 0,
+      "false_negatives": 2,
+      "false_positives": 0,
+      "relevant_comments": 1,
+      "comments": 1,
+      "precision": 1.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "defect_comments": 1
+    },
+    {
+      "id": "display-vs-authority",
+      "name": "Display vs authoritative state",
+      "cases": [
+        "test-stats-not-out-display-increments-wickets",
+        "test-notifications-not-out-sends-wicket-push"
+      ],
+      "true_positives": 1,
+      "false_negatives": 1,
+      "false_positives": 0,
+      "relevant_comments": 2,
+      "comments": 2,
+      "precision": 1.0,
+      "recall": 0.5,
+      "f1": 0.6666666666666666,
+      "defect_comments": 1
+    },
+    {
+      "id": "omitted-guard-as-true",
+      "name": "Omitted guard treated as true",
+      "cases": [
+        "test-fantasy-missing-confirm-pays-wicket-points",
+        "test-mobile-missing-confirm-shows-wicket-banner"
+      ],
+      "true_positives": 0,
+      "false_negatives": 2,
+      "false_positives": 1,
+      "relevant_comments": 2,
+      "comments": 3,
+      "precision": 0.6666666666666666,
+      "recall": 0.0,
+      "f1": 0.0,
+      "defect_comments": 2
+    },
+    {
+      "id": "kind-relabel",
+      "name": "Outcome kind relabel",
+      "cases": [
+        "test-highlights-not-out-filed-as-wicket-clip",
+        "test-social-appeal-kind-posted-as-wicket"
+      ],
+      "true_positives": 0,
+      "false_negatives": 2,
+      "false_positives": 1,
+      "relevant_comments": 0,
+      "comments": 1,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "defect_comments": 0
+    },
+    {
+      "id": "leak-propagation",
+      "name": "Leak persistence or pass-through",
+      "cases": [
+        "test-archive-history-keeps-protocol-leaks",
+        "test-gateway-forwards-raw-ball-and-match-pack"
+      ],
+      "true_positives": 2,
+      "false_negatives": 0,
+      "false_positives": 0,
+      "relevant_comments": 4,
+      "comments": 4,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "defect_comments": 2
+    },
+    {
+      "id": "api-contract-break",
+      "name": "API contract break",
+      "cases": [
+        "test-scoring-no-content-breaks-gateway-and-broadcast",
+        "test-scoring-overs-number-breaks-string-consumers"
+      ],
+      "true_positives": 0,
+      "false_negatives": 4,
+      "false_positives": 1,
+      "relevant_comments": 2,
+      "comments": 3,
+      "precision": 0.6666666666666666,
+      "recall": 0.0,
+      "f1": 0.0,
+      "defect_comments": 2
+    },
+    {
+      "id": "event-contract-break",
+      "name": "Event contract break",
+      "cases": [
+        "test-scoring-numeric-boundaries-silence-highlights",
+        "test-scoring-renamed-wicket-field-breaks-notifications",
+        "test-highlights-split-kinds-stop-social-posts"
+      ],
+      "true_positives": 0,
+      "false_negatives": 6,
+      "false_positives": 0,
+      "relevant_comments": 0,
+      "comments": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "defect_comments": 0
+    },
+    {
+      "id": "security",
+      "name": "Security",
+      "cases": [
+        "test-scoring-open-reset-endpoint",
+        "test-gateway-origin-param-ssrf",
+        "test-archive-pickle-restore-rce"
+      ],
+      "true_positives": 0,
+      "false_negatives": 5,
+      "false_positives": 0,
+      "relevant_comments": 3,
+      "comments": 3,
+      "precision": 1.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "defect_comments": 3
+    }
+  ],
+  "results": [
+    {
+      "case_id": "test-protocol-omitted-confirm-counts-wicket-single-repo",
+      "tool": "codeant",
+      "pr_url": "https://github.com/org-codeant/prlab-cricket-protocol/pull/7",
+      "finding_passed": false,
+      "isolation_passed": true,
+      "intent": "Catch that omitting umpire_confirmed now counts a wicket",
+      "tests": "The protocol PR defaults a missing umpire_confirmed to true on a dismissal so older clients still parse. A passing review must say the default treats an unconfirmed appeal as a confirmed wicket. Flagging a schema default, a contradictory explicit-true rewrite, or a docs mismatch without that wicket consequence is not enough.",
+      "capability_id": "local-semantic-consequence",
+      "capability": "Local semantic consequence",
+      "capability_asks": "From the changed repo alone, can the tool infer that a local default or rewrite changes a domain decision \u2014 not only that a field has a new value?",
+      "capability_ids": [
+        "local-semantic-consequence"
+      ],
+      "claims": [
+        {
+          "claim_id": "omitted-confirm-counts-wicket",
+          "must_assert": "If umpire_confirmed is omitted on a dismissal, this change treats the dismissal as confirmed, so an unconfirmed appeal can be counted as a wicket.",
+          "passed": false,
+          "quote": "",
+          "reason": "panel agrees (fail): part 1 not met: The review discusses kind being required and defaulting to none, not umpire_confirmed being omitted or defaulting to true.",
+          "tokens_expected": [
+            "umpire_confirmed",
+            "(omitted|default|missing)",
+            "wicket"
+          ],
+          "tokens_matched": [
+            "(omitted|default|missing)",
+            "wicket"
+          ],
+          "tokens_missing": [
+            "umpire_confirmed"
+          ],
+          "parts": [
+            {
+              "part": "When umpire_confirmed is omitted on a dismissal, the change treats it as confirmed (defaults it to true).",
+              "met": false,
+              "quote": "",
+              "why": "The review discusses kind being required and defaulting to none, not umpire_confirmed being omitted or defaulting to true."
+            },
+            {
+              "part": "As a result an unconfirmed appeal can be counted or recorded as a wicket.",
+              "met": false,
+              "quote": "",
+              "why": "The review does not mention unconfirmed appeals being counted as wickets or any consequence related to umpire_confirmed."
+            }
+          ],
+          "votes": [
+            {
+              "judge": "claude-haiku-4-5",
+              "passed": false,
+              "reason": "part 1 not met: The review discusses a mismatch between schema and Python model regarding the `kind` field, not the `umpire_confirmed` field."
+            },
+            {
+              "judge": "claude-sonnet-4-5",
+              "passed": false,
+              "reason": "part 1 not met: The review discusses kind being required and defaulting to none, not umpire_confirmed being omitted or defaulting to true."
+            }
+          ]
+        }
+      ],
+      "actual": "schemas/ball_event.schema.json:45\n**Suggestion:** Requiring `kind` makes `wicket:{}` invalid in schema-first consumers, although the Python model accepts it and defaults `kind` to `none`.\n\n**Assessment:** \ud83d\udfe0 `Major` \u00b7 \ud83d\udd01 `Occurrence: Sometimes` \u00b7 \ud83c\udff7\ufe0f `Api mismatch`\n\n \ud83d\udc4d | \ud83d\udc4e",
+      "comments": [
+        "schemas/ball_event.schema.json:45\n**Suggestion:** Requiring `kind` makes `wicket:{}` invalid in schema-first consumers, although the Python model accepts it and defaults `kind` to `none`.\n\n**Assessment:** \ud83d\udfe0 `Major` \u00b7 \ud83d\udd01 `Occurrence: Sometimes` \u00b7 \ud83c\udff7\ufe0f `Api mismatch`\n\n \ud83d\udc4d | \ud83d\udc4e"
+      ],
+      "metrics": {
+        "true_positives": 0,
+        "false_negatives": 1,
+        "false_positives": 0,
+        "relevant_comments": 1,
+        "comments": 1,
+        "precision": 1.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "defect_comments": 1
+      },
+      "unexpected_bots": [],
+      "judge_mode": "llm",
+      "comment_verdicts": [
+        {
+          "index": 1,
+          "label": "defect",
+          "reason": "The schema requires 'kind' but the Python model defaults it to WicketKind.NONE, creating a contract mismatch where schema-first consumers would reject valid Python payloads."
+        }
+      ]
+    },
+    {
+      "case_id": "test-protocol-omitted-confirm-counts-wicket-with-downstream-context",
+      "tool": "codeant",
+      "pr_url": "https://github.com/org-codeant/prlab-cricket-protocol/pull/8",
+      "finding_passed": false,
+      "isolation_passed": true,
+      "intent": "Catch the omitted-confirm wicket trap and name a downstream consumer",
+      "tests": "Same protocol default as the other protocol case. A passing review must say omitted umpire_confirmed can count a wicket, and it must name a real downstream effect \u2014 scoring counting the wicket, the ledger copying it, or fantasy paying bowling points. Mentioning only that a field has a default fails the second claim.",
+      "capability_id": "cross-repo-impact",
+      "capability": "Cross-repo impact",
+      "capability_asks": "Can the tool connect a local contract change to a named downstream consumer?",
+      "capability_ids": [
+        "cross-repo-impact"
+      ],
+      "claims": [
+        {
+          "claim_id": "omitted-confirm-counts-wicket",
+          "must_assert": "If umpire_confirmed is omitted on a dismissal, this change treats the dismissal as confirmed, so an unconfirmed appeal can be counted as a wicket.",
+          "passed": false,
+          "quote": "",
+          "reason": "panel agrees (fail): part 1 not met: The review discusses a mismatch when kind is omitted, not when umpire_confirmed is omitted.",
+          "tokens_expected": [
+            "umpire_confirmed",
+            "(omitted|default|missing)",
+            "wicket"
+          ],
+          "tokens_matched": [
+            "wicket"
+          ],
+          "tokens_missing": [
+            "umpire_confirmed",
+            "(omitted|default|missing)"
+          ],
+          "parts": [
+            {
+              "part": "When umpire_confirmed is omitted on a dismissal, the change treats it as confirmed (defaults it to true).",
+              "met": false,
+              "quote": "",
+              "why": "The review discusses a mismatch when kind is omitted, not when umpire_confirmed is omitted."
+            },
+            {
+              "part": "As a result an unconfirmed appeal can be counted or recorded as a wicket.",
+              "met": false,
+              "quote": "",
+              "why": "The review does not mention unconfirmed appeals being counted as wickets."
+            }
+          ],
+          "votes": [
+            {
+              "judge": "claude-haiku-4-5",
+              "passed": false,
+              "reason": "part 1 not met: The review discusses a mismatch between schema and Pydantic validation for the `kind` field, not about `umpire_confirmed` being omitted or defaulted to true."
+            },
+            {
+              "judge": "claude-sonnet-4-5",
+              "passed": false,
+              "reason": "part 1 not met: The review discusses a mismatch when kind is omitted, not when umpire_confirmed is omitted."
+            }
+          ]
+        },
+        {
+          "claim_id": "names-downstream-consumer",
+          "must_assert": "The review states a concrete downstream effect of the defaulted confirmation in a named consumer \u2014 for example scoring counting or incrementing the wicket, the stats ledger copying that wicket, or fantasy paying bowling points for it. Naming a downstream repo or hop without saying what it does wrong (for example 'scoring may rely on this invariant') is not enough, and neither is naming the field default alone.",
+          "passed": false,
+          "quote": "",
+          "reason": "panel agrees (fail): part 1 not met: The review does not name any specific downstream consumer like scoring, stats ledger, or fantasy.",
+          "tokens_expected": [
+            "(scoring|stats|fantasy|ledger)",
+            "(count|increment|cop(y|ies)|pa(y|ys|id)|award|points)"
+          ],
+          "tokens_matched": [
+            "(count|increment|cop(y|ies)|pa(y|ys|id)|award|points)"
+          ],
+          "tokens_missing": [
+            "(scoring|stats|fantasy|ledger)"
+          ],
+          "parts": [
+            {
+              "part": "Names a specific downstream consumer: scoring, the stats ledger, or fantasy (any one).",
+              "met": false,
+              "quote": "",
+              "why": "The review does not name any specific downstream consumer like scoring, stats ledger, or fantasy."
+            },
+            {
+              "part": "Says what that consumer now does wrong because of the defaulted confirmation: counts or increments the wicket, copies it into the ledger, or pays bowling points for it.",
+              "met": false,
+              "quote": "",
+              "why": "The review does not describe what any consumer does wrong; it only discusses schema versus Pydantic validation mismatch."
+            }
+          ],
+          "votes": [
+            {
+              "judge": "claude-haiku-4-5",
+              "passed": false,
+              "reason": "part 1 not met: The review does not name any specific downstream consumer like scoring, the stats ledger, or fantasy."
+            },
+            {
+              "judge": "claude-sonnet-4-5",
+              "passed": false,
+              "reason": "part 1 not met: The review does not name any specific downstream consumer like scoring, stats ledger, or fantasy."
+            }
+          ]
+        }
+      ],
+      "actual": "schemas/ball_event.schema.json:45\n**Suggestion:** A wicket object without `kind` is rejected by the schema but accepted by `Wicket`, so the same legacy payload passes Pydantic validation and fails schema validation.\n\n**Assessment:** \ud83d\udfe0 `Major` \u00b7 \ud83d\udd01 `Occurrence: Rarely` \u00b7 \ud83c\udff7\ufe0f `Api mismatch`\n\n \ud83d\udc4d | \ud83d\udc4e",
+      "comments": [
+        "schemas/ball_event.schema.json:45\n**Suggestion:** A wicket object without `kind` is rejected by the schema but accepted by `Wicket`, so the same legacy payload passes Pydantic validation and fails schema validation.\n\n**Assessment:** \ud83d\udfe0 `Major` \u00b7 \ud83d\udd01 `Occurrence: Rarely` \u00b7 \ud83c\udff7\ufe0f `Api mismatch`\n\n \ud83d\udc4d | \ud83d\udc4e"
+      ],
+      "metrics": {
+        "true_positives": 0,
+        "false_negatives": 2,
+        "false_positives": 0,
+        "relevant_comments": 1,
+        "comments": 1,
+        "precision": 1.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "defect_comments": 1
+      },
+      "unexpected_bots": [],
+      "judge_mode": "llm",
+      "comment_verdicts": [
+        {
+          "index": 1,
+          "label": "defect",
+          "reason": "The schema requires 'kind' in the wicket object, but the Pydantic model has a default value for 'kind' (WicketKind.NONE), allowing wicket objects without 'kind' to pass validation in Python while failing schema validation, creating a data contract mismatch."
+        }
+      ]
+    },
+    {
+      "case_id": "test-scoring-raw-ball-leaks-protocol-fields",
+      "tool": "codeant",
+      "pr_url": "https://github.com/org-codeant/prlab-cricket-scoring/pull/15",
+      "finding_passed": true,
+      "isolation_passed": true,
+      "intent": "Catch raw_ball leaking BallEvent / protocol fields to product clients",
+      "tests": "Scoring copies the full validated BallEvent onto ScoreSnapshot.raw_ball as a debug envelope. Product clients (broadcast, gateway, archive) are supposed to see only the snapshot contract. A passing review must say publishing raw_ball exposes protocol fields such as umpire_confirmed or extras. Calling it a convenient debug field without the leak is not enough.",
+      "capability_id": "contract-leak",
+      "capability": "Public contract leak",
+      "capability_asks": "Can the tool see that a public response or nested object now exposes internal or forbidden fields?",
+      "capability_ids": [
+        "contract-leak"
+      ],
+      "claims": [
+        {
+          "claim_id": "raw-ball-leaks-protocol",
+          "must_assert": "Publishing raw_ball on the snapshot leaks protocol or BallEvent fields to product clients that should only see the score snapshot.",
+          "passed": true,
+          "quote": "raw_ball is part of both POST and GET response models, exposing forbidden fields such as wicket.umpire_confirmed and extras.type to product clients.",
+          "reason": "panel agrees (pass): The review explicitly states that raw_ball exposes forbidden BallEvent fields to product clients.",
+          "tokens_expected": [
+            "raw_ball",
+            "(leak|protocol|BallEvent|product)"
+          ],
+          "tokens_matched": [
+            "raw_ball",
+            "(leak|protocol|BallEvent|product)"
+          ],
+          "tokens_missing": [],
+          "parts": [
+            {
+              "part": "Publishing raw_ball exposes protocol or BallEvent fields (such as umpire_confirmed or extras) to product clients that should see only the score snapshot.",
+              "met": true,
+              "quote": "raw_ball is part of both POST and GET response models, exposing forbidden fields such as wicket.umpire_confirmed and extras.type to product clients.",
+              "why": "The review states that raw_ball exposes forbidden fields (wicket.umpire_confirmed and extras.type, which are BallEvent fields) to product clients through response models."
+            }
+          ],
+          "votes": [
+            {
+              "judge": "claude-haiku-4-5",
+              "passed": true,
+              "reason": "The review explicitly identifies the leak of protocol fields through raw_ball in response models sent to product clients."
+            },
+            {
+              "judge": "claude-sonnet-4-5",
+              "passed": true,
+              "reason": "The review explicitly states that raw_ball exposes forbidden BallEvent fields to product clients."
+            }
+          ]
+        }
+      ],
+      "actual": "scoring/snapshot.py:29\n**Suggestion:** `raw_ball` is part of both POST and GET response models, exposing forbidden fields such as `wicket.umpire_confirmed` and `extras.type` to product clients.\n\n**Assessment:** \ud83d\udfe0 `Major` \u00b7 \ud83d\udd01 `Occurrence: Often` \u00b7 \ud83c\udff7\ufe0f `Security`\n\n \ud83d\udc4d | \ud83d\udc4e",
+      "comments": [
+        "scoring/snapshot.py:29\n**Suggestion:** `raw_ball` is part of both POST and GET response models, exposing forbidden fields such as `wicket.umpire_confirmed` and `extras.type` to product clients.\n\n**Assessment:** \ud83d\udfe0 `Major` \u00b7 \ud83d\udd01 `Occurrence: Often` \u00b7 \ud83c\udff7\ufe0f `Security`\n\n \ud83d\udc4d | \ud83d\udc4e"
+      ],
+      "metrics": {
+        "true_positives": 1,
+        "false_negatives": 0,
+        "false_positives": 0,
+        "relevant_comments": 1,
+        "comments": 1,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "defect_comments": 0
+      },
+      "unexpected_bots": [],
+      "judge_mode": "llm",
+      "comment_verdicts": [
+        {
+          "index": 1,
+          "label": "trap",
+          "reason": "holds the quote the claim judge verified"
+        }
+      ]
+    },
+    {
+      "case_id": "test-scoring-match-pack-reexports-protocol-fields",
+      "tool": "codeant",
+      "pr_url": "https://github.com/org-codeant/prlab-cricket-scoring/pull/16",
+      "finding_passed": true,
+      "isolation_passed": true,
+      "intent": "Catch the nested match pack re-exporting extras or umpire_confirmed",
+      "tests": "Scoring adds match.innings.latest_over.latest_delivery so overlays can walk a structured pack instead of last_event strings. That nest copies protocol extras and umpire_confirmed onto the public snapshot. A passing review must say those fields are being re-exported to product clients. Complaining only that the JSON schema is underspecified is not enough.",
+      "capability_id": "contract-leak",
+      "capability": "Public contract leak",
+      "capability_asks": "Can the tool see that a public response or nested object now exposes internal or forbidden fields?",
+      "capability_ids": [
+        "contract-leak"
+      ],
+      "claims": [
+        {
+          "claim_id": "match-pack-reexports-protocol",
+          "must_assert": "The nested match pack re-exports protocol details such as extras or umpire_confirmed to product clients instead of keeping those fields inside scoring.",
+          "passed": true,
+          "quote": "The public snapshot now exposes umpire_confirmed, which the existing product contract explicitly forbids and downstream consumers must not receive.",
+          "reason": "panel agrees (pass): The review directly states that umpire_confirmed is exposed in the public snapshot to downstream consumers, meeting the claim about protocol fields reaching product clients.",
+          "tokens_expected": [
+            "(match pack|latest_delivery|umpire_confirmed|extras)",
+            "(leak|re-export|protocol|product)"
+          ],
+          "tokens_matched": [
+            "(match pack|latest_delivery|umpire_confirmed|extras)",
+            "(leak|re-export|protocol|product)"
+          ],
+          "tokens_missing": [],
+          "parts": [
+            {
+              "part": "The nested match pack exposes protocol fields such as extras.type or umpire_confirmed to product clients through the public snapshot.",
+              "met": true,
+              "quote": "The public snapshot now exposes umpire_confirmed, which the existing product contract explicitly forbids and downstream consumers must not receive.",
+              "why": "The review explicitly states that umpire_confirmed is exposed to downstream consumers through the public snapshot."
+            }
+          ],
+          "votes": [
+            {
+              "judge": "claude-haiku-4-5",
+              "passed": true,
+              "reason": "The review confirms that protocol fields like umpire_confirmed are being exposed to product clients through the public snapshot, meeting the claim's core assertion."
+            },
+            {
+              "judge": "claude-sonnet-4-5",
+              "passed": true,
+              "reason": "The review directly states that umpire_confirmed is exposed in the public snapshot to downstream consumers, meeting the claim about protocol fields reaching product clients."
+            }
+          ]
+        }
+      ],
+      "actual": "schemas/score_snapshot.schema.json:15\n**Suggestion:** The schema accepts any object inside `match`, so malformed or differently shaped match packs pass validation and overlay clients cannot rely on the documented nested fields.\n\n**Assessment:** \ud83d\udfe0 `Major` \u00b7 \ud83d\udd01 `Occurrence: Rarely` \u00b7 \ud83c\udff7\ufe0f `Api mismatch`\n\n \ud83d\udc4d | \ud83d\udc4e\n\nscoring/snapshot.py:17\n**Suggestion:** The public snapshot now exposes `umpire_confirmed`, which the existing product contract explicitly forbids and downstream consumers must not receive.\n\n**Assessment:** \ud83d\udfe0 `Major` \u00b7 \ud83d\udd01 `Occurrence: Often` \u00b7 \ud83c\udff7\ufe0f `Api mismatch`\n\n \ud83d\udc4d | \ud83d\udc4e",
+      "comments": [
+        "schemas/score_snapshot.schema.json:15\n**Suggestion:** The schema accepts any object inside `match`, so malformed or differently shaped match packs pass validation and overlay clients cannot rely on the documented nested fields.\n\n**Assessment:** \ud83d\udfe0 `Major` \u00b7 \ud83d\udd01 `Occurrence: Rarely` \u00b7 \ud83c\udff7\ufe0f `Api mismatch`\n\n \ud83d\udc4d | \ud83d\udc4e",
+        "scoring/snapshot.py:17\n**Suggestion:** The public snapshot now exposes `umpire_confirmed`, which the existing product contract explicitly forbids and downstream consumers must not receive.\n\n**Assessment:** \ud83d\udfe0 `Major` \u00b7 \ud83d\udd01 `Occurrence: Often` \u00b7 \ud83c\udff7\ufe0f `Api mismatch`\n\n \ud83d\udc4d | \ud83d\udc4e"
+      ],
+      "metrics": {
+        "true_positives": 1,
+        "false_negatives": 0,
+        "false_positives": 0,
+        "relevant_comments": 2,
+        "comments": 2,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "defect_comments": 1
+      },
+      "unexpected_bots": [],
+      "judge_mode": "llm",
+      "comment_verdicts": [
+        {
+          "index": 1,
+          "label": "defect",
+          "reason": "The JSON schema uses `\"type\": [\"object\", \"null\"]` without specifying `properties` or `required`, allowing any object structure to pass validation, which breaks the contract that overlay clients can rely on the documented nested field structure."
+        },
+        {
+          "index": 2,
+          "label": "trap",
+          "reason": "holds the quote the claim judge verified"
+        }
+      ]
+    },
+    {
+      "case_id": "test-broadcast-raw-ball-treats-missing-confirm-as-wicket",
+      "tool": "codeant",
+      "pr_url": "https://github.com/org-codeant/prlab-cricket-broadcast/pull/5",
+      "finding_passed": false,
+      "isolation_passed": true,
+      "intent": "Catch TV animation treating a missing umpire_confirmed as a wicket via raw_ball",
+      "tests": "Broadcast starts reading extras.type and umpire_confirmed from snapshot.raw_ball so wides and appeals animate. If confirmation is omitted it treats the ball as a wicket before last_event. A passing review must say that bypasses scoring's last_event and can show a rejected appeal as a wicket. Coverage nits on no_ball without that confirmation bug fail the case.",
+      "capability_id": "abstraction-bypass",
+      "capability": "Published-contract bypass",
+      "capability_asks": "Can the tool flag a consumer reading producer internals \u2014 a leaked envelope or a nested walk \u2014 instead of the agreed public field?",
+      "capability_ids": [
+        "abstraction-bypass"
+      ],
+      "claims": [
+        {
+          "claim_id": "raw-ball-bypasses-last-event",
+          "must_assert": "Animating from raw_ball extras or umpire_confirmed bypasses scoring's last_event and can treat a missing confirmation as a wicket.",
+          "passed": false,
+          "quote": "An unconfirmed wicket appeal with a wide or no-ball is shown as an extra animation",
+          "reason": "panel agrees (fail): part 2 not met: The review describes the opposite case: an unconfirmed appeal WITH extras is shown as an extra (not as a wicket), which does not meet the claim that a missing confirmation is treated as a wicket.",
+          "tokens_expected": [
+            "raw_ball",
+            "(umpire_confirmed|extras)"
+          ],
+          "tokens_matched": [],
+          "tokens_missing": [
+            "raw_ball",
+            "(umpire_confirmed|extras)"
+          ],
+          "parts": [
+            {
+              "part": "Broadcast decides the animation from raw_ball (its extras or wicket confirmation) ahead of, or instead of, scoring's last_event.",
+              "met": true,
+              "quote": "An unconfirmed wicket appeal with a wide or no-ball is shown as an extra animation",
+              "why": "The review states that the animation is decided from raw_ball extras (wide or no-ball) instead of the appeal result, which is the mechanism described in part 1."
+            },
+            {
+              "part": "A missing umpire_confirmed is treated as a wicket, so an unconfirmed or rejected appeal can be shown as a wicket.",
+              "met": false,
+              "quote": "",
+              "why": "The review describes the opposite case: an unconfirmed appeal WITH extras is shown as an extra (not as a wicket), which does not meet the claim that a missing confirmation is treated as a wicket."
+            }
+          ],
+          "votes": [
+            {
+              "judge": "claude-haiku-4-5",
+              "passed": false,
+              "reason": "part 2 not met: The review describes extras overriding the appeal result, but does not state that a missing umpire_confirmed is treated as a wicket; it only says the appeal result is hidden."
+            },
+            {
+              "judge": "claude-sonnet-4-5",
+              "passed": false,
+              "reason": "part 2 not met: The review describes the opposite case: an unconfirmed appeal WITH extras is shown as an extra (not as a wicket), which does not meet the claim that a missing confirmation is treated as a wicket."
+            }
+          ]
+        }
+      ],
+      "actual": "public/app.js:10\n**Suggestion:** An unconfirmed wicket appeal with a wide or no-ball is shown as an extra animation, so the broadcast hides the appeal result.\n\n**Assessment:** \ud83d\udfe0 `Major` \u00b7 \ud83d\udd01 `Occurrence: Sometimes` \u00b7 \ud83c\udff7\ufe0f `Incorrect condition logic`\n\n \ud83d\udc4d | \ud83d\udc4e",
+      "comments": [
+        "public/app.js:10\n**Suggestion:** An unconfirmed wicket appeal with a wide or no-ball is shown as an extra animation, so the broadcast hides the appeal result.\n\n**Assessment:** \ud83d\udfe0 `Major` \u00b7 \ud83d\udd01 `Occurrence: Sometimes` \u00b7 \ud83c\udff7\ufe0f `Incorrect condition logic`\n\n \ud83d\udc4d | \ud83d\udc4e"
+      ],
+      "metrics": {
+        "true_positives": 0,
+        "false_negatives": 1,
+        "false_positives": 0,
+        "relevant_comments": 1,
+        "comments": 1,
+        "precision": 1.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "defect_comments": 1
+      },
+      "unexpected_bots": [],
+      "judge_mode": "llm",
+      "comment_verdicts": [
+        {
+          "index": 1,
+          "label": "defect",
+          "reason": "The code checks wicket conditions before checking extras conditions, so an unconfirmed wicket appeal with extras will return early on the wicket check (if umpire_confirmed is not false) and never reach the extras checks, causing the appeal result to be hidden behind a wicket animation instead of showing the extra animation."
+        }
+      ]
+    },
+    {
+      "case_id": "test-broadcast-match-pack-walk-bypasses-last-event",
+      "tool": "codeant",
+      "pr_url": "https://github.com/org-codeant/prlab-cricket-broadcast/pull/6",
+      "finding_passed": false,
+      "isolation_passed": true,
+      "intent": "Catch walking match.innings.latest_over.latest_delivery instead of trusting last_event",
+      "tests": "Broadcast walks the nested match pack for overlay animations. That couples TV graphics to protocol extras and wicket confirmation instead of scoring's last_event. A passing review must say the walk bypasses last_event or re-reads confirmation/extras from the pack. Noting only that public/app.js duplicates animator.js is not enough.",
+      "capability_id": "abstraction-bypass",
+      "capability": "Published-contract bypass",
+      "capability_asks": "Can the tool flag a consumer reading producer internals \u2014 a leaked envelope or a nested walk \u2014 instead of the agreed public field?",
+      "capability_ids": [
+        "abstraction-bypass"
+      ],
+      "claims": [
+        {
+          "claim_id": "match-pack-walk-couples-protocol",
+          "must_assert": "Walking match.innings.latest_over.latest_delivery couples broadcast to protocol extras or wicket confirmation instead of trusting last_event.",
+          "passed": false,
+          "quote": "",
+          "reason": "panel agrees (fail): no review",
+          "tokens_expected": [
+            "(latest_delivery|match\\.innings|umpire_confirmed)",
+            "(last_event|wicket|extras)"
+          ],
+          "tokens_matched": [],
+          "tokens_missing": [
+            "(latest_delivery|match\\.innings|umpire_confirmed)",
+            "(last_event|wicket|extras)"
+          ],
+          "parts": [],
+          "votes": [
+            {
+              "judge": "claude-haiku-4-5",
+              "passed": false,
+              "reason": "no review"
+            },
+            {
+              "judge": "claude-sonnet-4-5",
+              "passed": false,
+              "reason": "no review"
+            }
+          ]
+        }
+      ],
+      "actual": "",
+      "comments": [],
+      "metrics": {
+        "true_positives": 0,
+        "false_negatives": 1,
+        "false_positives": 0,
+        "relevant_comments": 0,
+        "comments": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "defect_comments": 0
+      },
+      "unexpected_bots": [],
+      "judge_mode": "llm",
+      "comment_verdicts": []
+    },
+    {
+      "case_id": "test-stats-not-out-display-increments-wickets",
+      "tool": "codeant",
+      "pr_url": "https://github.com/org-codeant/prlab-cricket-stats/pull/3",
+      "finding_passed": true,
+      "isolation_passed": true,
+      "intent": "Catch incrementing ledger wickets when last_event.display is NOT_OUT",
+      "tests": "Stats increments MatchLedger.wickets when the display is NOT_OUT so analytics includes appeal volume. Scoring already said the batter was not out (wicket_counted is false). A passing review must say an appeal is now counted as a dismissal. Updating comments that the ledger used to copy snapshot.wickets, without the NOT_OUT increment, fails the case.",
+      "capability_id": "display-vs-authority",
+      "capability": "Display vs authoritative state",
+      "capability_asks": "Can the tool reject treating a presentation or display value as the source of truth for a decision or side effect?",
+      "capability_ids": [
+        "display-vs-authority"
+      ],
+      "claims": [
+        {
+          "claim_id": "not-out-counted-as-wicket",
+          "must_assert": "Incrementing wickets when the display is NOT_OUT counts an appeal as a dismissal even though scoring said the batter was not out.",
+          "passed": true,
+          "quote": "apply_snapshot adds a wicket whenever last_event.display is NOT_OUT, overriding the authoritative snapshot.wickets total and publishing false dismissal counts.",
+          "reason": "panel agrees (pass): The review explicitly describes the defect where NOT_OUT display values cause wicket increments that override the correct wickets count.",
+          "tokens_expected": [
+            "NOT_OUT",
+            "wicket"
+          ],
+          "tokens_matched": [
+            "NOT_OUT",
+            "wicket"
+          ],
+          "tokens_missing": [],
+          "parts": [
+            {
+              "part": "Wickets are incremented when the display is NOT_OUT, so an appeal where the batter was not out is counted as a dismissal.",
+              "met": true,
+              "quote": "apply_snapshot adds a wicket whenever last_event.display is NOT_OUT, overriding the authoritative snapshot.wickets total and publishing false dismissal counts.",
+              "why": "The review states that wickets are incremented when display is NOT_OUT, resulting in false dismissal counts despite the batter not being out."
+            }
+          ],
+          "votes": [
+            {
+              "judge": "claude-haiku-4-5",
+              "passed": true,
+              "reason": "The review directly describes the defect: wickets are incremented based on NOT_OUT display status, causing appeals where the batter was not out to be counted as dismissals."
+            },
+            {
+              "judge": "claude-sonnet-4-5",
+              "passed": true,
+              "reason": "The review explicitly describes the defect where NOT_OUT display values cause wicket increments that override the correct wickets count."
+            }
+          ]
+        }
+      ],
+      "actual": "stats/ledger.py:25\n**Suggestion:** `apply_snapshot` adds a wicket whenever `last_event.display` is `NOT_OUT`, overriding the authoritative `snapshot.wickets` total and publishing false dismissal counts.\n\n**Assessment:** \ud83d\udfe0 `Major` \u00b7 \ud83d\udd01 `Occurrence: Sometimes` \u00b7 \ud83c\udff7\ufe0f `Api mismatch`\n\n \ud83d\udc4d | \ud83d\udc4e\n\ntests/test_ledger.py:41\n**Suggestion:** This test validates a wicket for an event explicitly marked `wicket_counted=False`, institutionalizing behavior that contradicts the snapshot and ledger contracts.\n\n**Assessment:** \ud83d\udfe0 `Major` \u00b7 \ud83d\udd01 `Occurrence: Often` \u00b7 \ud83c\udff7\ufe0f `Logic error`\n\n \ud83d\udc4d | \ud83d\udc4e",
+      "comments": [
+        "stats/ledger.py:25\n**Suggestion:** `apply_snapshot` adds a wicket whenever `last_event.display` is `NOT_OUT`, overriding the authoritative `snapshot.wickets` total and publishing false dismissal counts.\n\n**Assessment:** \ud83d\udfe0 `Major` \u00b7 \ud83d\udd01 `Occurrence: Sometimes` \u00b7 \ud83c\udff7\ufe0f `Api mismatch`\n\n \ud83d\udc4d | \ud83d\udc4e",
+        "tests/test_ledger.py:41\n**Suggestion:** This test validates a wicket for an event explicitly marked `wicket_counted=False`, institutionalizing behavior that contradicts the snapshot and ledger contracts.\n\n**Assessment:** \ud83d\udfe0 `Major` \u00b7 \ud83d\udd01 `Occurrence: Often` \u00b7 \ud83c\udff7\ufe0f `Logic error`\n\n \ud83d\udc4d | \ud83d\udc4e"
+      ],
+      "metrics": {
+        "true_positives": 1,
+        "false_negatives": 0,
+        "false_positives": 0,
+        "relevant_comments": 2,
+        "comments": 2,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "defect_comments": 1
+      },
+      "unexpected_bots": [],
+      "judge_mode": "llm",
+      "comment_verdicts": [
+        {
+          "index": 1,
+          "label": "trap",
+          "reason": "holds the quote the claim judge verified"
+        },
+        {
+          "index": 2,
+          "label": "defect",
+          "reason": "The test asserts `wickets == 1` for a snapshot with `wicket_counted=False`, validating behavior that contradicts the snapshot's explicit contract that this event should not be counted as a wicket."
+        }
+      ]
+    },
+    {
+      "case_id": "test-fantasy-missing-confirm-pays-wicket-points",
+      "tool": "codeant",
+      "pr_url": "https://github.com/org-codeant/prlab-cricket-fantasy/pull/3",
+      "finding_passed": false,
+      "isolation_passed": true,
+      "intent": "Catch paying bowling wicket points from last_ball when confirmation is missing",
+      "tests": "Fantasy settles bowling from last_ball.wicket and treats a missing umpire_confirmed as given. That can award 20 wicket points the ledger total never granted. A passing review must say omitted confirmation pays wicket points. Complaining only that last-ball settlement overwrites an aggregate of three wickets, without the missing-confirm award, is a different bug.",
+      "capability_id": "omitted-guard-as-true",
+      "capability": "Omitted guard treated as true",
+      "capability_asks": "Can the tool catch logic that treats a missing confirmation or guard flag as granted?",
+      "capability_ids": [
+        "omitted-guard-as-true"
+      ],
+      "claims": [
+        {
+          "claim_id": "missing-confirm-pays-wicket",
+          "must_assert": "Settling bowling from last_ball.wicket when confirmation is missing awards wicket points that the ledger wicket total did not grant.",
+          "passed": false,
+          "quote": "",
+          "reason": "panel agrees (fail): The review discusses malformed values, client manipulation, and aggregate replacement, but does not state that missing umpire_confirmed causes wicket points to be awarded when the ledger did not count them.",
+          "tokens_expected": [
+            "(last_ball|umpire_confirmed)",
+            "(wicket|bowling|points)"
+          ],
+          "tokens_matched": [
+            "(last_ball|umpire_confirmed)",
+            "(wicket|bowling|points)"
+          ],
+          "tokens_missing": [],
+          "parts": [
+            {
+              "part": "When umpire_confirmed is missing on the last ball's wicket, settlement treats it as given and awards wicket (bowling) points that the ledger did not count.",
+              "met": false,
+              "quote": "",
+              "why": "The review discusses malformed values, client manipulation, and aggregate replacement, but does not state that missing umpire_confirmed causes wicket points to be awarded when the ledger did not count them."
+            }
+          ],
+          "votes": [
+            {
+              "judge": "claude-haiku-4-5",
+              "passed": false,
+              "reason": "The review describes clients adding bowling points despite zero aggregate wickets, and last_ball replacing accumulated wickets, but does not specifically state that a missing umpire_confirmed field is treated as given/true to award wicket points."
+            },
+            {
+              "judge": "claude-sonnet-4-5",
+              "passed": false,
+              "reason": "The review discusses malformed values, client manipulation, and aggregate replacement, but does not state that missing umpire_confirmed causes wicket points to be awarded when the ledger did not count them."
+            }
+          ]
+        }
+      ],
+      "actual": "fantasy/ledger.py:7\n**Suggestion:** `kind` accepts any string, while every value except exact `none` triggers a wicket award, so malformed values can create bowling points.\n\n**Assessment:** \ud83d\udfe0 `Major` \u00b7 \ud83d\udd01 `Occurrence: Sometimes` \u00b7 \ud83c\udff7\ufe0f `Type error`\n\n \ud83d\udc4d | \ud83d\udc4e\n\nfantasy/ledger.py:20\n**Suggestion:** `last_ball` is accepted from the HTTP ledger payload, allowing clients to add bowling points despite reporting zero aggregate wickets.\n\n**Assessment:** \ud83d\udfe0 `Major` \u00b7 \ud83d\udd01 `Occurrence: Often` \u00b7 \ud83c\udff7\ufe0f `Security`\n\n \ud83d\udc4d | \ud83d\udc4e\n\nfantasy/points.py:29\n**Suggestion:** When `ledger.wickets` is greater than one, a qualifying `last_ball` replaces all accumulated wickets with one, undercounting bowling points.\n\n**Assessment:** \ud83d\udfe0 `Major` \u00b7 \ud83d\udd01 `Occurrence: Sometimes` \u00b7 \ud83c\udff7\ufe0f `Logic error`\n\n \ud83d\udc4d | \ud83d\udc4e",
+      "comments": [
+        "fantasy/ledger.py:7\n**Suggestion:** `kind` accepts any string, while every value except exact `none` triggers a wicket award, so malformed values can create bowling points.\n\n**Assessment:** \ud83d\udfe0 `Major` \u00b7 \ud83d\udd01 `Occurrence: Sometimes` \u00b7 \ud83c\udff7\ufe0f `Type error`\n\n \ud83d\udc4d | \ud83d\udc4e",
+        "fantasy/ledger.py:20\n**Suggestion:** `last_ball` is accepted from the HTTP ledger payload, allowing clients to add bowling points despite reporting zero aggregate wickets.\n\n**Assessment:** \ud83d\udfe0 `Major` \u00b7 \ud83d\udd01 `Occurrence: Often` \u00b7 \ud83c\udff7\ufe0f `Security`\n\n \ud83d\udc4d | \ud83d\udc4e",
+        "fantasy/points.py:29\n**Suggestion:** When `ledger.wickets` is greater than one, a qualifying `last_ball` replaces all accumulated wickets with one, undercounting bowling points.\n\n**Assessment:** \ud83d\udfe0 `Major` \u00b7 \ud83d\udd01 `Occurrence: Sometimes` \u00b7 \ud83c\udff7\ufe0f `Logic error`\n\n \ud83d\udc4d | \ud83d\udc4e"
+      ],
+      "metrics": {
+        "true_positives": 0,
+        "false_negatives": 1,
+        "false_positives": 1,
+        "relevant_comments": 2,
+        "comments": 3,
+        "precision": 0.6666666666666666,
+        "recall": 0.0,
+        "f1": 0.0,
+        "defect_comments": 2
+      },
+      "unexpected_bots": [],
+      "judge_mode": "llm",
+      "comment_verdicts": [
+        {
+          "index": 1,
+          "label": "noise",
+          "reason": "The code checks `ball.wicket.kind != \"none\"` which correctly distinguishes the special 'none' value from any other string, so malformed values do not trigger unintended wicket awards."
+        },
+        {
+          "index": 2,
+          "label": "defect",
+          "reason": "holds the quote the claim judge verified"
+        },
+        {
+          "index": 3,
+          "label": "defect",
+          "reason": "When `ledger.wickets > 1`, the code unconditionally sets `bowling = WICKET_POINTS` (a single wicket's points) instead of adding to it, causing undercounting of total bowling points."
+        }
+      ]
+    },
+    {
+      "case_id": "test-highlights-not-out-filed-as-wicket-clip",
+      "tool": "codeant",
+      "pr_url": "https://github.com/org-codeant/prlab-cricket-highlights/pull/5",
+      "finding_passed": false,
+      "isolation_passed": true,
+      "intent": "Catch filing a NOT_OUT appeal as a wicket highlight clip",
+      "tests": "Highlights labels NOT_OUT events as kind=wicket so editors can search one replay bucket. Social then publishes that clip. A passing review must say a refused appeal is mislabeled as a wicket highlight. Replay-discoverability rationale without the mislabel fails the case.",
+      "capability_id": "kind-relabel",
+      "capability": "Outcome kind relabel",
+      "capability_asks": "Can the tool catch a classification change that files or publishes one outcome under another kind?",
+      "capability_ids": [
+        "kind-relabel"
+      ],
+      "claims": [
+        {
+          "claim_id": "appeal-filed-as-wicket-clip",
+          "must_assert": "Treating NOT_OUT as a wicket clip mislabels an appeal as a wicket highlight.",
+          "passed": false,
+          "quote": "",
+          "reason": "panel agrees (fail): no review",
+          "tokens_expected": [
+            "NOT_OUT",
+            "wicket"
+          ],
+          "tokens_matched": [],
+          "tokens_missing": [
+            "NOT_OUT",
+            "wicket"
+          ],
+          "parts": [],
+          "votes": [
+            {
+              "judge": "claude-haiku-4-5",
+              "passed": false,
+              "reason": "no review"
+            },
+            {
+              "judge": "claude-sonnet-4-5",
+              "passed": false,
+              "reason": "no review"
+            }
+          ]
+        }
+      ],
+      "actual": "",
+      "comments": [],
+      "metrics": {
+        "true_positives": 0,
+        "false_negatives": 1,
+        "false_positives": 0,
+        "relevant_comments": 0,
+        "comments": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "defect_comments": 0
+      },
+      "unexpected_bots": [],
+      "judge_mode": "llm",
+      "comment_verdicts": []
+    },
+    {
+      "case_id": "test-social-appeal-kind-posted-as-wicket",
+      "tool": "codeant",
+      "pr_url": "https://github.com/org-codeant/prlab-cricket-social/pull/3",
+      "finding_passed": false,
+      "isolation_passed": true,
+      "intent": "Catch posting WICKET on the public timeline when highlight kind is appeal",
+      "tests": "Social posts WICKET whenever highlights returns kind=appeal so the timeline stays live during reviews. A failed appeal becomes a public wicket. A passing review must say that. Stale docstring or README that still says only scored wickets are posted, without calling out the public WICKET for an appeal, is not enough.",
+      "capability_id": "kind-relabel",
+      "capability": "Outcome kind relabel",
+      "capability_asks": "Can the tool catch a classification change that files or publishes one outcome under another kind?",
+      "capability_ids": [
+        "kind-relabel"
+      ],
+      "claims": [
+        {
+          "claim_id": "appeal-posted-as-wicket",
+          "must_assert": "Posting WICKET when the highlight kind is appeal treats a failed appeal as a public wicket.",
+          "passed": false,
+          "quote": "",
+          "reason": "panel agrees (fail): The review contains no comments about posting behavior, appeal handling, or wicket announcements.",
+          "tokens_expected": [
+            "appeal",
+            "WICKET"
+          ],
+          "tokens_matched": [],
+          "tokens_missing": [
+            "appeal",
+            "WICKET"
+          ],
+          "parts": [
+            {
+              "part": "Social posts WICKET for a highlight of kind appeal, so an appeal that was not given is announced publicly as a wicket. (In this system an appeal is a dismissal that was not given, so 'every appeal' covers failed appeals.)",
+              "met": false,
+              "quote": "",
+              "why": "The review contains no comments about posting behavior, appeal handling, or wicket announcements."
+            }
+          ],
+          "votes": [
+            {
+              "judge": "claude-haiku-4-5",
+              "passed": false,
+              "reason": "The review provides no information about posting WICKET, highlight kinds, appeals, or any social posting behavior."
+            },
+            {
+              "judge": "claude-sonnet-4-5",
+              "passed": false,
+              "reason": "The review contains no comments about posting behavior, appeal handling, or wicket announcements."
+            }
+          ]
+        }
+      ],
+      "actual": "## CodeAnt Nitpicks",
+      "comments": [
+        "## CodeAnt Nitpicks"
+      ],
+      "metrics": {
+        "true_positives": 0,
+        "false_negatives": 1,
+        "false_positives": 1,
+        "relevant_comments": 0,
+        "comments": 1,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "defect_comments": 0
+      },
+      "unexpected_bots": [],
+      "judge_mode": "llm",
+      "comment_verdicts": [
+        {
+          "index": 1,
+          "label": "noise",
+          "reason": "The comment is incomplete and contains no actual criticism or defect claim to evaluate."
+        }
+      ]
+    },
+    {
+      "case_id": "test-archive-history-keeps-protocol-leaks",
+      "tool": "codeant",
+      "pr_url": "https://github.com/org-codeant/prlab-cricket-archive/pull/5",
+      "finding_passed": true,
+      "isolation_passed": true,
+      "intent": "Catch persisting raw_ball or the match pack in history instead of the product snapshot",
+      "tests": "Archive now stores raw_ball and match on every snapshot for support replays. Protocol fields stay in process-wide history. A passing review must say those envelopes keep protocol leaks in history. Memory-limit or missing-match-fixture comments without the persist/leak point fail the case.",
+      "capability_id": "leak-propagation",
+      "capability": "Leak persistence or pass-through",
+      "capability_asks": "Can the tool see that storing or forwarding an internal envelope keeps leaked fields beyond the producer?",
+      "capability_ids": [
+        "leak-propagation"
+      ],
+      "claims": [
+        {
+          "claim_id": "history-keeps-protocol-leaks",
+          "must_assert": "Persisting raw_ball or the match pack keeps protocol fields in history instead of storing only the product snapshot.",
+          "passed": true,
+          "quote": "Each snapshot now retains both arbitrary dictionaries in the process-global history",
+          "reason": "panel agrees (pass): The review confirms that snapshots now retain the protocol fields in history, though it focuses on the memory consequence rather than the product snapshot aspect.",
+          "tokens_expected": [
+            "raw_ball",
+            "(persist|leak|history|match)"
+          ],
+          "tokens_matched": [
+            "raw_ball",
+            "(persist|leak|history|match)"
+          ],
+          "tokens_missing": [],
+          "parts": [
+            {
+              "part": "Archive now keeps raw_ball or the match pack on its stored snapshots (persisted, or copied into the stored model), so protocol fields beyond the product snapshot are kept in or returned from history.",
+              "met": true,
+              "quote": "Each snapshot now retains both arbitrary dictionaries in the process-global history",
+              "why": "The review states that snapshots now retain raw_ball and match (the arbitrary dictionaries) in history, meeting the requirement that archive keeps these on stored snapshots so protocol fields are kept in history."
+            }
+          ],
+          "votes": [
+            {
+              "judge": "claude-haiku-4-5",
+              "passed": true,
+              "reason": "The review confirms that archive/store.py now persists raw_ball and match in stored snapshots, retaining protocol fields in history."
+            },
+            {
+              "judge": "claude-sonnet-4-5",
+              "passed": true,
+              "reason": "The review confirms that snapshots now retain the protocol fields in history, though it focuses on the memory consequence rather than the product snapshot aspect."
+            }
+          ]
+        }
+      ],
+      "actual": "archive/store.py:20\n**Suggestion:** Every response now includes `raw_ball: null` and `match: null` for legacy payloads, changing the product-only response shape for existing clients.\n\n**Assessment:** \ud83d\udfe0 `Major` \u00b7 \ud83d\udd01 `Occurrence: Often` \u00b7 \ud83c\udff7\ufe0f `Api mismatch`\n\n \ud83d\udc4d | \ud83d\udc4e\n\narchive/store.py:42\n**Suggestion:** Each snapshot now retains both arbitrary dictionaries in the process-global history, so repeated large envelopes can exhaust memory because history has no eviction.\n\n**Assessment:** \ud83d\udd34 `Critical` \u00b7 \ud83d\udd01 `Occurrence: Rarely` \u00b7 \ud83c\udff7\ufe0f `Memory leak`\n\n \ud83d\udc4d | \ud83d\udc4e",
+      "comments": [
+        "archive/store.py:20\n**Suggestion:** Every response now includes `raw_ball: null` and `match: null` for legacy payloads, changing the product-only response shape for existing clients.\n\n**Assessment:** \ud83d\udfe0 `Major` \u00b7 \ud83d\udd01 `Occurrence: Often` \u00b7 \ud83c\udff7\ufe0f `Api mismatch`\n\n \ud83d\udc4d | \ud83d\udc4e",
+        "archive/store.py:42\n**Suggestion:** Each snapshot now retains both arbitrary dictionaries in the process-global history, so repeated large envelopes can exhaust memory because history has no eviction.\n\n**Assessment:** \ud83d\udd34 `Critical` \u00b7 \ud83d\udd01 `Occurrence: Rarely` \u00b7 \ud83c\udff7\ufe0f `Memory leak`\n\n \ud83d\udc4d | \ud83d\udc4e"
+      ],
+      "metrics": {
+        "true_positives": 1,
+        "false_negatives": 0,
+        "false_positives": 0,
+        "relevant_comments": 2,
+        "comments": 2,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "defect_comments": 1
+      },
+      "unexpected_bots": [],
+      "judge_mode": "llm",
+      "comment_verdicts": [
+        {
+          "index": 1,
+          "label": "defect",
+          "reason": "The diff adds `raw_ball: dict | None = None` and `match: dict | None = None` fields to StoredSnapshot, which will now be included in all API responses with null values for legacy payloads, changing the response shape for existing clients."
+        },
+        {
+          "index": 2,
+          "label": "trap",
+          "reason": "holds the quote the claim judge verified"
+        }
+      ]
+    },
+    {
+      "case_id": "test-notifications-not-out-sends-wicket-push",
+      "tool": "codeant",
+      "pr_url": "https://github.com/org-codeant/prlab-cricket-notifications/pull/3",
+      "finding_passed": false,
+      "isolation_passed": true,
+      "intent": "Catch sending a WICKET push when display is NOT_OUT and wicket_counted is not required",
+      "tests": "Notifications send the WICKET push when last_event.display is WICKET or NOT_OUT, not only when wicket_counted is true. Fans get a wicket alert for an appeal that was not given. A passing review must say that. An untested WICKET-display branch or stale 'counted wickets only' docs, without the NOT_OUT push, fail the case.",
+      "capability_id": "display-vs-authority",
+      "capability": "Display vs authoritative state",
+      "capability_asks": "Can the tool reject treating a presentation or display value as the source of truth for a decision or side effect?",
+      "capability_ids": [
+        "display-vs-authority"
+      ],
+      "claims": [
+        {
+          "claim_id": "push-on-appeal-display",
+          "must_assert": "Sending a WICKET push when display is NOT_OUT (or otherwise not requiring wicket_counted) notifies fans for an appeal that was not given.",
+          "passed": false,
+          "quote": "",
+          "reason": "panel agrees (fail): no review",
+          "tokens_expected": [
+            "NOT_OUT",
+            "(wicket_counted|WICKET|push|notif)"
+          ],
+          "tokens_matched": [],
+          "tokens_missing": [
+            "NOT_OUT",
+            "(wicket_counted|WICKET|push|notif)"
+          ],
+          "parts": [],
+          "votes": [
+            {
+              "judge": "claude-haiku-4-5",
+              "passed": false,
+              "reason": "no review"
+            },
+            {
+              "judge": "claude-sonnet-4-5",
+              "passed": false,
+              "reason": "no review"
+            }
+          ]
+        }
+      ],
+      "actual": "",
+      "comments": [],
+      "metrics": {
+        "true_positives": 0,
+        "false_negatives": 1,
+        "false_positives": 0,
+        "relevant_comments": 0,
+        "comments": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "defect_comments": 0
+      },
+      "unexpected_bots": [],
+      "judge_mode": "llm",
+      "comment_verdicts": []
+    },
+    {
+      "case_id": "test-gateway-forwards-raw-ball-and-match-pack",
+      "tool": "codeant",
+      "pr_url": "https://github.com/org-codeant/prlab-cricket-live-gateway/pull/5",
+      "finding_passed": true,
+      "isolation_passed": true,
+      "intent": "Catch the live gateway forwarding raw_ball or match instead of stripping them",
+      "tests": "The gateway used to drop protocol leaks. This change forwards scoring JSON as received, including raw_ball and match, so the truck can keep extra fields. Mobile and other clients then see protocol fields. A passing review must say those envelopes are forwarded/not stripped. Null-vs-omitted response-shape nits without the pass-through leak fail the case.",
+      "capability_id": "leak-propagation",
+      "capability": "Leak persistence or pass-through",
+      "capability_asks": "Can the tool see that storing or forwarding an internal envelope keeps leaked fields beyond the producer?",
+      "capability_ids": [
+        "leak-propagation"
+      ],
+      "claims": [
+        {
+          "claim_id": "gateway-forwards-leaks",
+          "must_assert": "Forwarding raw_ball or the match pack lets downstream clients see protocol fields that the gateway should have stripped.",
+          "passed": true,
+          "quote": "Allowing every extra field retains protocol-internal or sensitive scoring fields and emits them through the mobile response instead of filtering the product contract.",
+          "reason": "panel agrees (pass): The second comment explicitly states that extra scoring fields are retained and emitted to clients instead of being filtered.",
+          "tokens_expected": [
+            "(raw_ball|match)",
+            "(forward|pass|strip|leak|mobile)"
+          ],
+          "tokens_matched": [
+            "(raw_ball|match)",
+            "(forward|pass|strip|leak|mobile)"
+          ],
+          "tokens_missing": [],
+          "parts": [
+            {
+              "part": "The gateway now passes raw_ball, the match pack, or other extra scoring fields through to its clients instead of stripping them, exposing protocol fields such as umpire_confirmed.",
+              "met": true,
+              "quote": "Allowing every extra field retains protocol-internal or sensitive scoring fields and emits them through the mobile response instead of filtering the product contract.",
+              "why": "The review states that extra scoring fields (protocol-internal fields) are now emitted through the mobile response instead of being filtered, which matches the claim about passing through and exposing protocol fields to clients."
+            }
+          ],
+          "votes": [
+            {
+              "judge": "claude-haiku-4-5",
+              "passed": true,
+              "reason": "The review explicitly describes protocol-internal fields being retained and emitted to clients instead of filtered, meeting the core mechanism of the claim."
+            },
+            {
+              "judge": "claude-sonnet-4-5",
+              "passed": true,
+              "reason": "The second comment explicitly states that extra scoring fields are retained and emitted to clients instead of being filtered."
+            }
+          ]
+        }
+      ],
+      "actual": "gateway/filter.py:20\n**Suggestion:** When scoring data omits these fields, responses now include `raw_ball: null` and `match: null`, changing the existing response shape for clients.\n\n**Assessment:** \ud83d\udfe0 `Major` \u00b7 \ud83d\udd01 `Occurrence: Often` \u00b7 \ud83c\udff7\ufe0f `Api mismatch`\n\n \ud83d\udc4d | \ud83d\udc4e\n\ngateway/filter.py:21\n**Suggestion:** Allowing every extra field retains protocol-internal or sensitive scoring fields and emits them through the mobile response instead of filtering the product contract.\n\n**Assessment:** \ud83d\udfe0 `Major` \u00b7 \ud83d\udd01 `Occurrence: Sometimes` \u00b7 \ud83c\udff7\ufe0f `Api mismatch`\n\n \ud83d\udc4d | \ud83d\udc4e",
+      "comments": [
+        "gateway/filter.py:20\n**Suggestion:** When scoring data omits these fields, responses now include `raw_ball: null` and `match: null`, changing the existing response shape for clients.\n\n**Assessment:** \ud83d\udfe0 `Major` \u00b7 \ud83d\udd01 `Occurrence: Often` \u00b7 \ud83c\udff7\ufe0f `Api mismatch`\n\n \ud83d\udc4d | \ud83d\udc4e",
+        "gateway/filter.py:21\n**Suggestion:** Allowing every extra field retains protocol-internal or sensitive scoring fields and emits them through the mobile response instead of filtering the product contract.\n\n**Assessment:** \ud83d\udfe0 `Major` \u00b7 \ud83d\udd01 `Occurrence: Sometimes` \u00b7 \ud83c\udff7\ufe0f `Api mismatch`\n\n \ud83d\udc4d | \ud83d\udc4e"
+      ],
+      "metrics": {
+        "true_positives": 1,
+        "false_negatives": 0,
+        "false_positives": 0,
+        "relevant_comments": 2,
+        "comments": 2,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "defect_comments": 1
+      },
+      "unexpected_bots": [],
+      "judge_mode": "llm",
+      "comment_verdicts": [
+        {
+          "index": 1,
+          "label": "defect",
+          "reason": "The diff changes ProductSnapshot to include `raw_ball: dict | None = None` and `match: dict | None = None` fields with default None values, which will add these keys to all responses even when the input data omits them, altering the response shape for existing clients."
+        },
+        {
+          "index": 2,
+          "label": "trap",
+          "reason": "holds the quote the claim judge verified"
+        }
+      ]
+    },
+    {
+      "case_id": "test-mobile-missing-confirm-shows-wicket-banner",
+      "tool": "codeant",
+      "pr_url": "https://github.com/org-codeant/prlab-cricket-mobile/pull/3",
+      "finding_passed": false,
+      "isolation_passed": true,
+      "intent": "Catch showing a wicket banner from the match-pack wicket when umpire_confirmed is missing",
+      "tests": "Mobile reads the banner from match.innings.latest_over.latest_delivery when the snapshot has a match pack, so the phone matches the truck. If umpire_confirmed is omitted it still shows a wicket. A passing review must say an unconfirmed dismissal becomes a wicket banner. Saying ScoreSnapshot does not declare match, without the missing-flag banner, fails the case.",
+      "capability_id": "omitted-guard-as-true",
+      "capability": "Omitted guard treated as true",
+      "capability_asks": "Can the tool catch logic that treats a missing confirmation or guard flag as granted?",
+      "capability_ids": [
+        "omitted-guard-as-true"
+      ],
+      "claims": [
+        {
+          "claim_id": "missing-flag-shows-wicket-banner",
+          "must_assert": "Reading the banner from the match-pack wicket when umpire_confirmed is missing shows a wicket for an unconfirmed dismissal.",
+          "passed": false,
+          "quote": "",
+          "reason": "panel agrees (fail): no review",
+          "tokens_expected": [
+            "(latest_delivery|umpire_confirmed|match\\.innings)",
+            "(banner|wicket)"
+          ],
+          "tokens_matched": [],
+          "tokens_missing": [
+            "(latest_delivery|umpire_confirmed|match\\.innings)",
+            "(banner|wicket)"
+          ],
+          "parts": [],
+          "votes": [
+            {
+              "judge": "claude-haiku-4-5",
+              "passed": false,
+              "reason": "no review"
+            },
+            {
+              "judge": "claude-sonnet-4-5",
+              "passed": false,
+              "reason": "no review"
+            }
+          ]
+        }
+      ],
+      "actual": "",
+      "comments": [],
+      "metrics": {
+        "true_positives": 0,
+        "false_negatives": 1,
+        "false_positives": 0,
+        "relevant_comments": 0,
+        "comments": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "defect_comments": 0
+      },
+      "unexpected_bots": [],
+      "judge_mode": "llm",
+      "comment_verdicts": []
+    },
+    {
+      "case_id": "test-scoring-no-content-breaks-gateway-and-broadcast",
+      "tool": "codeant",
+      "pr_url": "https://github.com/org-codeant/prlab-cricket-scoring/pull/17",
+      "finding_passed": false,
+      "isolation_passed": true,
+      "intent": "Catch that a 204 for an unstarted match breaks the gateway and broadcast",
+      "tests": "Scoring returns 204 with no body for a match with no balls, instead of 404. The live-gateway treats any status other than 200/404 as a scoring failure and returns 502 to mobile; broadcast's fetchSnapshot treats 204 as ok and throws parsing the empty body. A passing review must say the status change breaks callers, and name one of those consumers with its concrete failure.",
+      "capability_id": "api-contract-break",
+      "capability": "API contract break",
+      "capability_asks": "Can the tool see that a change to an HTTP response (status code, field type, route behaviour) breaks the services and clients that call it?",
+      "capability_ids": [
+        "api-contract-break",
+        "cross-repo-impact"
+      ],
+      "claims": [
+        {
+          "claim_id": "status-change-breaks-callers",
+          "must_assert": "Changing GET /matches/{id}/score from 404 to 204 with an empty body for a match with no balls is a breaking API change: callers that treat 204 as success and parse JSON fail on the empty body, and callers can no longer tell an unknown match from one that has not started.",
+          "passed": false,
+          "quote": "",
+          "reason": "panel agrees (fail): The review discusses race conditions and stale data causing incorrect 204 responses, not the breaking change from 404 to 204 for matches with no balls.",
+          "tokens_expected": [
+            "204",
+            "(empty|no content|body|json)"
+          ],
+          "tokens_matched": [
+            "204"
+          ],
+          "tokens_missing": [
+            "(empty|no content|body|json)"
+          ],
+          "parts": [
+            {
+              "part": "Returning 204 with an empty body instead of 404 for a match with no balls breaks existing callers: callers that parse JSON fail on the empty body, callers that accept only 200 or 404 now treat it as an error, or callers can no longer tell an unknown match from one not started (any one).",
+              "met": false,
+              "quote": "",
+              "why": "The review discusses race conditions and stale data causing incorrect 204 responses, not the breaking change from 404 to 204 for matches with no balls."
+            }
+          ],
+          "votes": [
+            {
+              "judge": "claude-haiku-4-5",
+              "passed": false,
+              "reason": "The review identifies technical defects (race conditions, stale references) but does not address the breaking API change or its consequences for callers parsing responses."
+            },
+            {
+              "judge": "claude-sonnet-4-5",
+              "passed": false,
+              "reason": "The review discusses race conditions and stale data causing incorrect 204 responses, not the breaking change from 404 to 204 for matches with no balls."
+            }
+          ]
+        },
+        {
+          "claim_id": "names-broken-consumer",
+          "must_assert": "The review names a concrete consumer failure: the live-gateway returns 502 (scoring error) to mobile for a match that has not started because it treats any non-200 non-404 status as a failure, or broadcast's fetchSnapshot accepts the 204 as ok and throws when parsing the empty body. Saying only that clients may be affected is not enough.",
+          "passed": false,
+          "quote": "",
+          "reason": "panel agrees (fail): part 1 not met: The review does not name the live-gateway or broadcast.",
+          "tokens_expected": [
+            "(gateway|broadcast|mobile|fetchSnapshot)",
+            "(502|throw|pars|json|error)"
+          ],
+          "tokens_matched": [],
+          "tokens_missing": [
+            "(gateway|broadcast|mobile|fetchSnapshot)",
+            "(502|throw|pars|json|error)"
+          ],
+          "parts": [
+            {
+              "part": "Names the live-gateway, or broadcast (its fetchSnapshot or dashboard).",
+              "met": false,
+              "quote": "",
+              "why": "The review does not name the live-gateway or broadcast."
+            },
+            {
+              "part": "States that consumer's concrete failure: the gateway returns a 502 or scoring error for a match that has not started, or broadcast treats 204 as success and fails parsing the empty body.",
+              "met": false,
+              "quote": "",
+              "why": "The review describes when 204 is returned but does not state any consumer's concrete failure."
+            }
+          ],
+          "votes": [
+            {
+              "judge": "claude-haiku-4-5",
+              "passed": false,
+              "reason": "part 1 not met: The review does not name the live-gateway, broadcast, fetchSnapshot, or dashboard."
+            },
+            {
+              "judge": "claude-sonnet-4-5",
+              "passed": false,
+              "reason": "part 1 not met: The review does not name the live-gateway or broadcast."
+            }
+          ]
+        }
+      ],
+      "actual": "scoring/app.py:37\n**Suggestion:** During a concurrent ball recording, this read can occur before the snapshot write and return 204 or an older score even though the ball was accepted.\n\n**Assessment:** \ud83d\udfe0 `Major` \u00b7 \ud83d\udd01 `Occurrence: Sometimes` \u00b7 \ud83c\udff7\ufe0f `Race condition`\n\n \ud83d\udc4d | \ud83d\udc4e\n\nscoring/app.py:40\n**Suggestion:** Because snapshots are process-local, a request handled by another worker or after restart returns 204 for a match whose ball was already recorded.\n\n**Assessment:** \ud83d\udd34 `Critical` \u00b7 \ud83d\udd01 `Occurrence: Rarely` \u00b7 \ud83c\udff7\ufe0f `Stale reference`\n\n \ud83d\udc4d | \ud83d\udc4e",
+      "comments": [
+        "scoring/app.py:37\n**Suggestion:** During a concurrent ball recording, this read can occur before the snapshot write and return 204 or an older score even though the ball was accepted.\n\n**Assessment:** \ud83d\udfe0 `Major` \u00b7 \ud83d\udd01 `Occurrence: Sometimes` \u00b7 \ud83c\udff7\ufe0f `Race condition`\n\n \ud83d\udc4d | \ud83d\udc4e",
+        "scoring/app.py:40\n**Suggestion:** Because snapshots are process-local, a request handled by another worker or after restart returns 204 for a match whose ball was already recorded.\n\n**Assessment:** \ud83d\udd34 `Critical` \u00b7 \ud83d\udd01 `Occurrence: Rarely` \u00b7 \ud83c\udff7\ufe0f `Stale reference`\n\n \ud83d\udc4d | \ud83d\udc4e"
+      ],
+      "metrics": {
+        "true_positives": 0,
+        "false_negatives": 2,
+        "false_positives": 0,
+        "relevant_comments": 2,
+        "comments": 2,
+        "precision": 1.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "defect_comments": 2
+      },
+      "unexpected_bots": [],
+      "judge_mode": "llm",
+      "comment_verdicts": [
+        {
+          "index": 1,
+          "label": "defect",
+          "reason": "The diff changes the behavior from raising a 404 error to returning 204 for missing snapshots, but without synchronization primitives, concurrent `record_ball` writes and `get_score` reads can race, causing the endpoint to return 204 or stale data even after a ball was successfully recorded."
+        },
+        {
+          "index": 2,
+          "label": "defect",
+          "reason": "The `_snapshots` dictionary is process-local in memory, so after a worker restart or request routing to a different worker process, previously recorded matches will return 204 instead of their actual scores, breaking the data contract for callers."
+        }
+      ]
+    },
+    {
+      "case_id": "test-scoring-overs-number-breaks-string-consumers",
+      "tool": "codeant",
+      "pr_url": "https://github.com/org-codeant/prlab-cricket-scoring/pull/18",
+      "finding_passed": false,
+      "isolation_passed": true,
+      "intent": "Catch that publishing overs as a number breaks consumers that expect a string",
+      "tests": "Scoring publishes overs as a float instead of a string. The live-gateway, stats and archive models declare overs as a string, and pydantic rejects a float, so the gateway fails for mobile and stats and archive reject every snapshot. A passing review must call it a breaking type change and name a consumer that now rejects the snapshot.",
+      "capability_id": "api-contract-break",
+      "capability": "API contract break",
+      "capability_asks": "Can the tool see that a change to an HTTP response (status code, field type, route behaviour) breaks the services and clients that call it?",
+      "capability_ids": [
+        "api-contract-break",
+        "cross-repo-impact"
+      ],
+      "claims": [
+        {
+          "claim_id": "overs-type-change-breaks-contract",
+          "must_assert": "Changing overs in the published ScoreSnapshot from a string to a number is a breaking change to the API contract for existing consumers, with no versioning or compatibility path.",
+          "passed": false,
+          "quote": "",
+          "reason": "panel agrees (fail): The review contains no comments about overs, ScoreSnapshot, type changes, breaking changes, or API contracts.",
+          "tokens_expected": [
+            "overs",
+            "(string|str|type|number|float)"
+          ],
+          "tokens_matched": [],
+          "tokens_missing": [
+            "overs",
+            "(string|str|type|number|float)"
+          ],
+          "parts": [
+            {
+              "part": "Changing overs in the published snapshot from a string to a number is a breaking change for existing consumers of the API contract.",
+              "met": false,
+              "quote": "",
+              "why": "The review contains no comments about overs, ScoreSnapshot, type changes, breaking changes, or API contracts."
+            }
+          ],
+          "votes": [
+            {
+              "judge": "claude-haiku-4-5",
+              "passed": false,
+              "reason": "The review contains only a header 'CodeAnt Nitpicks' with no substantive content about the overs field, ScoreSnapshot, API contracts, or breaking changes."
+            },
+            {
+              "judge": "claude-sonnet-4-5",
+              "passed": false,
+              "reason": "The review contains no comments about overs, ScoreSnapshot, type changes, breaking changes, or API contracts."
+            }
+          ]
+        },
+        {
+          "claim_id": "names-consumer-rejecting-overs",
+          "must_assert": "The review names a consumer whose model declares overs as a string and says it will now reject or fail on the snapshot: the live-gateway (its response to mobile fails), stats (snapshots rejected, ledger stops updating), or archive (snapshots rejected).",
+          "passed": false,
+          "quote": "",
+          "reason": "panel agrees (fail): part 1 not met: The review does not name the live-gateway, stats, or archive.",
+          "tokens_expected": [
+            "(gateway|stats|archive|ledger)",
+            "(reject|fail|valid|422|500|error)"
+          ],
+          "tokens_matched": [],
+          "tokens_missing": [
+            "(gateway|stats|archive|ledger)",
+            "(reject|fail|valid|422|500|error)"
+          ],
+          "parts": [
+            {
+              "part": "Names the live-gateway, stats or archive.",
+              "met": false,
+              "quote": "",
+              "why": "The review does not name the live-gateway, stats, or archive."
+            },
+            {
+              "part": "Says that consumer will now reject, fail validation on, or fail on the snapshot because it expects overs as a string.",
+              "met": false,
+              "quote": "",
+              "why": "The review does not discuss any consumer rejecting or failing on the snapshot due to expecting overs as a string."
+            }
+          ],
+          "votes": [
+            {
+              "judge": "claude-haiku-4-5",
+              "passed": false,
+              "reason": "part 1 not met: The review does not name the live-gateway, stats, or archive."
+            },
+            {
+              "judge": "claude-sonnet-4-5",
+              "passed": false,
+              "reason": "part 1 not met: The review does not name the live-gateway, stats, or archive."
+            }
+          ]
+        }
+      ],
+      "actual": "## CodeAnt Nitpicks",
+      "comments": [
+        "## CodeAnt Nitpicks"
+      ],
+      "metrics": {
+        "true_positives": 0,
+        "false_negatives": 2,
+        "false_positives": 1,
+        "relevant_comments": 0,
+        "comments": 1,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "defect_comments": 0
+      },
+      "unexpected_bots": [],
+      "judge_mode": "llm",
+      "comment_verdicts": [
+        {
+          "index": 1,
+          "label": "noise",
+          "reason": "The comment appears to be incomplete or a placeholder with no actual content to evaluate."
+        }
+      ]
+    },
+    {
+      "case_id": "test-scoring-numeric-boundaries-silence-highlights",
+      "tool": "codeant",
+      "pr_url": "https://github.com/org-codeant/prlab-cricket-scoring/pull/19",
+      "finding_passed": false,
+      "isolation_passed": true,
+      "intent": "Catch that numeric boundary displays silently stop boundary clips and posts",
+      "tests": "Scoring stops emitting FOUR and SIX; boundaries display as 4 and 6. Highlights and mobile detect boundaries only by display FOUR/SIX, so boundary clips, social BOUNDARY posts and the mobile boundary banner stop, with no error anywhere. A passing review must say consumers match on those values and name the silent loss.",
+      "capability_id": "event-contract-break",
+      "capability": "Event contract break",
+      "capability_asks": "Can the tool see that a change to a published event's fields or values breaks consumers that match on them, including ones that fail silently?",
+      "capability_ids": [
+        "event-contract-break",
+        "cross-repo-impact"
+      ],
+      "claims": [
+        {
+          "claim_id": "display-values-removed",
+          "must_assert": "Removing FOUR and SIX from last_event.display changes the values of a published event that consumers match on, so any consumer detecting boundaries by FOUR or SIX stops recognising them.",
+          "passed": false,
+          "quote": "",
+          "reason": "panel agrees (fail): no review",
+          "tokens_expected": [
+            "(FOUR|SIX)",
+            "(display|event|consumer|match)"
+          ],
+          "tokens_matched": [],
+          "tokens_missing": [
+            "(FOUR|SIX)",
+            "(display|event|consumer|match)"
+          ],
+          "parts": [],
+          "votes": [
+            {
+              "judge": "claude-haiku-4-5",
+              "passed": false,
+              "reason": "no review"
+            },
+            {
+              "judge": "claude-sonnet-4-5",
+              "passed": false,
+              "reason": "no review"
+            }
+          ]
+        },
+        {
+          "claim_id": "names-silent-boundary-loss",
+          "must_assert": "The review names a consumer that detects boundaries by display FOUR/SIX and the concrete loss: highlights no longer returns a boundary clip (so social stops posting BOUNDARY), or mobile no longer shows its boundary banner.",
+          "passed": false,
+          "quote": "",
+          "reason": "panel agrees (fail): no review",
+          "tokens_expected": [
+            "(highlights|social|mobile|clip|banner)",
+            "(boundary|BOUNDARY)"
+          ],
+          "tokens_matched": [],
+          "tokens_missing": [
+            "(highlights|social|mobile|clip|banner)",
+            "(boundary|BOUNDARY)"
+          ],
+          "parts": [],
+          "votes": [
+            {
+              "judge": "claude-haiku-4-5",
+              "passed": false,
+              "reason": "no review"
+            },
+            {
+              "judge": "claude-sonnet-4-5",
+              "passed": false,
+              "reason": "no review"
+            }
+          ]
+        }
+      ],
+      "actual": "",
+      "comments": [],
+      "metrics": {
+        "true_positives": 0,
+        "false_negatives": 2,
+        "false_positives": 0,
+        "relevant_comments": 0,
+        "comments": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "defect_comments": 0
+      },
+      "unexpected_bots": [],
+      "judge_mode": "llm",
+      "comment_verdicts": []
+    },
+    {
+      "case_id": "test-scoring-renamed-wicket-field-breaks-notifications",
+      "tool": "codeant",
+      "pr_url": "https://github.com/org-codeant/prlab-cricket-scoring/pull/20",
+      "finding_passed": false,
+      "isolation_passed": true,
+      "intent": "Catch that renaming wicket_counted breaks strict consumers and is masked in others",
+      "tests": "Scoring renames last_event.wicket_counted to wicket with no alias. Notifications, stats and archive require wicket_counted and reject the event (no wicket pushes, no ledger), while highlights and mobile fall back to display WICKET and keep working, which hides the break. A passing review must call it breaking and name a consumer that fails.",
+      "capability_id": "event-contract-break",
+      "capability": "Event contract break",
+      "capability_asks": "Can the tool see that a change to a published event's fields or values breaks consumers that match on them, including ones that fail silently?",
+      "capability_ids": [
+        "event-contract-break",
+        "cross-repo-impact"
+      ],
+      "claims": [
+        {
+          "claim_id": "field-rename-breaks-event",
+          "must_assert": "Renaming last_event.wicket_counted to wicket without keeping the old field is a breaking change to the published event contract.",
+          "passed": false,
+          "quote": "",
+          "reason": "panel agrees (fail): no review",
+          "tokens_expected": [
+            "wicket_counted",
+            "(rename|break|remov|consumer)"
+          ],
+          "tokens_matched": [],
+          "tokens_missing": [
+            "wicket_counted",
+            "(rename|break|remov|consumer)"
+          ],
+          "parts": [],
+          "votes": [
+            {
+              "judge": "claude-haiku-4-5",
+              "passed": false,
+              "reason": "no review"
+            },
+            {
+              "judge": "claude-sonnet-4-5",
+              "passed": false,
+              "reason": "no review"
+            }
+          ]
+        },
+        {
+          "claim_id": "names-consumer-failing-on-rename",
+          "must_assert": "The review names a consumer that reads wicket_counted and what happens now: notifications stops sending wicket pushes (its model requires wicket_counted), stats or archive reject the snapshot, or highlights/mobile only keep working by falling back to display.",
+          "passed": false,
+          "quote": "",
+          "reason": "panel agrees (fail): no review",
+          "tokens_expected": [
+            "(notification|push|stats|archive|highlights|mobile)",
+            "(wicket_counted|fail|reject|missing|fall)"
+          ],
+          "tokens_matched": [],
+          "tokens_missing": [
+            "(notification|push|stats|archive|highlights|mobile)",
+            "(wicket_counted|fail|reject|missing|fall)"
+          ],
+          "parts": [],
+          "votes": [
+            {
+              "judge": "claude-haiku-4-5",
+              "passed": false,
+              "reason": "no review"
+            },
+            {
+              "judge": "claude-sonnet-4-5",
+              "passed": false,
+              "reason": "no review"
+            }
+          ]
+        }
+      ],
+      "actual": "",
+      "comments": [],
+      "metrics": {
+        "true_positives": 0,
+        "false_negatives": 2,
+        "false_positives": 0,
+        "relevant_comments": 0,
+        "comments": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "defect_comments": 0
+      },
+      "unexpected_bots": [],
+      "judge_mode": "llm",
+      "comment_verdicts": []
+    },
+    {
+      "case_id": "test-protocol-runs-off-bat-total-double-counts-extras",
+      "tool": "codeant",
+      "pr_url": "https://github.com/org-codeant/prlab-cricket-protocol/pull/9",
+      "finding_passed": false,
+      "isolation_passed": true,
+      "intent": "Catch that redefining runs_off_bat double-counts extras downstream",
+      "tests": "Protocol redefines runs_off_bat as the total for the delivery, extras included, while extras.runs still carries the extras. Scoring adds runs_off_bat and extras.runs, so every wide and no-ball is counted twice in the score, the stats ledger copies it, and fantasy pays extra batting points. A passing review must say the extras are now counted twice and name that downstream effect.",
+      "capability_id": "cross-repo-impact",
+      "capability": "Cross-repo impact",
+      "capability_asks": "Can the tool connect a local contract change to a named downstream consumer?",
+      "capability_ids": [
+        "cross-repo-impact",
+        "local-semantic-consequence"
+      ],
+      "claims": [
+        {
+          "claim_id": "extras-reported-twice",
+          "must_assert": "runs_off_bat now includes extras while extras.runs still reports them, so the same runs are carried twice on every wide or no-ball, and any consumer summing the two double-counts.",
+          "passed": true,
+          "quote": "The model now defines runs_off_bat as including extras, but the JSON schema still says extras are excluded, so schema consumers may double-count delivery runs.",
+          "reason": "panel agrees (pass): The second comment directly states the double-counting issue from runs_off_bat including extras when consumers expect them excluded.",
+          "tokens_expected": [
+            "(extras|wide|no.?ball)",
+            "(twice|double|both|sum|add)"
+          ],
+          "tokens_matched": [
+            "(extras|wide|no.?ball)",
+            "(twice|double|both|sum|add)"
+          ],
+          "tokens_missing": [],
+          "parts": [
+            {
+              "part": "runs_off_bat now includes the extras that extras.runs also reports, so extras are double-counted by anything that adds the two, such as a consumer still following the old contract.",
+              "met": true,
+              "quote": "The model now defines runs_off_bat as including extras, but the JSON schema still says extras are excluded, so schema consumers may double-count delivery runs.",
+              "why": "The review states that runs_off_bat now includes extras while the schema still says they're excluded, causing consumers to double-count runs."
+            }
+          ],
+          "votes": [
+            {
+              "judge": "claude-haiku-4-5",
+              "passed": true,
+              "reason": "The review directly describes the double-counting scenario where runs_off_bat includes extras that are also in extras.runs, leading consumers to sum both and double-count."
+            },
+            {
+              "judge": "claude-sonnet-4-5",
+              "passed": true,
+              "reason": "The second comment directly states the double-counting issue from runs_off_bat including extras when consumers expect them excluded."
+            }
+          ]
+        },
+        {
+          "claim_id": "names-double-count-downstream",
+          "must_assert": "The review names the downstream effect: scoring computes runs_off_bat plus extras.runs, so the published score over-counts extras, and that inflated total flows into the stats ledger or fantasy batting points.",
+          "passed": false,
+          "quote": "",
+          "reason": "panel agrees (fail): part 1 not met: The review does not state that scoring adds runs_off_bat and extras.runs or that this causes over-counting in the published score.",
+          "tokens_expected": [
+            "(scoring|stats|ledger|fantasy)",
+            "(double|twice|inflat|over.?count|extra)"
+          ],
+          "tokens_matched": [
+            "(double|twice|inflat|over.?count|extra)"
+          ],
+          "tokens_missing": [
+            "(scoring|stats|ledger|fantasy)"
+          ],
+          "parts": [
+            {
+              "part": "Says scoring, which adds runs_off_bat and extras.runs, now over-counts extras in the published score.",
+              "met": false,
+              "quote": "",
+              "why": "The review does not state that scoring adds runs_off_bat and extras.runs or that this causes over-counting in the published score."
+            },
+            {
+              "part": "Says the inflated total reaches the stats ledger or fantasy batting points.",
+              "met": false,
+              "quote": "",
+              "why": "The review does not mention the stats ledger or fantasy batting points at all."
+            }
+          ],
+          "votes": [
+            {
+              "judge": "claude-haiku-4-5",
+              "passed": false,
+              "reason": "part 1 not met: The review mentions runs_off_bat and extras but does not state that scoring adds them together or that this causes over-counting in a published score."
+            },
+            {
+              "judge": "claude-sonnet-4-5",
+              "passed": false,
+              "reason": "part 1 not met: The review does not state that scoring adds runs_off_bat and extras.runs or that this causes over-counting in the published score."
+            }
+          ]
+        }
+      ],
+      "actual": "cricket_protocol/models.py:62\n**Suggestion:** The new maximum rejects delivery totals above 12, including valid deliveries with multiple runs, overthrows, or accumulated wides, which were previously accepted.\n\n**Assessment:** \ud83d\udfe0 `Major` \u00b7 \ud83d\udd01 `Occurrence: Rarely` \u00b7 \ud83c\udff7\ufe0f `Api mismatch`\n\n \ud83d\udc4d | \ud83d\udc4e\n\ncricket_protocol/models.py:66\n**Suggestion:** The model now defines `runs_off_bat` as including extras, but the JSON schema still says extras are excluded, so schema consumers may double-count delivery runs.\n\n**Assessment:** \ud83d\udfe0 `Major` \u00b7 \ud83d\udd01 `Occurrence: Sometimes` \u00b7 \ud83c\udff7\ufe0f `Api mismatch`\n\n \ud83d\udc4d | \ud83d\udc4e",
+      "comments": [
+        "cricket_protocol/models.py:62\n**Suggestion:** The new maximum rejects delivery totals above 12, including valid deliveries with multiple runs, overthrows, or accumulated wides, which were previously accepted.\n\n**Assessment:** \ud83d\udfe0 `Major` \u00b7 \ud83d\udd01 `Occurrence: Rarely` \u00b7 \ud83c\udff7\ufe0f `Api mismatch`\n\n \ud83d\udc4d | \ud83d\udc4e",
+        "cricket_protocol/models.py:66\n**Suggestion:** The model now defines `runs_off_bat` as including extras, but the JSON schema still says extras are excluded, so schema consumers may double-count delivery runs.\n\n**Assessment:** \ud83d\udfe0 `Major` \u00b7 \ud83d\udd01 `Occurrence: Sometimes` \u00b7 \ud83c\udff7\ufe0f `Api mismatch`\n\n \ud83d\udc4d | \ud83d\udc4e"
+      ],
+      "metrics": {
+        "true_positives": 1,
+        "false_negatives": 1,
+        "false_positives": 1,
+        "relevant_comments": 1,
+        "comments": 2,
+        "precision": 0.5,
+        "recall": 0.5,
+        "f1": 0.5,
+        "defect_comments": 0
+      },
+      "unexpected_bots": [],
+      "judge_mode": "llm",
+      "comment_verdicts": [
+        {
+          "index": 1,
+          "label": "noise",
+          "reason": "The comment speculates about what deliveries 'were previously accepted' but provides no evidence that the new maximum of 12 is incorrect for the stated semantics of 'total runs on this delivery, extras included'."
+        },
+        {
+          "index": 2,
+          "label": "trap",
+          "reason": "holds the quote the claim judge verified"
+        }
+      ]
+    },
+    {
+      "case_id": "test-highlights-split-kinds-stop-social-posts",
+      "tool": "codeant",
+      "pr_url": "https://github.com/org-codeant/prlab-cricket-highlights/pull/6",
+      "finding_passed": false,
+      "isolation_passed": true,
+      "intent": "Catch that splitting the boundary clip kind stops social boundary posts",
+      "tests": "Highlights splits the boundary clip kind into four and six. Social posts only for kind boundary, so every BOUNDARY post stops silently. A passing review must say the kind values changed and name social's lost posts.",
+      "capability_id": "event-contract-break",
+      "capability": "Event contract break",
+      "capability_asks": "Can the tool see that a change to a published event's fields or values breaks consumers that match on them, including ones that fail silently?",
+      "capability_ids": [
+        "event-contract-break",
+        "cross-repo-impact"
+      ],
+      "claims": [
+        {
+          "claim_id": "boundary-kind-removed",
+          "must_assert": "clipFor no longer returns kind boundary; it returns four or six, a change to the values consumers of the clip contract match on.",
+          "passed": false,
+          "quote": "",
+          "reason": "panel agrees (fail): no review",
+          "tokens_expected": [
+            "boundary",
+            "(kind|four|six)"
+          ],
+          "tokens_matched": [],
+          "tokens_missing": [
+            "boundary",
+            "(kind|four|six)"
+          ],
+          "parts": [],
+          "votes": [
+            {
+              "judge": "claude-haiku-4-5",
+              "passed": false,
+              "reason": "no review"
+            },
+            {
+              "judge": "claude-sonnet-4-5",
+              "passed": false,
+              "reason": "no review"
+            }
+          ]
+        },
+        {
+          "claim_id": "names-social-lost-posts",
+          "must_assert": "The review names social (postFor), which only posts for kind boundary, and says boundary posts stop: fours and sixes are no longer posted.",
+          "passed": false,
+          "quote": "",
+          "reason": "panel agrees (fail): no review",
+          "tokens_expected": [
+            "(social|postFor|post)",
+            "(boundary|BOUNDARY)"
+          ],
+          "tokens_matched": [],
+          "tokens_missing": [
+            "(social|postFor|post)",
+            "(boundary|BOUNDARY)"
+          ],
+          "parts": [],
+          "votes": [
+            {
+              "judge": "claude-haiku-4-5",
+              "passed": false,
+              "reason": "no review"
+            },
+            {
+              "judge": "claude-sonnet-4-5",
+              "passed": false,
+              "reason": "no review"
+            }
+          ]
+        }
+      ],
+      "actual": "",
+      "comments": [],
+      "metrics": {
+        "true_positives": 0,
+        "false_negatives": 2,
+        "false_positives": 0,
+        "relevant_comments": 0,
+        "comments": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "defect_comments": 0
+      },
+      "unexpected_bots": [],
+      "judge_mode": "llm",
+      "comment_verdicts": []
+    },
+    {
+      "case_id": "test-scoring-open-reset-endpoint",
+      "tool": "codeant",
+      "pr_url": "https://github.com/org-codeant/prlab-cricket-scoring/pull/21",
+      "finding_passed": false,
+      "isolation_passed": true,
+      "intent": "Catch an unauthenticated state-wiping endpoint and its downstream reach",
+      "tests": "Scoring adds POST /matches/{id}/reset with no authentication, on a service whose CORS allows every origin. Any caller or web page can wipe a live match; the gateway and mobile then show an unknown match, and the next snapshot restarts the stats ledger that fantasy settles from. A passing review must flag the missing authorization and name a downstream effect.",
+      "capability_id": "security",
+      "capability": "Security",
+      "capability_asks": "Can the tool flag a change that lets an untrusted caller change state, reach internal systems, or run code?",
+      "capability_ids": [
+        "security",
+        "cross-repo-impact"
+      ],
+      "claims": [
+        {
+          "claim_id": "reset-unauthenticated",
+          "must_assert": "The reset endpoint has no authentication or authorization, and with CORS allowing every origin any caller or web page can wipe a live match's score.",
+          "passed": false,
+          "quote": "",
+          "reason": "panel agrees (fail): The review describes a race condition between concurrent requests, not the absence of authentication or authorization allowing any caller to reset matches.",
+          "tokens_expected": [
+            "(auth|unauthenticated|anyone|any caller|CORS|origin)",
+            "reset"
+          ],
+          "tokens_matched": [
+            "reset"
+          ],
+          "tokens_missing": [
+            "(auth|unauthenticated|anyone|any caller|CORS|origin)"
+          ],
+          "parts": [
+            {
+              "part": "The new reset endpoint has no authentication or authorization, so any caller can wipe or reset a live match. (Mentioning CORS is not required.)",
+              "met": false,
+              "quote": "",
+              "why": "The review describes a race condition between concurrent requests, not the absence of authentication or authorization allowing any caller to reset matches."
+            }
+          ],
+          "votes": [
+            {
+              "judge": "claude-haiku-4-5",
+              "passed": false,
+              "reason": "The review discusses a race condition between concurrent requests, not the absence of authentication or authorization controls."
+            },
+            {
+              "judge": "claude-sonnet-4-5",
+              "passed": false,
+              "reason": "The review describes a race condition between concurrent requests, not the absence of authentication or authorization allowing any caller to reset matches."
+            }
+          ]
+        },
+        {
+          "claim_id": "names-reset-downstream",
+          "must_assert": "The review names a downstream effect of a reset: the live-gateway, mobile or broadcast then see an unknown match or a restarted score, or the stats ledger (and fantasy points settled from it) is restarted or overwritten.",
+          "passed": false,
+          "quote": "",
+          "reason": "panel agrees (fail): The review only describes a race condition causing inconsistent internal state, not any downstream effect on live-gateway, mobile, broadcast, or the stats ledger.",
+          "tokens_expected": [
+            "(gateway|mobile|broadcast|stats|ledger|fantasy)",
+            "(404|unknown|restart|overwrit|zero|0/0|lost)"
+          ],
+          "tokens_matched": [],
+          "tokens_missing": [
+            "(gateway|mobile|broadcast|stats|ledger|fantasy)",
+            "(404|unknown|restart|overwrit|zero|0/0|lost)"
+          ],
+          "parts": [
+            {
+              "part": "Names a downstream effect of a reset: the live-gateway, mobile or broadcast then see an unknown match or a restarted score, or the stats ledger (and fantasy points settled from it) restarts or is overwritten.",
+              "met": false,
+              "quote": "",
+              "why": "The review only describes a race condition causing inconsistent internal state, not any downstream effect on live-gateway, mobile, broadcast, or the stats ledger."
+            }
+          ],
+          "votes": [
+            {
+              "judge": "claude-haiku-4-5",
+              "passed": false,
+              "reason": "The review describes a race condition affecting internal state consistency (snapshot vs. state mismatch) but does not name any downstream effect on the live-gateway, mobile, broadcast, or stats ledger."
+            },
+            {
+              "judge": "claude-sonnet-4-5",
+              "passed": false,
+              "reason": "The review only describes a race condition causing inconsistent internal state, not any downstream effect on live-gateway, mobile, broadcast, or the stats ledger."
+            }
+          ]
+        }
+      ],
+      "actual": "scoring/app.py:43\n**Suggestion:** Concurrent ball and reset requests can interleave these separate deletions, leaving a new state without a snapshot or a snapshot without matching state.\n\n**Assessment:** \ud83d\udfe0 `Major` \u00b7 \ud83d\udd01 `Occurrence: Rarely` \u00b7 \ud83c\udff7\ufe0f `Race condition`\n\n \ud83d\udc4d | \ud83d\udc4e",
+      "comments": [
+        "scoring/app.py:43\n**Suggestion:** Concurrent ball and reset requests can interleave these separate deletions, leaving a new state without a snapshot or a snapshot without matching state.\n\n**Assessment:** \ud83d\udfe0 `Major` \u00b7 \ud83d\udd01 `Occurrence: Rarely` \u00b7 \ud83c\udff7\ufe0f `Race condition`\n\n \ud83d\udc4d | \ud83d\udc4e"
+      ],
+      "metrics": {
+        "true_positives": 0,
+        "false_negatives": 2,
+        "false_positives": 0,
+        "relevant_comments": 1,
+        "comments": 1,
+        "precision": 1.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "defect_comments": 1
+      },
+      "unexpected_bots": [],
+      "judge_mode": "llm",
+      "comment_verdicts": [
+        {
+          "index": 1,
+          "label": "defect",
+          "reason": "The reset endpoint performs two separate dictionary deletions without synchronization, creating a race condition where concurrent requests could leave the match state and snapshots in an inconsistent state."
+        }
+      ]
+    },
+    {
+      "case_id": "test-gateway-origin-param-ssrf",
+      "tool": "codeant",
+      "pr_url": "https://github.com/org-codeant/prlab-cricket-live-gateway/pull/6",
+      "finding_passed": false,
+      "isolation_passed": true,
+      "intent": "Catch server-side request forgery through a caller-chosen upstream",
+      "tests": "The live-gateway accepts ?origin= and fetches scoring from that host. Any caller can make the gateway request arbitrary URLs from inside the network (SSRF), and because mobile trusts the gateway, serve forged scores to phones. A passing review must flag the SSRF and name the forged-data effect on clients.",
+      "capability_id": "security",
+      "capability": "Security",
+      "capability_asks": "Can the tool flag a change that lets an untrusted caller change state, reach internal systems, or run code?",
+      "capability_ids": [
+        "security",
+        "cross-repo-impact"
+      ],
+      "claims": [
+        {
+          "claim_id": "origin-param-ssrf",
+          "must_assert": "The origin query parameter lets any caller make the gateway send requests to an arbitrary host, including internal or cloud metadata addresses: server-side request forgery.",
+          "passed": false,
+          "quote": "",
+          "reason": "panel agrees (fail): The review describes query parameters consuming the scoring path and requesting the wrong upstream resource, not arbitrary host targeting or SSRF.",
+          "tokens_expected": [
+            "(SSRF|server.?side request|arbitrary|internal|metadata|any host)",
+            "origin"
+          ],
+          "tokens_matched": [
+            "origin"
+          ],
+          "tokens_missing": [
+            "(SSRF|server.?side request|arbitrary|internal|metadata|any host)"
+          ],
+          "parts": [
+            {
+              "part": "The origin parameter lets a caller make the gateway send requests to an arbitrary host, such as internal or cloud metadata addresses: server-side request forgery.",
+              "met": false,
+              "quote": "",
+              "why": "The review describes query parameters consuming the scoring path and requesting the wrong upstream resource, not arbitrary host targeting or SSRF."
+            }
+          ],
+          "votes": [
+            {
+              "judge": "claude-haiku-4-5",
+              "passed": false,
+              "reason": "The review describes a different defect: query parameters consuming the scoring path to request the wrong upstream resource, not arbitrary host SSRF via the origin parameter."
+            },
+            {
+              "judge": "claude-sonnet-4-5",
+              "passed": false,
+              "reason": "The review describes query parameters consuming the scoring path and requesting the wrong upstream resource, not arbitrary host targeting or SSRF."
+            }
+          ]
+        },
+        {
+          "claim_id": "names-forged-scores",
+          "must_assert": "The review says a caller-chosen origin lets the gateway serve attacker-controlled scores or events to its clients (mobile), which trust the gateway's response.",
+          "passed": false,
+          "quote": "",
+          "reason": "panel agrees (fail): The review describes only the SSRF request mechanism (wrong upstream resource) without stating that attacker-controlled scores or events reach clients or that clients trust the gateway's response.",
+          "tokens_expected": [
+            "(mobile|client|app)",
+            "(forg|spoof|fake|attacker|malicious|control)"
+          ],
+          "tokens_matched": [
+            "(mobile|client|app)"
+          ],
+          "tokens_missing": [
+            "(forg|spoof|fake|attacker|malicious|control)"
+          ],
+          "parts": [
+            {
+              "part": "A caller-chosen origin lets attacker-controlled scores or events come back through the gateway's responses to its clients (such as mobile), which trust the gateway.",
+              "met": false,
+              "quote": "",
+              "why": "The review describes only the SSRF request mechanism (wrong upstream resource) without stating that attacker-controlled scores or events reach clients or that clients trust the gateway's response."
+            }
+          ],
+          "votes": [
+            {
+              "judge": "claude-haiku-4-5",
+              "passed": false,
+              "reason": "The review describes an SSRF mechanism (query parameters consuming the scoring path to request the wrong upstream resource) but does not state that attacker-controlled data comes back through the gateway's responses to clients that trust it."
+            },
+            {
+              "judge": "claude-sonnet-4-5",
+              "passed": false,
+              "reason": "The review describes only the SSRF request mechanism (wrong upstream resource) without stating that attacker-controlled scores or events reach clients or that clients trust the gateway's response."
+            }
+          ]
+        }
+      ],
+      "actual": "gateway/app.py:25\n**Suggestion:** An override containing a path or query is treated as an origin; query parameters can consume the appended scoring path and request the wrong upstream resource.\n\n**Assessment:** \ud83d\udfe0 `Major` \u00b7 \ud83d\udd01 `Occurrence: Rarely` \u00b7 \ud83c\udff7\ufe0f `Api mismatch`\n\n \ud83d\udc4d | \ud83d\udc4e",
+      "comments": [
+        "gateway/app.py:25\n**Suggestion:** An override containing a path or query is treated as an origin; query parameters can consume the appended scoring path and request the wrong upstream resource.\n\n**Assessment:** \ud83d\udfe0 `Major` \u00b7 \ud83d\udd01 `Occurrence: Rarely` \u00b7 \ud83c\udff7\ufe0f `Api mismatch`\n\n \ud83d\udc4d | \ud83d\udc4e"
+      ],
+      "metrics": {
+        "true_positives": 0,
+        "false_negatives": 2,
+        "false_positives": 0,
+        "relevant_comments": 1,
+        "comments": 1,
+        "precision": 1.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "defect_comments": 1
+      },
+      "unexpected_bots": [],
+      "judge_mode": "llm",
+      "comment_verdicts": [
+        {
+          "index": 1,
+          "label": "defect",
+          "reason": "The code constructs URLs by concatenating `base` with `/matches/{match_id}/score`, so an `origin` parameter containing query parameters (e.g., `https://example.com?foo=bar`) would result in malformed URLs like `https://example.com?foo=bar/matches/{match_id}/score`, causing requests to the wrong resource."
+        }
+      ]
+    },
+    {
+      "case_id": "test-archive-pickle-restore-rce",
+      "tool": "codeant",
+      "pr_url": "https://github.com/org-codeant/prlab-cricket-archive/pull/6",
+      "finding_passed": false,
+      "isolation_passed": true,
+      "intent": "Catch remote code execution through unpickling a client upload",
+      "tests": "Archive adds POST /matches/{id}/restore that base64-decodes a client-supplied backup and passes it to pickle.loads, with no authentication. Unpickling untrusted data runs arbitrary code on the archive server. A passing review must name the code-execution risk.",
+      "capability_id": "security",
+      "capability": "Security",
+      "capability_asks": "Can the tool flag a change that lets an untrusted caller change state, reach internal systems, or run code?",
+      "capability_ids": [
+        "security"
+      ],
+      "claims": [
+        {
+          "claim_id": "pickle-rce",
+          "must_assert": "Calling pickle.loads on a client-supplied backup lets any caller run arbitrary code on the archive server; the endpoint is unauthenticated.",
+          "passed": false,
+          "quote": "",
+          "reason": "panel agrees (fail): The review describes a race condition where concurrent snapshots can be lost during list replacement, not arbitrary code execution via pickle.loads.",
+          "tokens_expected": [
+            "pickle",
+            "(arbitrary code|code execution|RCE|execute|untrusted|unsafe)"
+          ],
+          "tokens_matched": [],
+          "tokens_missing": [
+            "pickle",
+            "(arbitrary code|code execution|RCE|execute|untrusted|unsafe)"
+          ],
+          "parts": [
+            {
+              "part": "Calling pickle.loads on a client-supplied backup lets a caller run arbitrary code on the archive server.",
+              "met": false,
+              "quote": "",
+              "why": "The review describes a race condition where concurrent snapshots can be lost during list replacement, not arbitrary code execution via pickle.loads."
+            }
+          ],
+          "votes": [
+            {
+              "judge": "claude-haiku-4-5",
+              "passed": false,
+              "reason": "The review describes a race condition with concurrent snapshot recording, not arbitrary code execution from pickle.loads on client-supplied input."
+            },
+            {
+              "judge": "claude-sonnet-4-5",
+              "passed": false,
+              "reason": "The review describes a race condition where concurrent snapshots can be lost during list replacement, not arbitrary code execution via pickle.loads."
+            }
+          ]
+        }
+      ],
+      "actual": "archive/app.py:46\n**Suggestion:** Concurrent snapshot recording can append to the old list just before this assignment, losing that snapshot when the restored list replaces it.\n\n**Assessment:** \ud83d\udfe0 `Major` \u00b7 \ud83d\udd01 `Occurrence: Rarely` \u00b7 \ud83c\udff7\ufe0f `Race condition`\n\n \ud83d\udc4d | \ud83d\udc4e",
+      "comments": [
+        "archive/app.py:46\n**Suggestion:** Concurrent snapshot recording can append to the old list just before this assignment, losing that snapshot when the restored list replaces it.\n\n**Assessment:** \ud83d\udfe0 `Major` \u00b7 \ud83d\udd01 `Occurrence: Rarely` \u00b7 \ud83c\udff7\ufe0f `Race condition`\n\n \ud83d\udc4d | \ud83d\udc4e"
+      ],
+      "metrics": {
+        "true_positives": 0,
+        "false_negatives": 1,
+        "false_positives": 0,
+        "relevant_comments": 1,
+        "comments": 1,
+        "precision": 1.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "defect_comments": 1
+      },
+      "unexpected_bots": [],
+      "judge_mode": "llm",
+      "comment_verdicts": [
+        {
+          "index": 1,
+          "label": "defect",
+          "reason": "The restore endpoint directly assigns to `_history[match_id]` without synchronization, creating a race condition where concurrent writes to the history list can be lost when the assignment overwrites it."
+        }
+      ]
+    }
+  ]
+}

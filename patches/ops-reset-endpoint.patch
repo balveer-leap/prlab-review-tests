@@ -1,0 +1,36 @@
+diff --git a/scoring/app.py b/scoring/app.py
+index ba6dbaf..284e998 100644
+--- a/scoring/app.py
++++ b/scoring/app.py
+@@ -1,4 +1,4 @@
+-from fastapi import FastAPI, HTTPException
++from fastapi import FastAPI, HTTPException, Response
+ from fastapi.middleware.cors import CORSMiddleware
+ 
+ from cricket_protocol import BallEvent
+@@ -34,3 +34,11 @@ def get_score(match_id: str) -> ScoreSnapshot:
+     if snapshot is None:
+         raise HTTPException(status_code=404, detail="unknown match")
+     return snapshot
++
++
++@app.post("/matches/{match_id}/reset", status_code=204)
++def reset_match(match_id: str) -> Response:
++    """Clear a match so ops can restart it after a bad feed without a redeploy."""
++    _matches.pop(match_id, None)
++    _snapshots.pop(match_id, None)
++    return Response(status_code=204)
+diff --git a/tests/test_app.py b/tests/test_app.py
+index 7e64534..0d433b2 100644
+--- a/tests/test_app.py
++++ b/tests/test_app.py
+@@ -26,3 +26,9 @@ def test_record_and_fetch_score() -> None:
+     assert body["runs"] == 1
+     assert body["last_event"]["display"] == "1"
+     assert "raw_ball" not in body
++
++
++def test_reset_clears_the_match() -> None:
++    client.post("/matches/m1/balls", json=PAYLOAD)
++    assert client.post("/matches/m1/reset").status_code == 204
++    assert client.get("/matches/m1/score").status_code == 404

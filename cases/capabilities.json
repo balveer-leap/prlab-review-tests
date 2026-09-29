@@ -30,5 +30,17 @@
   "leak-propagation": {
     "name": "Leak persistence or pass-through",
     "asks": "Can the tool see that storing or forwarding an internal envelope keeps leaked fields beyond the producer?"
+  },
+  "api-contract-break": {
+    "name": "API contract break",
+    "asks": "Can the tool see that a change to an HTTP response (status code, field type, route behaviour) breaks the services and clients that call it?"
+  },
+  "event-contract-break": {
+    "name": "Event contract break",
+    "asks": "Can the tool see that a change to a published event's fields or values breaks consumers that match on them, including ones that fail silently?"
+  },
+  "security": {
+    "name": "Security",
+    "asks": "Can the tool flag a change that lets an untrusted caller change state, reach internal systems, or run code?"
   }
 }

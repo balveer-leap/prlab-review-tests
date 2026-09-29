@@ -1,0 +1,69 @@
+diff --git a/schemas/score_snapshot.schema.json b/schemas/score_snapshot.schema.json
+index fe6ddd5..e0b8061 100644
+--- a/schemas/score_snapshot.schema.json
++++ b/schemas/score_snapshot.schema.json
+@@ -12,14 +12,14 @@
+     "last_event": {
+       "type": "object",
+       "additionalProperties": false,
+-      "required": ["display", "runs_added", "wicket_counted", "legal_delivery"],
++      "required": ["display", "runs_added", "wicket", "legal_delivery"],
+       "properties": {
+         "display": {
+           "type": "string",
+           "description": "Scoring-owned. Broadcast must not infer extras or wickets from other fields."
+         },
+         "runs_added": { "type": "integer" },
+-        "wicket_counted": { "type": "boolean" },
++        "wicket": { "type": "boolean" },
+         "legal_delivery": { "type": "boolean" }
+       }
+     }
+diff --git a/scoring/engine.py b/scoring/engine.py
+index accf1ef..6debb9a 100644
+--- a/scoring/engine.py
++++ b/scoring/engine.py
+@@ -64,7 +64,7 @@ def apply_ball(state: InningsState, event: BallEvent) -> tuple[InningsState, Sco
+         last_event=LastEvent(
+             display=_display(event, wicket_counted, runs_added),
+             runs_added=runs_added,
+-            wicket_counted=wicket_counted,
++            wicket=wicket_counted,
+             legal_delivery=legal_delivery,
+         ),
+     )
+diff --git a/scoring/snapshot.py b/scoring/snapshot.py
+index 09c58f4..ab7431c 100644
+--- a/scoring/snapshot.py
++++ b/scoring/snapshot.py
+@@ -8,7 +8,7 @@ class LastEvent(BaseModel):
+         description="Scoring-owned label: DOT, runs, FOUR, SIX, WIDE, NO_BALL, WICKET, NOT_OUT."
+     )
+     runs_added: int
+-    wicket_counted: bool
++    wicket: bool = Field(description="True when scoring counted a dismissal on this ball.")
+     legal_delivery: bool
+ 
+ 
+diff --git a/tests/test_engine.py b/tests/test_engine.py
+index 0ae5952..bc79b00 100644
+--- a/tests/test_engine.py
++++ b/tests/test_engine.py
+@@ -47,7 +47,7 @@ def test_confirmed_lbw_counts_wicket() -> None:
+     )
+     assert snapshot.wickets == 1
+     assert snapshot.last_event.display == "WICKET"
+-    assert snapshot.last_event.wicket_counted is True
++    assert snapshot.last_event.wicket is True
+ 
+ 
+ def test_unconfirmed_lbw_does_not_count() -> None:
+@@ -57,7 +57,7 @@ def test_unconfirmed_lbw_does_not_count() -> None:
+     )
+     assert snapshot.wickets == 0
+     assert snapshot.last_event.display == "NOT_OUT"
+-    assert snapshot.last_event.wicket_counted is False
++    assert snapshot.last_event.wicket is False
+ 
+ 
+ def test_snapshot_does_not_leak_protocol_fields() -> None:

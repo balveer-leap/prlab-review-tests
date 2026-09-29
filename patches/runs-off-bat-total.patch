@@ -1,0 +1,63 @@
+diff --git a/cricket_protocol/invariants.py b/cricket_protocol/invariants.py
+index 60bda8f..2663ed8 100644
+--- a/cricket_protocol/invariants.py
++++ b/cricket_protocol/invariants.py
+@@ -5,7 +5,7 @@ Hop 2 (cricket-broadcast) must never import this package or read BallEvent field
+ """
+ 
+ PROTOCOL_INVARIANTS = (
+-    "runs_off_bat is off the bat only and never includes extras.runs",
++    "runs_off_bat is the total for the delivery and includes extras.runs",
+     "umpire_confirmed has no default; omitting it is invalid",
+     "an unconfirmed dismissal is not a wicket — only scoring may decide that",
+     "cricket-broadcast must consume ScoreSnapshot, never BallEvent",
+diff --git a/cricket_protocol/models.py b/cricket_protocol/models.py
+index dfbe629..e435cd9 100644
+--- a/cricket_protocol/models.py
++++ b/cricket_protocol/models.py
+@@ -59,10 +59,10 @@ class BallEvent(BaseModel):
+     bowler: str
+     runs_off_bat: int = Field(
+         ge=0,
+-        le=6,
++        le=12,
+         description=(
+-            "Runs scored off the bat on this delivery. MUST NOT include extras. "
+-            "A wide is runs_off_bat=0 and extras.runs>=1."
++            "Total runs on this delivery, extras included. "
++            "extras.runs keeps the breakdown for wides and no-balls."
+         ),
+     )
+     extras: Extras
+diff --git a/schemas/ball_event.schema.json b/schemas/ball_event.schema.json
+index 3f0480c..5d9bf71 100644
+--- a/schemas/ball_event.schema.json
++++ b/schemas/ball_event.schema.json
+@@ -24,7 +24,7 @@
+     "runs_off_bat": {
+       "type": "integer",
+       "minimum": 0,
+-      "maximum": 6,
++      "maximum": 12,
+       "description": "Off the bat only. Never includes extras."
+     },
+     "extras": {
+diff --git a/tests/test_models.py b/tests/test_models.py
+index b180018..c785956 100644
+--- a/tests/test_models.py
++++ b/tests/test_models.py
+@@ -27,11 +27,11 @@ def test_valid_dot_ball() -> None:
+     assert event.wicket.kind is WicketKind.NONE
+ 
+ 
+-def test_wide_is_extras_not_runs_off_bat() -> None:
++def test_wide_total_includes_extras() -> None:
+     event = BallEvent.model_validate(
+-        _ball(runs_off_bat=0, extras={"type": "wide", "runs": 1})
++        _ball(runs_off_bat=1, extras={"type": "wide", "runs": 1})
+     )
+-    assert event.runs_off_bat == 0
++    assert event.runs_off_bat == 1
+     assert event.extras.runs == 1
+ 
+ 

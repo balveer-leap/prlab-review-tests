@@ -1,0 +1,96 @@
+{
+  "checked": "2026-10-01",
+  "prs_per_dev_month": 20,
+  "note": "List prices for the cheapest paid plan that includes PR review, read from each vendor's pricing page on the checked date. Claude rows are measured API cost (list price) of the actual review runs in this eval; the PRs are small (one cricket service each), so larger PRs cost more.",
+  "tools": {
+    "greptile": {
+      "plan": "Pro",
+      "price": "$30 per seat per month",
+      "seat_month": 30,
+      "included": "50 reviews per seat a month (a base review is 1 credit); extra reviews $1 each",
+      "source": "https://www.greptile.com/pricing",
+      "per_review": 1.5,
+      "dev_month": 30,
+      "eval_cost": 30
+    },
+    "coderabbit": {
+      "plan": "Essentials (was Pro)",
+      "price": "$24 per developer per month billed annually; $30 billed monthly",
+      "seat_month": 24,
+      "included": "Unlimited PR reviews, with an hourly per-developer limit",
+      "source": "https://www.coderabbit.ai/pricing",
+      "per_review": 1.2,
+      "dev_month": 24,
+      "eval_cost": 24
+    },
+    "qodo": {
+      "plan": "Pro Team",
+      "price": "$30 per month for 2,500 credits pooled across the team ($0.012 per credit)",
+      "seat_month": 30,
+      "pooled": true,
+      "included": "About 18 reviews a month (Qodo's estimate); more reviews draw credits at the same rate, about $1.67 a review",
+      "per_review": 1.67,
+      "source": "https://www.qodo.ai/pricing/",
+      "dev_month": 33.33,
+      "eval_cost": 38.33
+    },
+    "codeant": {
+      "plan": "AI Code Review",
+      "price": "$24 per user per month",
+      "seat_month": 24,
+      "included": "Unlimited reviews",
+      "source": "https://codeant.ai/blogs/anthropic-claude-code-review",
+      "source_note": "codeant.ai/pricing loads its prices in the browser; this is the figure CodeAnt states for itself",
+      "per_review": 1.2,
+      "dev_month": 24,
+      "eval_cost": 24
+    },
+    "claude-plain": {
+      "plan": "Claude API, pay as you go",
+      "price": "Sonnet 5.5: $2 per M input tokens, $10 per M output, $4 per M 1-hour cache writes, $0.20 per M cache reads",
+      "measured": {
+        "reviews": 23,
+        "total": 1.9317,
+        "per_review": 0.084,
+        "min": 0.0646284,
+        "max": 0.1120966,
+        "avg_turns": 4.9
+      },
+      "included": "Or a Claude Pro subscription at $20 a month ($17 billed annually), which includes Claude Code within its usage limits",
+      "source": "https://docs.claude.com/en/docs/about-claude/pricing",
+      "evidence": "cases/costs/claude-runs.json",
+      "per_review": 0.084,
+      "dev_month": 1.68,
+      "eval_cost": 1.9317
+    },
+    "claude-custom_skill": {
+      "plan": "Claude API, pay as you go",
+      "price": "Sonnet 5.5: $2 per M input tokens, $10 per M output, $4 per M 1-hour cache writes, $0.20 per M cache reads",
+      "measured": {
+        "reviews": 23,
+        "total": 3.289,
+        "per_review": 0.143,
+        "min": 0.10228140000000001,
+        "max": 0.205605,
+        "avg_turns": 9.0
+      },
+      "included": "Or a Claude Pro subscription at $20 a month ($17 billed annually), which includes Claude Code within its usage limits",
+      "source": "https://docs.claude.com/en/docs/about-claude/pricing",
+      "evidence": "cases/costs/claude-runs.json",
+      "per_review": 0.143,
+      "dev_month": 2.86,
+      "eval_cost": 3.289
+    },
+    "codeant-monorepo": {
+      "plan": "AI Code Review",
+      "price": "$24 per user per month",
+      "seat_month": 24,
+      "included": "Unlimited reviews",
+      "source": "https://codeant.ai/blogs/anthropic-claude-code-review",
+      "source_note": "codeant.ai/pricing loads its prices in the browser; this is the figure CodeAnt states for itself",
+      "per_review": 1.2,
+      "dev_month": 24,
+      "eval_cost": 24
+    }
+  }
+}

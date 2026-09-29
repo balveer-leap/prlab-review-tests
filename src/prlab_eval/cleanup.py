@@ -103,13 +103,16 @@ def leftover_eval_prs(cases: list[Case]) -> list[PullRequest]:
     return extras
 
 
-def cleanup_eval(only: set[str] | None = None) -> list[str]:
-    """Close eval PRs, delete eval branches, reset local clones. Reports stay."""
-    cases = [case for case in load_cases() if only is None or case.id in only]
+def cleanup_eval(only: set[str] | None = None, *, owner: str) -> list[str]:
+    """Close eval PRs, delete eval branches, reset local clones in ``owner``. Reports stay."""
+    if not owner:
+        raise ValueError("cleanup_eval needs an explicit owner")
+    everything = load_cases(owner=owner)
+    cases = [case for case in everything if only is None or case.id in only]
     lines: list[str] = []
     seen_prs: set[tuple[str, int]] = set()
     locals_by_path: dict[Path, set[str]] = {}
-    local_for_repo = {case.github_repo: WORKSPACE / case.local for case in load_cases()}
+    local_for_repo = {case.github_repo: WORKSPACE / case.local for case in everything}
 
     for case in cases:
         pr = find_open_pr(case.github_repo, case.branch)

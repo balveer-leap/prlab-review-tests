@@ -1,0 +1,34 @@
+# org-claudplain — Claude Code GitHub Action, OUT OF THE BOX.
+# This is what a team gets from the simplest working setup: one repository, the
+# default model, a one-line prompt, no tuning.
+name: Claude Review
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+      issues: write
+      id-token: write
+      actions: read
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          # Depth 1 only. TRAPS.md (the per-repo answer key) and the original
+          # READMEs were deleted in 8089e6d but stay readable in history, so a
+          # full clone hands the reviewer the traps it is being scored on.
+          fetch-depth: 1
+
+      - uses: anthropics/claude-code-action@v1
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          # track_progress puts the result on the PR as a comment. Without it the
+          # review only lands in the workflow log.
+          track_progress: true
+          prompt: "Review this pull request and post your review as a comment."
+          claude_args: "--max-turns 20"

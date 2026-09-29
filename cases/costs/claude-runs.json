@@ -1,0 +1,377 @@
+{
+ "source": "total_cost_usd from the result block of each GitHub Actions log (claude-code-action), one successful run per PR",
+ "runs": {
+  "claude-plain": [
+   {
+    "case": "test-protocol-omitted-confirm-counts-wicket-single-repo",
+    "pr": "https://github.com/org-claudplain/prlab-cricket-protocol/pull/1",
+    "run": "https://github.com/org-claudplain/prlab-cricket-protocol/actions/runs/36623010174",
+    "model": "claude-sonnet-5-5",
+    "turns": 4,
+    "total_cost_usd": 0.09038940000000001
+   },
+   {
+    "case": "test-protocol-omitted-confirm-counts-wicket-with-downstream-context",
+    "pr": "https://github.com/org-claudplain/prlab-cricket-protocol/pull/2",
+    "run": "https://github.com/org-claudplain/prlab-cricket-protocol/actions/runs/36623026814",
+    "model": "claude-sonnet-5-5",
+    "turns": 4,
+    "total_cost_usd": 0.08793100000000001
+   },
+   {
+    "case": "test-scoring-raw-ball-leaks-protocol-fields",
+    "pr": "https://github.com/org-claudplain/prlab-cricket-scoring/pull/1",
+    "run": "https://github.com/org-claudplain/prlab-cricket-scoring/actions/runs/36623048020",
+    "model": "claude-sonnet-5-5",
+    "turns": 5,
+    "total_cost_usd": 0.0855726
+   },
+   {
+    "case": "test-scoring-match-pack-reexports-protocol-fields",
+    "pr": "https://github.com/org-claudplain/prlab-cricket-scoring/pull/2",
+    "run": "https://github.com/org-claudplain/prlab-cricket-scoring/actions/runs/36623062904",
+    "model": "claude-sonnet-5-5",
+    "turns": 7,
+    "total_cost_usd": 0.1120966
+   },
+   {
+    "case": "test-broadcast-raw-ball-treats-missing-confirm-as-wicket",
+    "pr": "https://github.com/org-claudplain/prlab-cricket-broadcast/pull/1",
+    "run": "https://github.com/org-claudplain/prlab-cricket-broadcast/actions/runs/36623088428",
+    "model": "claude-sonnet-5-5",
+    "turns": 4,
+    "total_cost_usd": 0.090873
+   },
+   {
+    "case": "test-broadcast-match-pack-walk-bypasses-last-event",
+    "pr": "https://github.com/org-claudplain/prlab-cricket-broadcast/pull/2",
+    "run": "https://github.com/org-claudplain/prlab-cricket-broadcast/actions/runs/36623101351",
+    "model": "claude-sonnet-5-5",
+    "turns": 4,
+    "total_cost_usd": 0.08436339999999999
+   },
+   {
+    "case": "test-stats-not-out-display-increments-wickets",
+    "pr": "https://github.com/org-claudplain/prlab-cricket-stats/pull/1",
+    "run": "https://github.com/org-claudplain/prlab-cricket-stats/actions/runs/36623124874",
+    "model": "claude-sonnet-5-5",
+    "turns": 5,
+    "total_cost_usd": 0.078982
+   },
+   {
+    "case": "test-fantasy-missing-confirm-pays-wicket-points",
+    "pr": "https://github.com/org-claudplain/prlab-cricket-fantasy/pull/1",
+    "run": "https://github.com/org-claudplain/prlab-cricket-fantasy/actions/runs/36623144209",
+    "model": "claude-sonnet-5-5",
+    "turns": 4,
+    "total_cost_usd": 0.08256240000000001
+   },
+   {
+    "case": "test-highlights-not-out-filed-as-wicket-clip",
+    "pr": "https://github.com/org-claudplain/prlab-cricket-highlights/pull/1",
+    "run": "https://github.com/org-claudplain/prlab-cricket-highlights/actions/runs/36623163204",
+    "model": "claude-sonnet-5-5",
+    "turns": 6,
+    "total_cost_usd": 0.08540600000000001
+   },
+   {
+    "case": "test-social-appeal-kind-posted-as-wicket",
+    "pr": "https://github.com/org-claudplain/prlab-cricket-social/pull/1",
+    "run": "https://github.com/org-claudplain/prlab-cricket-social/actions/runs/36623182576",
+    "model": "claude-sonnet-5-5",
+    "turns": 4,
+    "total_cost_usd": 0.0733458
+   },
+   {
+    "case": "test-archive-history-keeps-protocol-leaks",
+    "pr": "https://github.com/org-claudplain/prlab-cricket-archive/pull/1",
+    "run": "https://github.com/org-claudplain/prlab-cricket-archive/actions/runs/36623207148",
+    "model": "claude-sonnet-5-5",
+    "turns": 5,
+    "total_cost_usd": 0.08579220000000001
+   },
+   {
+    "case": "test-notifications-not-out-sends-wicket-push",
+    "pr": "https://github.com/org-claudplain/prlab-cricket-notifications/pull/1",
+    "run": "https://github.com/org-claudplain/prlab-cricket-notifications/actions/runs/36623230854",
+    "model": "claude-sonnet-5-5",
+    "turns": 5,
+    "total_cost_usd": 0.084189
+   },
+   {
+    "case": "test-gateway-forwards-raw-ball-and-match-pack",
+    "pr": "https://github.com/org-claudplain/prlab-cricket-live-gateway/pull/1",
+    "run": "https://github.com/org-claudplain/prlab-cricket-live-gateway/actions/runs/36623252918",
+    "model": "claude-sonnet-5-5",
+    "turns": 5,
+    "total_cost_usd": 0.09162340000000001
+   },
+   {
+    "case": "test-mobile-missing-confirm-shows-wicket-banner",
+    "pr": "https://github.com/org-claudplain/prlab-cricket-mobile/pull/1",
+    "run": "https://github.com/org-claudplain/prlab-cricket-mobile/actions/runs/36623275869",
+    "model": "claude-sonnet-5-5",
+    "turns": 5,
+    "total_cost_usd": 0.0790652
+   },
+   {
+    "case": "test-scoring-no-content-breaks-gateway-and-broadcast",
+    "pr": "https://github.com/org-claudplain/prlab-cricket-scoring/pull/3",
+    "run": "https://github.com/org-claudplain/prlab-cricket-scoring/actions/runs/36623292755",
+    "model": "claude-sonnet-5-5",
+    "turns": 5,
+    "total_cost_usd": 0.0742556
+   },
+   {
+    "case": "test-scoring-overs-number-breaks-string-consumers",
+    "pr": "https://github.com/org-claudplain/prlab-cricket-scoring/pull/4",
+    "run": "https://github.com/org-claudplain/prlab-cricket-scoring/actions/runs/36623314825",
+    "model": "claude-sonnet-5-5",
+    "turns": 5,
+    "total_cost_usd": 0.08564740000000001
+   },
+   {
+    "case": "test-scoring-numeric-boundaries-silence-highlights",
+    "pr": "https://github.com/org-claudplain/prlab-cricket-scoring/pull/5",
+    "run": "https://github.com/org-claudplain/prlab-cricket-scoring/actions/runs/36623342397",
+    "model": "claude-sonnet-5-5",
+    "turns": 7,
+    "total_cost_usd": 0.0915388
+   },
+   {
+    "case": "test-scoring-renamed-wicket-field-breaks-notifications",
+    "pr": "https://github.com/org-claudplain/prlab-cricket-scoring/pull/6",
+    "run": "https://github.com/org-claudplain/prlab-cricket-scoring/actions/runs/36623363529",
+    "model": "claude-sonnet-5-5",
+    "turns": 6,
+    "total_cost_usd": 0.083701
+   },
+   {
+    "case": "test-protocol-runs-off-bat-total-double-counts-extras",
+    "pr": "https://github.com/org-claudplain/prlab-cricket-protocol/pull/3",
+    "run": "https://github.com/org-claudplain/prlab-cricket-protocol/actions/runs/36623382107",
+    "model": "claude-sonnet-5-5",
+    "turns": 6,
+    "total_cost_usd": 0.0947868
+   },
+   {
+    "case": "test-highlights-split-kinds-stop-social-posts",
+    "pr": "https://github.com/org-claudplain/prlab-cricket-highlights/pull/2",
+    "run": "https://github.com/org-claudplain/prlab-cricket-highlights/actions/runs/36623402427",
+    "model": "claude-sonnet-5-5",
+    "turns": 4,
+    "total_cost_usd": 0.0646284
+   },
+   {
+    "case": "test-scoring-open-reset-endpoint",
+    "pr": "https://github.com/org-claudplain/prlab-cricket-scoring/pull/7",
+    "run": "https://github.com/org-claudplain/prlab-cricket-scoring/actions/runs/36623421024",
+    "model": "claude-sonnet-5-5",
+    "turns": 5,
+    "total_cost_usd": 0.0801134
+   },
+   {
+    "case": "test-gateway-origin-param-ssrf",
+    "pr": "https://github.com/org-claudplain/prlab-cricket-live-gateway/pull/2",
+    "run": "https://github.com/org-claudplain/prlab-cricket-live-gateway/actions/runs/36623438978",
+    "model": "claude-sonnet-5-5",
+    "turns": 4,
+    "total_cost_usd": 0.0713276
+   },
+   {
+    "case": "test-archive-pickle-restore-rce",
+    "pr": "https://github.com/org-claudplain/prlab-cricket-archive/pull/2",
+    "run": "https://github.com/org-claudplain/prlab-cricket-archive/actions/runs/36623460386",
+    "model": "claude-sonnet-5-5",
+    "turns": 4,
+    "total_cost_usd": 0.0734614
+   }
+  ],
+  "claude-custom_skill": [
+   {
+    "case": "test-protocol-omitted-confirm-counts-wicket-single-repo",
+    "pr": "https://github.com/org-claudeskill/prlab-cricket-protocol/pull/4",
+    "run": "https://github.com/org-claudeskill/prlab-cricket-protocol/actions/runs/36666722582",
+    "model": "claude-sonnet-5-5",
+    "turns": 6,
+    "total_cost_usd": 0.1359682
+   },
+   {
+    "case": "test-protocol-omitted-confirm-counts-wicket-with-downstream-context",
+    "pr": "https://github.com/org-claudeskill/prlab-cricket-protocol/pull/5",
+    "run": "https://github.com/org-claudeskill/prlab-cricket-protocol/actions/runs/36666732081",
+    "model": "claude-sonnet-5-5",
+    "turns": 13,
+    "total_cost_usd": 0.1608526
+   },
+   {
+    "case": "test-scoring-raw-ball-leaks-protocol-fields",
+    "pr": "https://github.com/org-claudeskill/prlab-cricket-scoring/pull/8",
+    "run": "https://github.com/org-claudeskill/prlab-cricket-scoring/actions/runs/36666743825",
+    "model": "claude-sonnet-5-5",
+    "turns": 7,
+    "total_cost_usd": 0.1488568
+   },
+   {
+    "case": "test-scoring-match-pack-reexports-protocol-fields",
+    "pr": "https://github.com/org-claudeskill/prlab-cricket-scoring/pull/9",
+    "run": "https://github.com/org-claudeskill/prlab-cricket-scoring/actions/runs/36666753967",
+    "model": "claude-sonnet-5-5",
+    "turns": 12,
+    "total_cost_usd": 0.205605
+   },
+   {
+    "case": "test-broadcast-raw-ball-treats-missing-confirm-as-wicket",
+    "pr": "https://github.com/org-claudeskill/prlab-cricket-broadcast/pull/3",
+    "run": "https://github.com/org-claudeskill/prlab-cricket-broadcast/actions/runs/36666765364",
+    "model": "claude-sonnet-5-5",
+    "turns": 11,
+    "total_cost_usd": 0.15209820000000002
+   },
+   {
+    "case": "test-broadcast-match-pack-walk-bypasses-last-event",
+    "pr": "https://github.com/org-claudeskill/prlab-cricket-broadcast/pull/4",
+    "run": "https://github.com/org-claudeskill/prlab-cricket-broadcast/actions/runs/36666775839",
+    "model": "claude-sonnet-5-5",
+    "turns": 6,
+    "total_cost_usd": 0.132279
+   },
+   {
+    "case": "test-stats-not-out-display-increments-wickets",
+    "pr": "https://github.com/org-claudeskill/prlab-cricket-stats/pull/2",
+    "run": "https://github.com/org-claudeskill/prlab-cricket-stats/actions/runs/36666787203",
+    "model": "claude-sonnet-5-5",
+    "turns": 7,
+    "total_cost_usd": 0.13134700000000002
+   },
+   {
+    "case": "test-fantasy-missing-confirm-pays-wicket-points",
+    "pr": "https://github.com/org-claudeskill/prlab-cricket-fantasy/pull/2",
+    "run": "https://github.com/org-claudeskill/prlab-cricket-fantasy/actions/runs/36666798145",
+    "model": "claude-sonnet-5-5",
+    "turns": 8,
+    "total_cost_usd": 0.1367082
+   },
+   {
+    "case": "test-highlights-not-out-filed-as-wicket-clip",
+    "pr": "https://github.com/org-claudeskill/prlab-cricket-highlights/pull/3",
+    "run": "https://github.com/org-claudeskill/prlab-cricket-highlights/actions/runs/36666809764",
+    "model": "claude-sonnet-5-5",
+    "turns": 6,
+    "total_cost_usd": 0.1026858
+   },
+   {
+    "case": "test-social-appeal-kind-posted-as-wicket",
+    "pr": "https://github.com/org-claudeskill/prlab-cricket-social/pull/2",
+    "run": "https://github.com/org-claudeskill/prlab-cricket-social/actions/runs/36666820220",
+    "model": "claude-sonnet-5-5",
+    "turns": 10,
+    "total_cost_usd": 0.14375880000000002
+   },
+   {
+    "case": "test-archive-history-keeps-protocol-leaks",
+    "pr": "https://github.com/org-claudeskill/prlab-cricket-archive/pull/3",
+    "run": "https://github.com/org-claudeskill/prlab-cricket-archive/actions/runs/36666909448",
+    "model": "claude-sonnet-5-5",
+    "turns": 7,
+    "total_cost_usd": 0.1253322
+   },
+   {
+    "case": "test-notifications-not-out-sends-wicket-push",
+    "pr": "https://github.com/org-claudeskill/prlab-cricket-notifications/pull/2",
+    "run": "https://github.com/org-claudeskill/prlab-cricket-notifications/actions/runs/36666844587",
+    "model": "claude-sonnet-5-5",
+    "turns": 8,
+    "total_cost_usd": 0.14029600000000003
+   },
+   {
+    "case": "test-gateway-forwards-raw-ball-and-match-pack",
+    "pr": "https://github.com/org-claudeskill/prlab-cricket-live-gateway/pull/3",
+    "run": "https://github.com/org-claudeskill/prlab-cricket-live-gateway/actions/runs/36666855601",
+    "model": "claude-sonnet-5-5",
+    "turns": 14,
+    "total_cost_usd": 0.20360060000000002
+   },
+   {
+    "case": "test-mobile-missing-confirm-shows-wicket-banner",
+    "pr": "https://github.com/org-claudeskill/prlab-cricket-mobile/pull/2",
+    "run": "https://github.com/org-claudeskill/prlab-cricket-mobile/actions/runs/36666866236",
+    "model": "claude-sonnet-5-5",
+    "turns": 12,
+    "total_cost_usd": 0.157515
+   },
+   {
+    "case": "test-scoring-no-content-breaks-gateway-and-broadcast",
+    "pr": "https://github.com/org-claudeskill/prlab-cricket-scoring/pull/10",
+    "run": "https://github.com/org-claudeskill/prlab-cricket-scoring/actions/runs/36666876392",
+    "model": "claude-sonnet-5-5",
+    "turns": 11,
+    "total_cost_usd": 0.12746180000000001
+   },
+   {
+    "case": "test-scoring-overs-number-breaks-string-consumers",
+    "pr": "https://github.com/org-claudeskill/prlab-cricket-scoring/pull/11",
+    "run": "https://github.com/org-claudeskill/prlab-cricket-scoring/actions/runs/36666886341",
+    "model": "claude-sonnet-5-5",
+    "turns": 7,
+    "total_cost_usd": 0.1401766
+   },
+   {
+    "case": "test-scoring-numeric-boundaries-silence-highlights",
+    "pr": "https://github.com/org-claudeskill/prlab-cricket-scoring/pull/12",
+    "run": "https://github.com/org-claudeskill/prlab-cricket-scoring/actions/runs/36666899791",
+    "model": "claude-sonnet-5-5",
+    "turns": 8,
+    "total_cost_usd": 0.131068
+   },
+   {
+    "case": "test-scoring-renamed-wicket-field-breaks-notifications",
+    "pr": "https://github.com/org-claudeskill/prlab-cricket-scoring/pull/13",
+    "run": "https://github.com/org-claudeskill/prlab-cricket-scoring/actions/runs/36666915046",
+    "model": "claude-sonnet-5-5",
+    "turns": 9,
+    "total_cost_usd": 0.15707039999999997
+   },
+   {
+    "case": "test-protocol-runs-off-bat-total-double-counts-extras",
+    "pr": "https://github.com/org-claudeskill/prlab-cricket-protocol/pull/6",
+    "run": "https://github.com/org-claudeskill/prlab-cricket-protocol/actions/runs/36666929024",
+    "model": "claude-sonnet-5-5",
+    "turns": 12,
+    "total_cost_usd": 0.1537602
+   },
+   {
+    "case": "test-highlights-split-kinds-stop-social-posts",
+    "pr": "https://github.com/org-claudeskill/prlab-cricket-highlights/pull/4",
+    "run": "https://github.com/org-claudeskill/prlab-cricket-highlights/actions/runs/36666942022",
+    "model": "claude-sonnet-5-5",
+    "turns": 9,
+    "total_cost_usd": 0.11614899999999999
+   },
+   {
+    "case": "test-scoring-open-reset-endpoint",
+    "pr": "https://github.com/org-claudeskill/prlab-cricket-scoring/pull/14",
+    "run": "https://github.com/org-claudeskill/prlab-cricket-scoring/actions/runs/36666955407",
+    "model": "claude-sonnet-5-5",
+    "turns": 9,
+    "total_cost_usd": 0.17326139999999998
+   },
+   {
+    "case": "test-gateway-origin-param-ssrf",
+    "pr": "https://github.com/org-claudeskill/prlab-cricket-live-gateway/pull/4",
+    "run": "https://github.com/org-claudeskill/prlab-cricket-live-gateway/actions/runs/36666967386",
+    "model": "claude-sonnet-5-5",
+    "turns": 9,
+    "total_cost_usd": 0.1108678
+   },
+   {
+    "case": "test-archive-pickle-restore-rce",
+    "pr": "https://github.com/org-claudeskill/prlab-cricket-archive/pull/4",
+    "run": "https://github.com/org-claudeskill/prlab-cricket-archive/actions/runs/36666978967",
+    "model": "claude-sonnet-5-5",
+    "turns": 6,
+    "total_cost_usd": 0.10228140000000001
+   }
+  ]
+ }
+}

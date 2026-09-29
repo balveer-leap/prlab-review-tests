@@ -1,0 +1,64 @@
+diff --git a/src/clip.js b/src/clip.js
+index 12fccb7..668e872 100644
+--- a/src/clip.js
++++ b/src/clip.js
+@@ -2,15 +2,19 @@
+  * Clip decisions from scoring's last_event only.
+  *
+  * @param {import("./snapshot.js").ScoreSnapshot} snapshot
+- * @returns {{ clip: boolean, kind: "none" | "wicket" | "boundary" | "appeal" }}
++ * @returns {{ clip: boolean, kind: "none" | "wicket" | "four" | "six" | "appeal" }}
+  */
+ export function clipFor(snapshot) {
+   const event = snapshot.last_event;
+   if (event.wicket_counted || event.display === "WICKET") {
+     return { clip: true, kind: "wicket" };
+   }
+-  if (event.display === "FOUR" || event.display === "SIX") {
+-    return { clip: true, kind: "boundary" };
++  // Editors filter fours and sixes separately.
++  if (event.display === "FOUR") {
++    return { clip: true, kind: "four" };
++  }
++  if (event.display === "SIX") {
++    return { clip: true, kind: "six" };
+   }
+   if (event.display === "NOT_OUT") {
+     return { clip: false, kind: "appeal" };
+diff --git a/tests/clip.test.js b/tests/clip.test.js
+index 58e903f..3cae10f 100644
+--- a/tests/clip.test.js
++++ b/tests/clip.test.js
+@@ -52,7 +52,7 @@ test("unconfirmed appeal is not a clip", () => {
+   );
+ });
+ 
+-test("four is a boundary clip", () => {
++test("four is a four clip", () => {
+   assert.deepEqual(
+     clipFor(
+       snapshot({
+@@ -64,6 +64,22 @@ test("four is a boundary clip", () => {
+         },
+       })
+     ),
+-    { clip: true, kind: "boundary" }
++    { clip: true, kind: "four" }
++  );
++});
++
++test("six is a six clip", () => {
++  assert.deepEqual(
++    clipFor(
++      snapshot({
++        last_event: {
++          display: "SIX",
++          runs_added: 6,
++          wicket_counted: false,
++          legal_delivery: true,
++        },
++      })
++    ),
++    { clip: true, kind: "six" }
+   );
+ });

@@ -1,0 +1,42 @@
+diff --git a/scoring/app.py b/scoring/app.py
+index ba6dbaf..318717e 100644
+--- a/scoring/app.py
++++ b/scoring/app.py
+@@ -1,4 +1,4 @@
+-from fastapi import FastAPI, HTTPException
++from fastapi import FastAPI, HTTPException, Response
+ from fastapi.middleware.cors import CORSMiddleware
+ 
+ from cricket_protocol import BallEvent
+@@ -28,9 +28,14 @@ def record_ball(match_id: str, event: BallEvent) -> ScoreSnapshot:
+     return snapshot
+ 
+ 
+-@app.get("/matches/{match_id}/score", response_model=ScoreSnapshot)
+-def get_score(match_id: str) -> ScoreSnapshot:
++@app.get(
++    "/matches/{match_id}/score",
++    response_model=ScoreSnapshot,
++    responses={204: {"description": "No ball recorded for this match yet"}},
++)
++def get_score(match_id: str) -> ScoreSnapshot | Response:
+     snapshot = _snapshots.get(match_id)
+     if snapshot is None:
+-        raise HTTPException(status_code=404, detail="unknown match")
++        # Dashboards poll before the first ball. That is not an error.
++        return Response(status_code=204)
+     return snapshot
+diff --git a/tests/test_app.py b/tests/test_app.py
+index 7e64534..e2882c5 100644
+--- a/tests/test_app.py
++++ b/tests/test_app.py
+@@ -26,3 +26,9 @@ def test_record_and_fetch_score() -> None:
+     assert body["runs"] == 1
+     assert body["last_event"]["display"] == "1"
+     assert "raw_ball" not in body
++
++
++def test_match_without_balls_is_no_content() -> None:
++    response = client.get("/matches/not-started/score")
++    assert response.status_code == 204
++    assert response.content == b""

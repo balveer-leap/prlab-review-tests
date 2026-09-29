@@ -1,9 +1,21 @@
 from __future__ import annotations
 
+from prlab_eval.tools.claude import ClaudeActionTool
+from prlab_eval.tools.codeant import CodeAntTool
+from prlab_eval.tools.coderabbit import CodeRabbitTool
 from prlab_eval.tools.greptile import GreptileTool
+from prlab_eval.tools.qodo import QodoTool
 
 TOOLS = {
     GreptileTool.name: GreptileTool(),
+    CodeRabbitTool.name: CodeRabbitTool(),
+    QodoTool.name: QodoTool(),
+    CodeAntTool.name: CodeAntTool(),
+    # CodeAnt on one repo holding every service, so consumers' code is in view.
+    "codeant-monorepo": CodeAntTool("codeant-monorepo"),
+    # Same action, two setups: out of the box vs estate-aware prompt + sibling clones.
+    "claude-plain": ClaudeActionTool("claude-plain"),
+    "claude-custom_skill": ClaudeActionTool("claude-custom_skill"),
 }
 
 

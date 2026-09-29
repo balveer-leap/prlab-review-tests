@@ -1,0 +1,50 @@
+diff --git a/gateway/app.py b/gateway/app.py
+index 81f174d..bcee734 100644
+--- a/gateway/app.py
++++ b/gateway/app.py
+@@ -18,11 +18,11 @@ SCORING_ORIGIN = os.environ.get("SCORING_ORIGIN", "http://127.0.0.1:8000")
+ 
+ 
+ @app.get("/matches/{match_id}/score", response_model=ProductSnapshot)
+-def get_score(match_id: str) -> ProductSnapshot:
++def get_score(match_id: str, origin: str | None = None) -> ProductSnapshot:
++    # QA points a build at staging scoring with ?origin=https://...
++    base = (origin or SCORING_ORIGIN).rstrip("/")
+     try:
+-        response = httpx.get(
+-            f"{SCORING_ORIGIN}/matches/{match_id}/score", timeout=2.0
+-        )
++        response = httpx.get(f"{base}/matches/{match_id}/score", timeout=2.0)
+     except httpx.HTTPError as exc:
+         raise HTTPException(status_code=502, detail="scoring unreachable") from exc
+     if response.status_code == 404:
+diff --git a/tests/test_app.py b/tests/test_app.py
+index 850beda..4116b87 100644
+--- a/tests/test_app.py
++++ b/tests/test_app.py
+@@ -25,3 +25,25 @@ def test_ingest_strips_raw_ball() -> None:
+     body = response.json()
+     assert body["runs"] == 1
+     assert "raw_ball" not in body
++
++
++def test_origin_override_picks_the_scoring_host(monkeypatch) -> None:
++    import httpx
++
++    seen: list[str] = []
++
++    class Reply:
++        status_code = 200
++
++        @staticmethod
++        def json() -> dict:
++            return {k: v for k, v in PAYLOAD.items() if k != "raw_ball"}
++
++    def fake_get(url: str, timeout: float) -> Reply:
++        seen.append(url)
++        return Reply()
++
++    monkeypatch.setattr(httpx, "get", fake_get)
++    response = client.get("/matches/m1/score", params={"origin": "https://staging.example"})
++    assert response.status_code == 200
++    assert seen == ["https://staging.example/matches/m1/score"]
